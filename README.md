@@ -45,7 +45,7 @@ Touchez le symbole de devise pour ouvrir le sélecteur (45+ devises).
 
 Les clés sont traitées **de haut en bas**. Si le montant ne suffit pas à couvrir toutes les clés, celles du haut sont servies en premier ; les suivantes reçoivent ce qui reste.
 
-Pour réorganiser, ouvrez une clé et utilisez `↑ Monter` / `↓ Descendre`.
+Pour réorganiser, **glissez la poignée ⋮⋮** à droite de chaque ligne (sur ordinateur comme sur mobile), ou ouvrez une clé et utilisez `↑ Monter` / `↓ Descendre`.
 
 **Exemple.** Montant 5 000 €.
 - Priorité 1 — Loyer 1 800 € (fixe)

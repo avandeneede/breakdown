@@ -226,6 +226,28 @@
   .icon-btn.danger { color: var(--danger); }
   .icon-btn.danger:hover { background: rgba(255,59,48,0.12); }
   .icon-btn svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+
+  .drag-handle {
+    width: 32px; height: 32px; flex-shrink: 0;
+    display: grid; place-items: center;
+    background: transparent; border: none; padding: 0;
+    color: var(--muted); cursor: grab;
+    touch-action: none; font-family: inherit;
+    transition: color .15s, background .15s;
+    border-radius: 7px;
+  }
+  .drag-handle:hover { color: var(--text-2); background: var(--fill); }
+  .drag-handle:active { cursor: grabbing; }
+  .drag-handle svg { width: 16px; height: 20px; fill: currentColor; pointer-events: none; }
+
+  .row.dragging {
+    z-index: 10;
+    background: var(--card) !important;
+    box-shadow: 0 12px 32px rgba(0,0,0,0.22), 0 0 0 0.5px var(--separator);
+    cursor: grabbing;
+    will-change: transform;
+  }
+  .row.dragging::after { display: none; }
   .footer { text-align: center; color: var(--muted); font-size: 12px; padding: 16px 0; }
 </style>
 </head>
@@ -407,7 +429,7 @@
           <li>Enter the value and choose <code>€</code> (fixed) or <code>%</code> — then "Of total" or "Of remaining"</li>
         </ol>
         <h3>3. Priority order</h3>
-        <p>Keys are processed <strong>top-down</strong>. If the amount is not enough, top keys get served first; the rest receive whatever is left. Reorder by opening a key and using <code>↑ Move up</code> / <code>↓ Move down</code>.</p>
+        <p>Keys are processed <strong>top-down</strong>. If the amount is not enough, top keys get served first; the rest receive whatever is left. Reorder by <strong>dragging the handle</strong> on the right of each row, or by opening a key and using <code>↑ Move up</code> / <code>↓ Move down</code>.</p>
         <div class="callout"><strong>Example.</strong> Amount 5,000 €. Rent 1,800 € (P1), Salaries 40% of total (P2), Reserve 20% of remaining (P3). → Rent 1,800, Salaries 2,000, Reserve 240, free 960.</div>
         <h3>4. Multiple profiles</h3>
         <p>Top right, tap the profile name. Create one profile per use case (personal pay, business revenue, project budget, etc.). Each profile has its own keys, amount, and currency.</p>
@@ -486,7 +508,7 @@
           <li>Entrez la valeur puis choisissez <code>€</code> (fixe) ou <code>%</code> — puis « Du total » ou « Du reste »</li>
         </ol>
         <h3>3. Ordre de priorité</h3>
-        <p>Les clés sont traitées <strong>de haut en bas</strong>. Si le montant ne suffit pas, celles du haut sont servies en premier ; les suivantes reçoivent ce qui reste. Pour réorganiser, ouvrez une clé et utilisez <code>↑ Monter</code> / <code>↓ Descendre</code>.</p>
+        <p>Les clés sont traitées <strong>de haut en bas</strong>. Si le montant ne suffit pas, celles du haut sont servies en premier ; les suivantes reçoivent ce qui reste. Pour réorganiser, <strong>glissez la poignée</strong> à droite de chaque ligne, ou ouvrez une clé et utilisez <code>↑ Monter</code> / <code>↓ Descendre</code>.</p>
         <div class="callout"><strong>Exemple.</strong> Montant 5 000 €. Loyer 1 800 € (P1), Salaires 40 % du total (P2), Réserve 20 % du reste (P3). → Loyer 1 800, Salaires 2 000, Réserve 240, libre 960.</div>
         <h3>4. Plusieurs profils</h3>
         <p>En haut à droite, tapez sur le nom du profil. Créez un profil par cas d'usage (paie personnelle, chiffre d'affaires, budget projet, etc.). Chaque profil a ses propres clés, montant et devise.</p>
@@ -565,7 +587,7 @@
           <li>Voer de waarde in en kies <code>€</code> (vast) of <code>%</code> — daarna "Van totaal" of "Van rest"</li>
         </ol>
         <h3>3. Prioriteitsvolgorde</h3>
-        <p>Sleutels worden <strong>van boven naar beneden</strong> verwerkt. Als het bedrag niet volstaat, krijgen de bovenste sleutels voorrang; de volgende krijgen wat overblijft. Herorden door een sleutel te openen en <code>↑ Omhoog</code> / <code>↓ Omlaag</code> te gebruiken.</p>
+        <p>Sleutels worden <strong>van boven naar beneden</strong> verwerkt. Als het bedrag niet volstaat, krijgen de bovenste sleutels voorrang; de volgende krijgen wat overblijft. Herorden door <strong>de handgreep</strong> rechts van elke regel te slepen, of door een sleutel te openen en <code>↑ Omhoog</code> / <code>↓ Omlaag</code> te gebruiken.</p>
         <div class="callout"><strong>Voorbeeld.</strong> Bedrag 5.000 €. Huur 1.800 € (P1), Lonen 40% van totaal (P2), Reserve 20% van rest (P3). → Huur 1.800, Lonen 2.000, Reserve 240, vrij 960.</div>
         <h3>4. Meerdere profielen</h3>
         <p>Rechtsboven tik je op de profielnaam. Maak één profiel per gebruik (persoonlijk loon, omzet, projectbudget, enz.). Elk profiel heeft eigen sleutels, bedrag en valuta.</p>
@@ -981,6 +1003,7 @@
     return +s.replace(/[.,]/g, '') || 0;
   }
   const TRASH_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3M6 7v13a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7M10 11v7M14 11v7"/></svg>';
+  const DRAG_SVG = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="9" cy="6" r="1.4"/><circle cx="9" cy="12" r="1.4"/><circle cx="9" cy="18" r="1.4"/><circle cx="15" cy="6" r="1.4"/><circle cx="15" cy="12" r="1.4"/><circle cx="15" cy="18" r="1.4"/></svg>';
 
   // ============ Compute ============
   function compute(p) {
@@ -1220,9 +1243,78 @@
           <div class="row-amount ${isShort ? 'short' : (isZero ? 'zero' : '')}">${fmt(r.actual)} ${esc(sym)}</div>
           ${isShort ? `<div class="row-meta short">${t('requested')} ${fmt(r.requested)}</div>` : ''}
         </div>
-        <span class="chevron">›</span>`;
-      row.addEventListener('click', () => openKeySheet(k.id));
+        <button type="button" class="drag-handle" aria-label="Reorder">${DRAG_SVG}</button>`;
+      row.addEventListener('click', e => {
+        if (e.target.closest('.drag-handle')) return;
+        openKeySheet(k.id);
+      });
+      setupRowDrag(row, i);
       list.appendChild(row);
+    });
+  }
+
+  // Pointer-based drag & drop for reordering keys
+  function setupRowDrag(rowEl, startIndex) {
+    const handle = rowEl.querySelector('.drag-handle');
+    if (!handle) return;
+    handle.addEventListener('pointerdown', (e) => {
+      if (e.button !== undefined && e.button !== 0 && e.pointerType === 'mouse') return;
+      e.preventDefault();
+      handle.setPointerCapture(e.pointerId);
+
+      const list = $('#keysList');
+      const allRows = [...list.children];
+      const sIdx = allRows.indexOf(rowEl);
+      if (sIdx < 0) return;
+
+      const rowHeight = rowEl.offsetHeight;
+      const origTops = allRows.map(r => r.getBoundingClientRect().top);
+
+      const state = { startY: e.clientY, startIndex: sIdx, currentIndex: sIdx };
+      rowEl.classList.add('dragging');
+
+      const move = (ev) => {
+        const delta = ev.clientY - state.startY;
+        rowEl.style.transform = `translateY(${delta}px)`;
+
+        let target = state.startIndex;
+        allRows.forEach((row, i) => {
+          if (i === state.startIndex) return;
+          const mid = origTops[i] + row.offsetHeight / 2;
+          if (i < state.startIndex && ev.clientY < mid) target = Math.min(target, i);
+          else if (i > state.startIndex && ev.clientY > mid) target = Math.max(target, i);
+        });
+
+        if (target !== state.currentIndex) {
+          state.currentIndex = target;
+          allRows.forEach((row, i) => {
+            if (i === state.startIndex) return;
+            let shift = 0;
+            if (state.startIndex < target && i > state.startIndex && i <= target) shift = -rowHeight;
+            else if (state.startIndex > target && i < state.startIndex && i >= target) shift = rowHeight;
+            row.style.transform = shift ? `translateY(${shift}px)` : '';
+            row.style.transition = 'transform .18s cubic-bezier(.4,0,.2,1)';
+          });
+        }
+      };
+
+      const end = () => {
+        handle.removeEventListener('pointermove', move);
+        handle.removeEventListener('pointerup', end);
+        handle.removeEventListener('pointercancel', end);
+        allRows.forEach(row => { row.style.transform = ''; row.style.transition = ''; });
+        rowEl.classList.remove('dragging');
+        if (state.currentIndex !== state.startIndex) {
+          const p = current();
+          const [moved] = p.keys.splice(state.startIndex, 1);
+          p.keys.splice(state.currentIndex, 0, moved);
+          save(); renderAll();
+        }
+      };
+
+      handle.addEventListener('pointermove', move);
+      handle.addEventListener('pointerup', end);
+      handle.addEventListener('pointercancel', end);
     });
   }
 

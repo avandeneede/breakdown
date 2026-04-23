@@ -3,330 +3,911 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#0f172a">
-<title>Clé de répartition</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22><rect width=%2264%22 height=%2264%22 rx=%2212%22 fill=%22%230f172a%22/><text x=%2250%25%22 y=%2256%25%22 font-size=%2238%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22sans-serif%22>%E2%80%B0</text></svg>">
+<meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Répartition">
+<title>Répartition</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%23007aff'/><g fill='white' transform='translate(32 32)'><path d='M0 -18 A18 18 0 0 1 17.1 -5.6 L0 0 Z'/><path d='M17.1 -5.6 A18 18 0 0 1 -10.6 14.6 L0 0 Z' opacity='0.72'/><path d='M-10.6 14.6 A18 18 0 0 1 0 -18 L0 0 Z' opacity='0.88'/></g></svg>">
 <style>
-  :root{
-    --bg:#0f172a; --panel:#1e293b; --panel2:#334155; --text:#f1f5f9;
-    --muted:#94a3b8; --accent:#38bdf8; --good:#22c55e; --bad:#ef4444;
-    --border:#334155;
+  :root {
+    color-scheme: light dark;
+    --bg: #f2f2f7;
+    --bg-elevated: #ffffff;
+    --card: #ffffff;
+    --text: #000000;
+    --text-2: rgba(60,60,67,0.85);
+    --muted: #8e8e93;
+    --separator: rgba(60,60,67,0.16);
+    --accent: #007aff;
+    --success: #34c759;
+    --warning: #ff9500;
+    --danger: #ff3b30;
+    --fill: rgba(118,118,128,0.12);
+    --fill-2: rgba(118,118,128,0.08);
+    --fill-3: rgba(118,118,128,0.20);
   }
-  *{box-sizing:border-box}
-  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
-  body{min-height:100vh;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)}
-  .wrap{max-width:640px;margin:0 auto;padding:16px}
-  h1{font-size:20px;margin:0 0 4px;display:flex;align-items:center;gap:8px}
-  h1 .dot{width:10px;height:10px;border-radius:50%;background:var(--accent)}
-  .sub{color:var(--muted);font-size:13px;margin-bottom:16px}
-  .card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:14px;margin-bottom:14px}
-  label{display:block;font-size:12px;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:.05em}
-  .row{display:flex;gap:8px;align-items:center}
-  input,select,button{font:inherit;color:inherit}
-  input[type=text],input[type=number],select{
-    width:100%;background:var(--panel2);border:1px solid var(--border);
-    border-radius:10px;padding:12px 12px;color:var(--text);outline:none;
-    font-size:16px; /* prevents iOS zoom */
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #000000;
+      --bg-elevated: #1c1c1e;
+      --card: #1c1c1e;
+      --text: #ffffff;
+      --text-2: rgba(235,235,245,0.85);
+      --muted: #8e8e93;
+      --separator: rgba(84,84,88,0.60);
+      --accent: #0a84ff;
+      --success: #30d158;
+      --warning: #ff9f0a;
+      --danger: #ff453a;
+      --fill: rgba(118,118,128,0.24);
+      --fill-2: rgba(118,118,128,0.18);
+      --fill-3: rgba(118,118,128,0.36);
+    }
   }
-  input:focus,select:focus{border-color:var(--accent)}
-  button{
-    background:var(--panel2);border:1px solid var(--border);color:var(--text);
-    border-radius:10px;padding:10px 14px;cursor:pointer;font-size:14px;
-    transition:background .15s;
+
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg); color: var(--text);
+    font: 17px/1.35 -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro", "Segoe UI", Roboto, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    padding: env(safe-area-inset-top) 0 env(safe-area-inset-bottom);
+    min-height: 100vh;
+    overscroll-behavior-y: contain;
   }
-  button:hover{background:#475569}
-  button.primary{background:var(--accent);color:#0b1220;border-color:var(--accent);font-weight:600}
-  button.primary:hover{filter:brightness(1.1)}
-  button.ghost{background:transparent}
-  button.danger{color:var(--bad);border-color:#7f1d1d;background:transparent}
-  button.danger:hover{background:#3f1d1d}
-  .pill{display:inline-block;padding:3px 8px;border-radius:999px;background:var(--panel2);font-size:11px;color:var(--muted)}
-  .keys{display:flex;flex-direction:column;gap:8px}
-  .key{display:grid;grid-template-columns:1fr 110px 110px 36px;gap:6px;align-items:center}
-  .key .share{text-align:right}
-  .result{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px dashed var(--border)}
-  .result:last-child{border-bottom:none}
-  .result .name{font-weight:500}
-  .result .amt{font-variant-numeric:tabular-nums;font-weight:600}
-  .total{display:flex;justify-content:space-between;padding-top:10px;margin-top:4px;border-top:1px solid var(--border);font-size:13px;color:var(--muted)}
-  .total.warn{color:var(--bad)}
-  .btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
-  .actions{display:flex;gap:6px;justify-content:flex-end;margin-top:8px}
-  .mode{display:flex;background:var(--panel2);border-radius:10px;padding:3px;gap:2px}
-  .mode button{flex:1;background:transparent;border:none;padding:8px;font-size:13px;border-radius:8px}
-  .mode button.active{background:var(--accent);color:#0b1220;font-weight:600}
-  .small{font-size:12px;color:var(--muted)}
-  .hide{display:none}
-  ::placeholder{color:#64748b}
-  @media (max-width:420px){
-    .key{grid-template-columns:1fr 90px 36px}
-    .key .pct{display:none}
+
+  .wrap { max-width: 560px; margin: 0 auto; padding: 8px 16px 48px; }
+
+  .nav {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 12px 4px 16px;
+  }
+  .nav .title { font-size: 34px; font-weight: 700; letter-spacing: -0.035em; }
+  .nav .profile {
+    background: none; border: none; color: var(--accent);
+    font-size: 17px; font-weight: 400; cursor: pointer;
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 6px 8px;
+  }
+  .nav .profile:active { opacity: 0.6; }
+
+  .hero {
+    background: var(--card);
+    border-radius: 16px;
+    padding: 20px 20px 16px;
+    margin-bottom: 28px;
+  }
+  .hero-label {
+    font-size: 13px; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.05em;
+    font-weight: 500; margin-bottom: 6px;
+  }
+  .hero-amount {
+    display: flex; align-items: baseline; gap: 6px;
+    font-size: 40px; font-weight: 700; letter-spacing: -0.03em;
+    line-height: 1.1;
+  }
+  .hero-amount .cur {
+    color: var(--muted); font-weight: 500; cursor: pointer;
+    min-width: 0.6em; text-align: center;
+    user-select: none;
+  }
+  .hero-amount input {
+    all: unset; flex: 1; min-width: 0;
+    font: inherit; color: inherit;
+    font-variant-numeric: tabular-nums;
+  }
+  .hero-amount input::placeholder { color: var(--muted); opacity: 0.6; }
+
+  .progress {
+    height: 6px; background: var(--fill);
+    border-radius: 3px; overflow: hidden;
+    margin-top: 18px;
+  }
+  .progress > div {
+    height: 100%; background: var(--accent);
+    border-radius: 3px;
+    transition: width .3s cubic-bezier(.4,0,.2,1), background .2s;
+  }
+
+  .stats {
+    display: flex; gap: 14px; margin-top: 16px;
+    padding-top: 14px; border-top: 0.5px solid var(--separator);
+  }
+  .stat { flex: 1; min-width: 0; }
+  .stat-label {
+    font-size: 11px; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.06em;
+    font-weight: 500;
+  }
+  .stat-value {
+    font-size: 17px; font-weight: 600;
+    margin-top: 2px;
+    font-variant-numeric: tabular-nums;
+  }
+  .stat.danger .stat-value { color: var(--danger); }
+  .stat.success .stat-value { color: var(--success); }
+
+  .section-head {
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 13px; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.06em;
+    font-weight: 500;
+    padding: 4px 16px 8px;
+  }
+  .section-head button {
+    background: none; border: none; color: var(--accent);
+    font-size: 22px; line-height: 1; padding: 4px 8px;
+    cursor: pointer; border-radius: 50%;
+  }
+  .section-head button:active { background: var(--fill); }
+
+  .group {
+    background: var(--card);
+    border-radius: 14px;
+    overflow: hidden;
+    margin-bottom: 28px;
+  }
+
+  .row {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 16px;
+    position: relative;
+    cursor: pointer;
+    background: var(--card);
+    transition: background .15s;
+  }
+  .row::after {
+    content: ''; position: absolute;
+    left: 16px; right: 0; bottom: 0;
+    border-bottom: 0.5px solid var(--separator);
+  }
+  .row:last-child::after { display: none; }
+  .row:active { background: var(--fill-2); }
+
+  .row-rank {
+    width: 24px; text-align: center;
+    font-size: 13px; font-weight: 600;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+    flex-shrink: 0;
+  }
+  .row-icon {
+    width: 38px; height: 38px; border-radius: 10px;
+    display: grid; place-items: center;
+    font-size: 20px; flex-shrink: 0;
+    background: var(--fill);
+  }
+  .row-main { flex: 1; min-width: 0; }
+  .row-title {
+    font-size: 16px; font-weight: 500;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .row-sub {
+    font-size: 13px; color: var(--muted);
+    margin-top: 2px;
+    font-variant-numeric: tabular-nums;
+  }
+  .row-right { text-align: right; flex-shrink: 0; min-width: 0; }
+  .row-amount {
+    font-size: 16px; font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+  .row-amount.short { color: var(--warning); }
+  .row-amount.zero { color: var(--muted); }
+  .row-meta {
+    font-size: 12px; color: var(--muted);
+    margin-top: 2px;
+    font-variant-numeric: tabular-nums;
+  }
+  .row-meta.short { color: var(--warning); }
+  .chevron {
+    color: var(--muted); opacity: 0.5;
+    font-size: 16px; margin-left: 4px;
+  }
+
+  .group-empty {
+    padding: 28px 20px; text-align: center;
+    color: var(--muted); font-size: 15px;
+  }
+
+  .input {
+    width: 100%;
+    background: var(--fill); border: none;
+    border-radius: 10px;
+    padding: 12px 14px;
+    color: var(--text); font-size: 17px;
+    outline: none;
+    font-family: inherit;
+    font-variant-numeric: tabular-nums;
+    transition: background .15s;
+  }
+  .input:focus { background: var(--fill-2); }
+  .input::placeholder { color: var(--muted); opacity: 0.7; }
+
+  .btn {
+    font: inherit; font-size: 17px; font-weight: 500;
+    cursor: pointer;
+    background: var(--fill); color: var(--text);
+    border: none; border-radius: 12px;
+    padding: 12px 18px;
+    transition: background .15s, transform .05s, opacity .15s;
+    text-align: center;
+  }
+  .btn:active { transform: scale(0.98); }
+  .btn:hover { background: var(--fill-2); }
+  .btn.primary { background: var(--accent); color: white; font-weight: 600; }
+  .btn.primary:hover { filter: brightness(1.08); }
+  .btn.danger { color: var(--danger); }
+  .btn.ghost { background: transparent; }
+  .btn-row { display: flex; gap: 10px; }
+  .btn-row .btn { flex: 1; }
+
+  .segmented {
+    display: inline-flex; background: var(--fill);
+    border-radius: 9px; padding: 2px; gap: 2px;
+  }
+  .segmented button {
+    background: transparent; border: none; cursor: pointer;
+    padding: 7px 14px; font: inherit; font-size: 14px; font-weight: 500;
+    border-radius: 7px; color: var(--text-2);
+    min-width: 52px;
+  }
+  .segmented button.active {
+    background: var(--bg-elevated); color: var(--text);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08), 0 0 0 0.5px rgba(0,0,0,0.04);
+    font-weight: 600;
+  }
+  @media (prefers-color-scheme: dark) {
+    .segmented button.active {
+      background: #48484a;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    }
+  }
+
+  .sheet-backdrop {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0);
+    z-index: 100;
+    pointer-events: none;
+    transition: background .25s;
+  }
+  .sheet-backdrop.open {
+    background: rgba(0,0,0,0.4);
+    pointer-events: auto;
+  }
+  .sheet {
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    background: var(--bg);
+    border-radius: 14px 14px 0 0;
+    padding: 8px 20px calc(env(safe-area-inset-bottom) + 24px);
+    max-width: 560px; margin: 0 auto;
+    max-height: 90vh; overflow-y: auto;
+    transform: translateY(100%);
+    transition: transform .3s cubic-bezier(.32,.72,.28,1);
+  }
+  .sheet-backdrop.open .sheet { transform: translateY(0); }
+  .sheet-handle {
+    width: 36px; height: 5px;
+    background: var(--muted); opacity: 0.45;
+    border-radius: 3px;
+    margin: 6px auto 16px;
+  }
+  .sheet h2 {
+    font-size: 20px; font-weight: 600;
+    margin: 0 0 18px;
+    letter-spacing: -0.02em;
+  }
+  .sheet h3 {
+    font-size: 15px; font-weight: 600;
+    margin: 22px 0 6px;
+    letter-spacing: -0.01em;
+  }
+  .sheet p { margin: 0 0 10px; color: var(--text-2); font-size: 15px; line-height: 1.45; }
+  .sheet ol, .sheet ul { padding-left: 22px; color: var(--text-2); font-size: 15px; line-height: 1.5; }
+  .sheet li { margin-bottom: 6px; }
+  .sheet code {
+    font-family: "SF Mono", Menlo, monospace; font-size: 13px;
+    background: var(--fill); padding: 1px 6px; border-radius: 5px;
+  }
+  .callout {
+    background: var(--fill);
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-size: 14px; color: var(--text-2);
+    margin: 12px 0;
+  }
+  .field-label {
+    font-size: 13px; color: var(--muted);
+    font-weight: 500; margin: 18px 0 6px;
+    text-transform: uppercase; letter-spacing: 0.05em;
+  }
+  .field-label:first-child { margin-top: 0; }
+
+  .icon-picker {
+    width: 52px; height: 52px;
+    border-radius: 12px;
+    background: var(--fill); border: none;
+    font-size: 26px; cursor: pointer;
+    display: grid; place-items: center;
+    flex-shrink: 0;
+  }
+  .emoji-grid {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 2px; margin-top: 10px;
+    padding: 6px; background: var(--fill); border-radius: 10px;
+    max-height: 160px; overflow-y: auto;
+  }
+  .emoji-grid button {
+    background: transparent; border: none;
+    font-size: 22px; padding: 6px 0;
+    border-radius: 8px; cursor: pointer;
+    transition: background .15s;
+  }
+  .emoji-grid button:hover { background: var(--fill-3); }
+  .emoji-grid button:active { transform: scale(0.9); }
+
+  .reorder {
+    display: flex; gap: 8px; margin-top: 12px;
+  }
+  .reorder .btn { flex: 1; font-size: 15px; padding: 10px; }
+
+  .muted { color: var(--muted); font-size: 13px; }
+  .text-center { text-align: center; }
+  .hide { display: none !important; }
+
+  .footer {
+    text-align: center; color: var(--muted);
+    font-size: 12px; padding: 16px 0;
   }
 </style>
 </head>
 <body>
+
 <div class="wrap">
-  <h1><span class="dot"></span>Clé de répartition</h1>
-  <div class="sub">Divisez un montant selon des parts configurables. Données stockées localement sur cet appareil.</div>
 
-  <div class="card">
-    <label>Profil</label>
-    <div class="row">
-      <select id="profileSelect"></select>
-      <button id="newProfile" title="Nouveau profil">+</button>
-      <button id="renameProfile" title="Renommer">✎</button>
-      <button id="deleteProfile" class="danger" title="Supprimer">✕</button>
-    </div>
+  <div class="nav">
+    <div class="title">Répartition</div>
+    <button class="profile" id="profileBtn">
+      <span id="profileName">Défaut</span>
+      <svg width="11" height="11" viewBox="0 0 12 12" aria-hidden="true">
+        <path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
   </div>
 
-  <div class="card">
-    <label>Montant à répartir</label>
-    <div class="row">
-      <input id="amount" type="number" inputmode="decimal" step="0.01" placeholder="0,00" />
-      <select id="currency" style="width:90px">
-        <option>€</option><option>$</option><option>£</option><option>CHF</option>
-      </select>
+  <div class="hero">
+    <div class="hero-label">Montant à répartir</div>
+    <div class="hero-amount">
+      <span class="cur" id="curSym" title="Changer de devise">€</span>
+      <input id="budget" type="number" inputmode="decimal" step="0.01" placeholder="0">
     </div>
-  </div>
-
-  <div class="card">
-    <div class="row" style="justify-content:space-between;margin-bottom:10px">
-      <label style="margin:0">Clés de répartition</label>
-      <div class="mode">
-        <button id="modePct" class="active">%</button>
-        <button id="modeParts">Parts</button>
+    <div class="progress"><div id="progressBar" style="width:0%"></div></div>
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-label">Alloué</div>
+        <div class="stat-value" id="allocatedVal">—</div>
+      </div>
+      <div class="stat" id="remainingStat">
+        <div class="stat-label">Libre</div>
+        <div class="stat-value" id="remainingVal">—</div>
+      </div>
+      <div class="stat" id="shortStat">
+        <div class="stat-label">Manquant</div>
+        <div class="stat-value" id="shortVal">—</div>
       </div>
     </div>
-
-    <div id="keys" class="keys"></div>
-
-    <div class="btns">
-      <button id="addKey">+ Ajouter</button>
-      <button id="equalize" class="ghost">Égaliser</button>
-      <button id="normalize" class="ghost">Normaliser 100%</button>
-    </div>
-    <div class="total" id="totalLine"></div>
   </div>
 
-  <div class="card">
-    <label>Résultat</label>
-    <div id="results"></div>
+  <div class="section-head">
+    <span>Clés de répartition</span>
+    <button id="addKeyBtn" title="Ajouter une clé">＋</button>
   </div>
+  <div class="group" id="keysList"></div>
 
-  <div class="card">
-    <label>Données</label>
-    <div class="btns">
-      <button id="export">Exporter</button>
-      <button id="import">Importer</button>
-      <input id="importFile" type="file" accept="application/json" class="hide">
+  <div class="section-head"><span>Données</span></div>
+  <div class="group">
+    <div class="row" id="guideRow">
+      <div class="row-icon" style="background:transparent">📖</div>
+      <div class="row-main"><div class="row-title">Guide rapide</div><div class="row-sub">Comment utiliser, exporter, importer</div></div>
+      <span class="chevron">›</span>
     </div>
-    <div class="small" style="margin-top:8px">Astuce iPhone: Safari → Partager → « Sur l'écran d'accueil » pour l'utiliser comme une app.</div>
+    <div class="row" id="exportRow">
+      <div class="row-icon" style="background:transparent">⇣</div>
+      <div class="row-main"><div class="row-title">Exporter mes profils</div><div class="row-sub">Télécharger un fichier JSON</div></div>
+      <span class="chevron">›</span>
+    </div>
+    <div class="row" id="importRow">
+      <div class="row-icon" style="background:transparent">⇡</div>
+      <div class="row-main"><div class="row-title">Importer un fichier</div><div class="row-sub">Restaurer ou transférer depuis un autre appareil</div></div>
+      <span class="chevron">›</span>
+    </div>
+  </div>
+  <input id="importFile" type="file" accept="application/json" class="hide">
+
+  <div class="footer">Données stockées localement sur cet appareil.</div>
+</div>
+
+<!-- Profile sheet -->
+<div class="sheet-backdrop" id="profileSheet">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <h2>Profils</h2>
+    <div class="group" id="profileList"></div>
+    <button class="btn primary" id="newProfileBtn" style="width:100%">Nouveau profil</button>
+  </div>
+</div>
+
+<!-- Key sheet -->
+<div class="sheet-backdrop" id="keySheet">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <h2 id="keySheetTitle">Clé</h2>
+
+    <div style="display:flex;gap:12px;align-items:center">
+      <button class="icon-picker" id="keyEmoji" type="button">💰</button>
+      <input type="text" class="input" id="keyName" placeholder="Nom de la clé" autocomplete="off">
+    </div>
+    <div class="emoji-grid hide" id="emojiGrid"></div>
+
+    <div class="field-label">Type et valeur</div>
+    <div style="display:flex;gap:10px;align-items:center">
+      <input type="number" inputmode="decimal" step="0.01" class="input" id="keyValue" placeholder="0" style="flex:1">
+      <div class="segmented" role="tablist">
+        <button type="button" id="typeAbs" class="active" data-type="amount">€</button>
+        <button type="button" id="typePct" data-type="percent">%</button>
+      </div>
+    </div>
+    <div class="muted" id="valueHint" style="margin-top:6px"></div>
+
+    <div id="reorderSection" class="hide">
+      <div class="field-label">Ordre de priorité</div>
+      <div class="reorder">
+        <button class="btn" id="moveUp">↑ Monter</button>
+        <button class="btn" id="moveDown">↓ Descendre</button>
+      </div>
+      <div class="muted" style="margin-top:8px">Les clés en haut sont servies en premier si le montant ne suffit pas.</div>
+    </div>
+
+    <div class="btn-row" style="margin-top:24px">
+      <button class="btn danger" id="keyDelete">Supprimer</button>
+      <button class="btn primary" id="keySave" style="flex:2">Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<!-- Guide sheet -->
+<div class="sheet-backdrop" id="guideSheet">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <h2>Guide rapide</h2>
+
+    <p>Cette app décompose un montant selon une <strong>clé de répartition</strong>. Chaque ligne prend soit un montant fixe en <code>€</code>, soit un pourcentage du total en <code>%</code>.</p>
+
+    <h3>1. Définir le montant</h3>
+    <p>Tapez le montant à répartir en haut de l'écran. Tapez sur le symbole de devise pour changer (€, $, £, CHF, kr).</p>
+
+    <h3>2. Ajouter des clés</h3>
+    <ol>
+      <li>Touchez <code>＋</code> dans la section « Clés de répartition »</li>
+      <li>Choisissez un emoji et un nom (ex. « Loyer »)</li>
+      <li>Entrez la valeur puis choisissez <code>€</code> (fixe) ou <code>%</code> (relatif au total)</li>
+    </ol>
+
+    <h3>3. Ordre de priorité</h3>
+    <p>Les clés sont traitées <strong>de haut en bas</strong>. Si le montant ne suffit pas à couvrir toutes les clés, celles du haut sont servies en premier ; les suivantes reçoivent ce qui reste. Pour réorganiser, ouvrez une clé et utilisez <code>↑ Monter</code> / <code>↓ Descendre</code>.</p>
+
+    <div class="callout">
+      <strong>Exemple.</strong> Montant 2 000 €. Loyer 900 € (P1), Épargne 20 % (P2), Imprévus 300 € (P3). → Loyer 900, Épargne 400, Imprévus 300, libre 400.
+    </div>
+
+    <h3>4. Plusieurs profils</h3>
+    <p>En haut à droite, tapez sur le nom du profil. Vous pouvez créer un profil par cas d'usage (paie personnelle, charges à répartir entre plusieurs projets, etc.). Chaque profil a ses propres clés.</p>
+
+    <h3>Exporter ses profils</h3>
+    <ol>
+      <li>Section « Données » → <strong>Exporter mes profils</strong></li>
+      <li>Un fichier <code>repartition-YYYY-MM-DD.json</code> est téléchargé</li>
+      <li>Sauvegardez-le (iCloud Drive, Dropbox, email…) ou envoyez-le vers un autre appareil via AirDrop</li>
+    </ol>
+
+    <h3>Importer sur un autre appareil</h3>
+    <ol>
+      <li>Ouvrez l'app sur le nouvel appareil (ou un nouveau navigateur)</li>
+      <li>Section « Données » → <strong>Importer un fichier</strong></li>
+      <li>Choisissez le fichier JSON exporté</li>
+    </ol>
+    <div class="callout">
+      ⚠️ L'import <strong>remplace</strong> toutes les données actuelles de l'app. Exportez d'abord si vous voulez les conserver.
+    </div>
+
+    <h3>Installer sur iPhone</h3>
+    <p>Safari → Partager → <strong>« Sur l'écran d'accueil »</strong>. L'app s'ouvre alors en plein écran, comme une app native.</p>
+
+    <button class="btn primary" id="guideClose" style="width:100%;margin-top:20px">Compris</button>
   </div>
 </div>
 
 <script>
 (() => {
-  const LS_KEY = 'repartition.v1';
-  const $ = s => document.querySelector(s);
-  const fmt = n => (Math.round(n*100)/100).toLocaleString('fr-BE',{minimumFractionDigits:2,maximumFractionDigits:2});
+  const LS_KEY = 'repartition.v3';
+  const LS_OLD_V2 = 'envelopes.v2';
+  const LS_OLD_V1 = 'repartition.v1';
+  const $ = (s, r=document) => r.querySelector(s);
+  const $$ = (s, r=document) => [...r.querySelectorAll(s)];
+  const uid = () => 'k_' + Math.random().toString(36).slice(2, 10);
 
+  const locale = navigator.language || 'fr-FR';
+  const fmt = n => {
+    const v = Math.round((+n || 0) * 100) / 100;
+    return v.toLocaleString(locale, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  };
+  const escapeHtml = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+  const CURRENCIES = ['€','$','£','CHF','kr'];
+  const EMOJI = ['💰','🏠','🛒','🍽️','☕','🚗','⛽','🚇','✈️','🏖️','🎬','🎮','🎵','🎨','📚','💡','📱','💳','👕','👟','💊','🏥','💇','🧘','🏋️','⚽','🐶','👶','🎁','🎂','🍺','🍷','🧾','💼','🎓','🔧','🌱','🎯','💸','🪙'];
+
+  const defaultProfile = (name='Défaut') => ({
+    name,
+    currency: '€',
+    amount: 2500,
+    keys: [
+      { id: uid(), emoji: '🏠', name: 'Logement',  type: 'amount',  value: 900 },
+      { id: uid(), emoji: '🛒', name: 'Courses',   type: 'amount',  value: 500 },
+      { id: uid(), emoji: '🚗', name: 'Transport', type: 'amount',  value: 200 },
+      { id: uid(), emoji: '🍽️', name: 'Restos',   type: 'amount',  value: 150 },
+      { id: uid(), emoji: '💰', name: 'Épargne',   type: 'percent', value: 20  },
+      { id: uid(), emoji: '🎬', name: 'Loisirs',   type: 'amount',  value: 100 },
+    ],
+  });
   const defaultState = () => ({
-    currentId: 'default',
-    profiles: {
-      default: {
-        name: 'Défaut',
-        mode: 'pct',
-        currency: '€',
-        amount: 100,
-        keys: [
-          {name:'Personne A', value:50},
-          {name:'Personne B', value:50},
-        ],
-      }
-    }
+    v: 3,
+    currentId: 'p_default',
+    profiles: { p_default: defaultProfile() },
   });
 
-  let state = load();
+  function migrate(raw) {
+    if (!raw) return null;
+    let s;
+    try { s = typeof raw === 'string' ? JSON.parse(raw) : raw; } catch { return null; }
+    if (!s || !s.profiles) return null;
+    if (s.v === 3) return s;
 
-  function load(){
-    try{
-      const raw = localStorage.getItem(LS_KEY);
-      if(!raw) return defaultState();
-      const s = JSON.parse(raw);
-      if(!s.profiles || !s.currentId) return defaultState();
-      return s;
-    }catch(e){ return defaultState(); }
-  }
-  function save(){ localStorage.setItem(LS_KEY, JSON.stringify(state)); }
-  function current(){ return state.profiles[state.currentId]; }
-  function uid(){ return 'p_' + Math.random().toString(36).slice(2,9); }
-
-  function renderProfiles(){
-    const sel = $('#profileSelect');
-    sel.innerHTML = '';
-    Object.entries(state.profiles).forEach(([id,p])=>{
-      const o = document.createElement('option');
-      o.value = id; o.textContent = p.name;
-      if(id === state.currentId) o.selected = true;
-      sel.appendChild(o);
+    Object.values(s.profiles).forEach(p => {
+      // v2 envelopes → keys
+      if (p.envelopes && !p.keys) {
+        p.keys = p.envelopes.map(e => ({
+          id: uid(),
+          emoji: e.emoji || '💰',
+          name: e.name || '',
+          type: e.mode === 'pct' ? 'percent' : 'amount',
+          value: +e.alloc || 0,
+        }));
+        delete p.envelopes;
+      }
+      // v1 keys[{name,value}] with p.mode
+      else if (p.keys && p.keys.length && p.keys[0] && !('type' in p.keys[0])) {
+        const mode = p.mode === 'pct' ? 'percent' : 'amount';
+        p.keys = p.keys.map(k => ({
+          id: uid(),
+          emoji: '💰',
+          name: k.name || '',
+          type: mode,
+          value: +k.value || 0,
+        }));
+      }
+      if (p.budget !== undefined && p.amount === undefined) { p.amount = p.budget; delete p.budget; }
+      if (p.mode) delete p.mode;
+      if (!p.currency) p.currency = '€';
+      p.keys = (p.keys || []).map(k => ({
+        id: k.id || uid(),
+        emoji: k.emoji || '💰',
+        name: k.name || '',
+        type: k.type === 'percent' ? 'percent' : 'amount',
+        value: +k.value || 0,
+      }));
     });
+    s.v = 3;
+    return s;
   }
 
-  function renderKeys(){
-    const p = current();
-    const box = $('#keys');
-    box.innerHTML = '';
-    const total = p.keys.reduce((s,k)=>s+(+k.value||0),0);
-    p.keys.forEach((k,i)=>{
-      const row = document.createElement('div');
-      row.className = 'key';
-      const pct = total>0 ? (k.value/total*100) : 0;
-      row.innerHTML = `
-        <input type="text" value="${escapeHtml(k.name)}" placeholder="Nom" data-i="${i}" data-f="name">
-        <input type="number" inputmode="decimal" step="any" value="${k.value ?? ''}" placeholder="${p.mode==='pct'?'%':'parts'}" data-i="${i}" data-f="value" class="share">
-        <div class="pill pct" style="text-align:right">${fmt(pct)}%</div>
-        <button class="danger" data-i="${i}" data-f="del" title="Supprimer">✕</button>`;
-      box.appendChild(row);
+  let state;
+  try {
+    const raw = localStorage.getItem(LS_KEY) || localStorage.getItem(LS_OLD_V2) || localStorage.getItem(LS_OLD_V1);
+    state = migrate(raw) || defaultState();
+  } catch (e) { state = defaultState(); }
+
+  const save = () => {
+    state.v = 3;
+    localStorage.setItem(LS_KEY, JSON.stringify(state));
+  };
+  const current = () => {
+    if (!state.profiles[state.currentId]) state.currentId = Object.keys(state.profiles)[0];
+    return state.profiles[state.currentId];
+  };
+
+  // Priority-based allocation
+  function compute(p) {
+    const total = +p.amount || 0;
+    let pool = total;
+    const results = p.keys.map(k => {
+      const requested = k.type === 'percent'
+        ? total * (+k.value || 0) / 100
+        : (+k.value || 0);
+      const actual = Math.max(0, Math.min(requested, pool));
+      pool -= actual;
+      return { key: k, requested, actual, short: requested - actual };
     });
-    // total line
-    const tl = $('#totalLine');
-    if(p.mode==='pct'){
-      const diff = Math.abs(total-100);
-      tl.textContent = `Somme: ${fmt(total)}%` + (diff>0.01?` — doit faire 100%`:'');
-      tl.classList.toggle('warn', diff>0.01);
-    } else {
-      tl.textContent = `Total parts: ${fmt(total)}`;
-      tl.classList.remove('warn');
-    }
-    // mode buttons
-    $('#modePct').classList.toggle('active', p.mode==='pct');
-    $('#modeParts').classList.toggle('active', p.mode==='parts');
-    $('#amount').value = p.amount ?? '';
-    $('#currency').value = p.currency || '€';
+    const allocated = total - pool;
+    const totalRequested = results.reduce((s, r) => s + r.requested, 0);
+    const totalShort = Math.max(0, totalRequested - total);
+    return { total, allocated, pool, results, totalShort };
   }
 
-  function renderResults(){
+  function renderHero() {
     const p = current();
-    const out = $('#results');
-    out.innerHTML = '';
-    const amount = +p.amount || 0;
-    const total = p.keys.reduce((s,k)=>s+(+k.value||0),0);
-    if(total<=0 || p.keys.length===0){
-      out.innerHTML = '<div class="small">Ajoutez des parts pour voir la répartition.</div>';
+    const c = compute(p);
+    $('#curSym').textContent = p.currency;
+    if (document.activeElement !== $('#budget')) $('#budget').value = p.amount || '';
+    $('#allocatedVal').textContent = fmt(c.allocated);
+    $('#remainingVal').textContent = fmt(c.pool);
+    $('#shortVal').textContent = fmt(c.totalShort);
+
+    const remStat = $('#remainingStat');
+    remStat.classList.toggle('success', c.total > 0 && c.pool < 0.005 && c.totalShort < 0.005);
+
+    const shortStat = $('#shortStat');
+    shortStat.classList.toggle('hide', c.totalShort < 0.005);
+    shortStat.classList.toggle('danger', c.totalShort >= 0.005);
+
+    const pct = c.total > 0 ? Math.min(100, c.allocated / c.total * 100) : 0;
+    const bar = $('#progressBar');
+    bar.style.width = pct + '%';
+    bar.style.background = c.totalShort >= 0.005
+      ? 'var(--warning)'
+      : (c.total > 0 && c.pool < 0.01 ? 'var(--success)' : 'var(--accent)');
+
+    $('#profileName').textContent = p.name;
+  }
+
+  function renderKeys() {
+    const p = current();
+    const c = compute(p);
+    const list = $('#keysList');
+    list.innerHTML = '';
+
+    if (!p.keys.length) {
+      list.innerHTML = '<div class="group-empty">Aucune clé.<br>Touchez ＋ pour en ajouter.</div>';
       return;
     }
-    let sum = 0;
-    p.keys.forEach((k,i)=>{
-      const share = (+k.value||0)/total;
-      const amt = amount * share;
-      sum += amt;
+
+    c.results.forEach((r, i) => {
+      const k = r.key;
+      const isShort = r.short > 0.005;
+      const isZero = r.actual < 0.005;
+      const setting = k.type === 'percent'
+        ? `${fmt(k.value)} % du total`
+        : `${fmt(k.value)} ${p.currency} · fixe`;
+
       const row = document.createElement('div');
-      row.className = 'result';
-      row.innerHTML = `<div><div class="name">${escapeHtml(k.name||'—')}</div>
-        <div class="small">${fmt(share*100)}%</div></div>
-        <div class="amt">${fmt(amt)} ${escapeHtml(p.currency||'')}</div>`;
-      out.appendChild(row);
+      row.className = 'row';
+      row.dataset.id = k.id;
+      row.innerHTML = `
+        <div class="row-rank">${i + 1}</div>
+        <div class="row-icon">${escapeHtml(k.emoji || '💰')}</div>
+        <div class="row-main">
+          <div class="row-title">${escapeHtml(k.name || 'Sans nom')}</div>
+          <div class="row-sub">${setting}</div>
+        </div>
+        <div class="row-right">
+          <div class="row-amount ${isShort ? 'short' : (isZero ? 'zero' : '')}">${fmt(r.actual)} ${escapeHtml(p.currency)}</div>
+          ${isShort ? `<div class="row-meta short">demandé ${fmt(r.requested)}</div>` : ''}
+        </div>
+        <span class="chevron">›</span>
+      `;
+      row.addEventListener('click', () => openKeySheet(k.id));
+      list.appendChild(row);
     });
-    const t = document.createElement('div');
-    t.className = 'total';
-    t.innerHTML = `<span>Total</span><span>${fmt(sum)} ${escapeHtml(p.currency||'')}</span>`;
-    out.appendChild(t);
   }
 
-  function renderAll(){ renderProfiles(); renderKeys(); renderResults(); }
+  const renderAll = () => { renderHero(); renderKeys(); };
 
-  function escapeHtml(s){ return String(s??'').replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+  function openSheet(id) { $('#' + id).classList.add('open'); }
+  function closeSheet(id) { $('#' + id).classList.remove('open'); }
+  $$('.sheet-backdrop').forEach(s => s.addEventListener('click', e => {
+    if (e.target === s) s.classList.remove('open');
+  }));
 
-  // Events
-  $('#profileSelect').addEventListener('change', e => {
-    state.currentId = e.target.value; save(); renderAll();
-  });
-  $('#newProfile').addEventListener('click', () => {
-    const name = prompt('Nom du profil ?', 'Nouveau profil');
-    if(!name) return;
-    const id = uid();
-    state.profiles[id] = {name, mode:'pct', currency:'€', amount:0, keys:[{name:'A',value:50},{name:'B',value:50}]};
-    state.currentId = id; save(); renderAll();
-  });
-  $('#renameProfile').addEventListener('click', () => {
+  // ---- Key sheet ----
+  let editingId = null;
+  function openKeySheet(id) {
     const p = current();
-    const name = prompt('Renommer le profil', p.name);
-    if(!name) return;
-    p.name = name; save(); renderAll();
+    let k = id ? p.keys.find(x => x.id === id) : null;
+    const isNew = !k;
+    editingId = isNew ? null : k.id;
+    if (isNew) k = { id: null, emoji: '💰', name: '', type: 'amount', value: 0 };
+
+    $('#keySheetTitle').textContent = isNew ? 'Nouvelle clé' : 'Modifier la clé';
+    $('#keyEmoji').textContent = k.emoji;
+    $('#keyName').value = k.name;
+    $('#keyValue').value = k.value || '';
+    $('#typeAbs').textContent = p.currency;
+    setType(k.type);
+    $('#keyDelete').style.display = isNew ? 'none' : '';
+    $('#reorderSection').classList.toggle('hide', isNew);
+    $('#emojiGrid').classList.add('hide');
+    updateValueHint();
+    openSheet('keySheet');
+  }
+
+  function setType(type) {
+    $('#typeAbs').classList.toggle('active', type !== 'percent');
+    $('#typePct').classList.toggle('active', type === 'percent');
+    updateValueHint();
+  }
+  const getType = () => $('#typePct').classList.contains('active') ? 'percent' : 'amount';
+
+  function updateValueHint() {
+    const p = current();
+    const type = getType();
+    const v = +$('#keyValue').value || 0;
+    const hint = $('#valueHint');
+    if (type === 'percent') {
+      hint.textContent = p.amount > 0 ? `≈ ${fmt(p.amount * v / 100)} ${p.currency} sur ${fmt(p.amount)}` : 'Définissez le montant pour voir la part.';
+    } else {
+      hint.textContent = p.amount > 0 ? `≈ ${fmt(p.amount > 0 ? v / p.amount * 100 : 0)} % du montant` : '';
+    }
+  }
+
+  $('#typeAbs').addEventListener('click', () => setType('amount'));
+  $('#typePct').addEventListener('click', () => setType('percent'));
+  $('#keyValue').addEventListener('input', updateValueHint);
+
+  const grid = $('#emojiGrid');
+  EMOJI.forEach(em => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.textContent = em;
+    b.addEventListener('click', () => { $('#keyEmoji').textContent = em; grid.classList.add('hide'); });
+    grid.appendChild(b);
   });
-  $('#deleteProfile').addEventListener('click', () => {
-    if(Object.keys(state.profiles).length<=1){ alert('Vous devez garder au moins un profil.'); return; }
-    if(!confirm('Supprimer ce profil ?')) return;
-    delete state.profiles[state.currentId];
-    state.currentId = Object.keys(state.profiles)[0];
+  $('#keyEmoji').addEventListener('click', () => grid.classList.toggle('hide'));
+
+  $('#keySave').addEventListener('click', () => {
+    const p = current();
+    const draft = {
+      id: editingId || uid(),
+      emoji: $('#keyEmoji').textContent || '💰',
+      name: ($('#keyName').value.trim()) || 'Sans nom',
+      type: getType(),
+      value: +$('#keyValue').value || 0,
+    };
+    if (editingId) {
+      const i = p.keys.findIndex(x => x.id === editingId);
+      if (i >= 0) p.keys[i] = draft;
+    } else {
+      p.keys.push(draft);
+    }
+    save(); renderAll(); closeSheet('keySheet');
+  });
+
+  $('#keyDelete').addEventListener('click', () => {
+    if (!editingId) return;
+    if (!confirm('Supprimer cette clé ?')) return;
+    const p = current();
+    p.keys = p.keys.filter(x => x.id !== editingId);
+    save(); renderAll(); closeSheet('keySheet');
+  });
+
+  function moveKey(delta) {
+    if (!editingId) return;
+    const p = current();
+    const i = p.keys.findIndex(x => x.id === editingId);
+    const j = i + delta;
+    if (i < 0 || j < 0 || j >= p.keys.length) return;
+    [p.keys[i], p.keys[j]] = [p.keys[j], p.keys[i]];
+    save(); renderAll();
+  }
+  $('#moveUp').addEventListener('click', () => moveKey(-1));
+  $('#moveDown').addEventListener('click', () => moveKey(1));
+
+  $('#addKeyBtn').addEventListener('click', () => openKeySheet(null));
+
+  $('#budget').addEventListener('input', e => {
+    current().amount = +e.target.value || 0;
+    save(); renderHero(); renderKeys();
+  });
+
+  $('#curSym').addEventListener('click', () => {
+    const p = current();
+    const i = CURRENCIES.indexOf(p.currency);
+    p.currency = CURRENCIES[(i + 1) % CURRENCIES.length];
     save(); renderAll();
   });
 
-  $('#amount').addEventListener('input', e => {
-    current().amount = +e.target.value || 0; save(); renderResults();
-  });
-  $('#currency').addEventListener('change', e => {
-    current().currency = e.target.value; save(); renderResults();
+  // ---- Profile sheet ----
+  function renderProfileList() {
+    const list = $('#profileList');
+    list.innerHTML = '';
+    Object.entries(state.profiles).forEach(([id, p]) => {
+      const isActive = id === state.currentId;
+      const canDelete = Object.keys(state.profiles).length > 1;
+      const row = document.createElement('div');
+      row.className = 'row';
+      row.innerHTML = `
+        <div class="row-main">
+          <div class="row-title">${escapeHtml(p.name)}</div>
+          <div class="row-sub">${p.keys.length} clé${p.keys.length > 1 ? 's' : ''} · ${fmt(p.amount || 0)} ${escapeHtml(p.currency || '€')}</div>
+        </div>
+        ${isActive ? '<span style="color:var(--accent);font-size:18px;font-weight:600">✓</span>' : ''}
+        <button class="btn ghost" data-rename="${id}" style="padding:6px 10px;font-size:14px">Renommer</button>
+        ${canDelete ? `<button class="btn ghost danger" data-delete="${id}" style="padding:6px 10px;font-size:14px">Suppr.</button>` : ''}
+      `;
+      row.addEventListener('click', e => {
+        if (e.target.closest('[data-rename], [data-delete]')) return;
+        state.currentId = id; save(); renderAll(); closeSheet('profileSheet');
+      });
+      list.appendChild(row);
+    });
+    $$('#profileList [data-rename]').forEach(b => b.addEventListener('click', e => {
+      e.stopPropagation();
+      const id = b.dataset.rename;
+      const name = prompt('Nom du profil', state.profiles[id].name);
+      if (name) { state.profiles[id].name = name.trim(); save(); renderProfileList(); renderHero(); }
+    }));
+    $$('#profileList [data-delete]').forEach(b => b.addEventListener('click', e => {
+      e.stopPropagation();
+      const id = b.dataset.delete;
+      if (!confirm(`Supprimer le profil « ${state.profiles[id].name} » ?`)) return;
+      delete state.profiles[id];
+      if (state.currentId === id) state.currentId = Object.keys(state.profiles)[0];
+      save(); renderProfileList(); renderAll();
+    }));
+  }
+
+  $('#profileBtn').addEventListener('click', () => { renderProfileList(); openSheet('profileSheet'); });
+
+  $('#newProfileBtn').addEventListener('click', () => {
+    const name = prompt('Nom du profil', 'Nouveau profil');
+    if (!name) return;
+    const id = 'p_' + uid();
+    state.profiles[id] = { name: name.trim(), currency: current().currency || '€', amount: 0, keys: [] };
+    state.currentId = id;
+    save(); closeSheet('profileSheet'); renderAll();
   });
 
-  $('#keys').addEventListener('input', e => {
-    const i = +e.target.dataset.i, f = e.target.dataset.f;
-    if(isNaN(i) || !f) return;
-    const p = current();
-    if(f==='name') p.keys[i].name = e.target.value;
-    else if(f==='value') p.keys[i].value = +e.target.value || 0;
-    save(); renderKeys(); renderResults();
-  });
-  $('#keys').addEventListener('click', e => {
-    if(e.target.dataset.f === 'del'){
-      const i = +e.target.dataset.i;
-      current().keys.splice(i,1); save(); renderKeys(); renderResults();
-    }
-  });
-
-  $('#addKey').addEventListener('click', () => {
-    current().keys.push({name:'', value:0}); save(); renderKeys(); renderResults();
-  });
-  $('#equalize').addEventListener('click', () => {
-    const p = current();
-    if(!p.keys.length) return;
-    const v = p.mode==='pct' ? 100/p.keys.length : 1;
-    p.keys.forEach(k=>k.value = Math.round(v*100)/100);
-    save(); renderKeys(); renderResults();
-  });
-  $('#normalize').addEventListener('click', () => {
-    const p = current();
-    const total = p.keys.reduce((s,k)=>s+(+k.value||0),0);
-    if(total<=0) return;
-    p.keys.forEach(k=>k.value = Math.round((k.value/total*100)*100)/100);
-    p.mode = 'pct';
-    save(); renderKeys(); renderResults();
-  });
-
-  $('#modePct').addEventListener('click', () => { current().mode='pct'; save(); renderKeys(); renderResults(); });
-  $('#modeParts').addEventListener('click', () => { current().mode='parts'; save(); renderKeys(); renderResults(); });
-
-  $('#export').addEventListener('click', () => {
-    const blob = new Blob([JSON.stringify(state,null,2)],{type:'application/json'});
+  // ---- Data ----
+  $('#exportRow').addEventListener('click', () => {
+    const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
-    a.href = url; a.download = 'repartition.json'; a.click();
-    setTimeout(()=>URL.revokeObjectURL(url), 1000);
+    a.href = url;
+    a.download = `repartition-${new Date().toISOString().slice(0,10)}.json`;
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
   });
-  $('#import').addEventListener('click', () => $('#importFile').click());
+  $('#importRow').addEventListener('click', () => $('#importFile').click());
   $('#importFile').addEventListener('change', e => {
-    const f = e.target.files[0]; if(!f) return;
+    const f = e.target.files[0]; if (!f) return;
     const r = new FileReader();
     r.onload = () => {
-      try{
-        const s = JSON.parse(r.result);
-        if(!s.profiles || !s.currentId) throw new Error('Fichier invalide');
+      try {
+        const s = migrate(r.result);
+        if (!s || !s.profiles) throw new Error('Fichier invalide');
+        if (!confirm('Remplacer toutes les données actuelles par le contenu du fichier ?')) return;
         state = s; save(); renderAll();
-      }catch(err){ alert('Import échoué: ' + err.message); }
+      } catch (err) { alert('Import échoué : ' + err.message); }
     };
     r.readAsText(f);
     e.target.value = '';
   });
+
+  $('#guideRow').addEventListener('click', () => openSheet('guideSheet'));
+  $('#guideClose').addEventListener('click', () => closeSheet('guideSheet'));
 
   renderAll();
 })();

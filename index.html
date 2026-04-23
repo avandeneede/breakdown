@@ -7,7 +7,7 @@
 <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Répartition">
+<meta name="apple-mobile-web-app-title" content="Breakdown">
 <title>Répartition</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%23007aff'/><g fill='white' transform='translate(32 32)'><path d='M0 -18 A18 18 0 0 1 17.1 -5.6 L0 0 Z'/><path d='M17.1 -5.6 A18 18 0 0 1 -10.6 14.6 L0 0 Z' opacity='0.72'/><path d='M-10.6 14.6 A18 18 0 0 1 0 -18 L0 0 Z' opacity='0.88'/></g></svg>">
 <style>
@@ -194,6 +194,16 @@
   .muted { color: var(--muted); font-size: 13px; }
   .hide { display: none !important; }
   .check { color: var(--accent); font-size: 18px; font-weight: 600; width: 18px; text-align: center; }
+  .icon-btn {
+    width: 36px; height: 36px; border-radius: 9px;
+    background: transparent; border: none; cursor: pointer; padding: 0;
+    display: grid; place-items: center; color: var(--text);
+    font-family: inherit; transition: background .15s, transform .05s; flex-shrink: 0;
+  }
+  .icon-btn:active { transform: scale(0.94); background: var(--fill); }
+  .icon-btn.danger { color: var(--danger); }
+  .icon-btn.danger:hover { background: rgba(255,59,48,0.12); }
+  .icon-btn svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
   .footer { text-align: center; color: var(--muted); font-size: 12px; padding: 16px 0; }
 </style>
 </head>
@@ -212,7 +222,7 @@
     <div class="hero-label" id="amountLabel">—</div>
     <div class="hero-amount">
       <span class="cur" id="curSym">€</span>
-      <input id="budget" type="number" inputmode="decimal" step="50" min="0" placeholder="0">
+      <input id="budget" type="text" inputmode="decimal" autocomplete="off" placeholder="0">
     </div>
     <div class="progress"><div id="progressBar" style="width:0%"></div></div>
     <div class="stats">
@@ -377,7 +387,9 @@
         </ol>
         <div class="callout">⚠️ Importing <strong>replaces</strong> all current data. Export first to keep it.</div>
         <h3>Install on iPhone</h3>
-        <p>Safari → Share → <strong>"Add to Home Screen"</strong>.</p>`,
+        <p>Safari → Share → <strong>"Add to Home Screen"</strong>. The app opens fullscreen like a native app.</p>
+        <h3>Install on Android</h3>
+        <p>Chrome (or Edge, Samsung Internet) → menu <code>⋮</code> → <strong>"Install app"</strong> or <strong>"Add to Home screen"</strong>. Confirm. The app opens fullscreen like a native app.</p>`,
     },
     fr: {
       htmlLang: 'fr', appLocale: 'fr-FR',
@@ -437,7 +449,9 @@
         </ol>
         <div class="callout">⚠️ L'import <strong>remplace</strong> toutes les données actuelles. Exportez d'abord pour les conserver.</div>
         <h3>Installer sur iPhone</h3>
-        <p>Safari → Partager → <strong>« Sur l'écran d'accueil »</strong>.</p>`,
+        <p>Safari → Partager → <strong>« Sur l'écran d'accueil »</strong>. L'app s'ouvre en plein écran comme une app native.</p>
+        <h3>Installer sur Android</h3>
+        <p>Chrome (ou Edge, Samsung Internet) → menu <code>⋮</code> → <strong>« Installer l'application »</strong> ou <strong>« Ajouter à l'écran d'accueil »</strong>. Confirmez. L'app s'ouvre en plein écran comme une app native.</p>`,
     },
     nl: {
       htmlLang: 'nl', appLocale: 'nl-NL',
@@ -497,7 +511,9 @@
         </ol>
         <div class="callout">⚠️ Importeren <strong>vervangt</strong> alle huidige gegevens. Exporteer eerst om ze te behouden.</div>
         <h3>Installeren op iPhone</h3>
-        <p>Safari → Deel → <strong>"Op beginscherm"</strong>.</p>`,
+        <p>Safari → Deel → <strong>"Op beginscherm"</strong>. De app opent schermvullend als een native app.</p>
+        <h3>Installeren op Android</h3>
+        <p>Chrome (of Edge, Samsung Internet) → menu <code>⋮</code> → <strong>"App installeren"</strong> of <strong>"Aan beginscherm toevoegen"</strong>. Bevestig. De app opent schermvullend als een native app.</p>`,
     },
   };
   const LANGS = ['en', 'fr', 'nl'];
@@ -742,8 +758,8 @@
   const emojiToIcon = e => EMOJI_MAP[e] || ['wallet', 'blue'];
 
   // ============ State & Migration ============
-  const LS_KEY = 'repartition.v6';
-  const LS_OLD = ['repartition.v5', 'repartition.v4', 'repartition.v3', 'envelopes.v2', 'repartition.v1'];
+  const LS_KEY = 'breakdown.v6';
+  const LS_OLD = ['repartition.v6', 'repartition.v5', 'repartition.v4', 'repartition.v3', 'envelopes.v2', 'repartition.v1'];
   const $ = (s, r=document) => r.querySelector(s);
   const $$ = (s, r=document) => [...r.querySelectorAll(s)];
   const uid = () => 'k_' + Math.random().toString(36).slice(2, 10);
@@ -857,6 +873,23 @@
     return v.toLocaleString(tr().appLocale, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   };
   const fmtInt = n => Math.round(+n || 0).toLocaleString(tr().appLocale);
+  function fmtAmount(n) {
+    const v = +n || 0;
+    const isInt = Math.abs(v - Math.round(v)) < 0.005;
+    return v.toLocaleString(tr().appLocale, {
+      minimumFractionDigits: isInt ? 0 : 2,
+      maximumFractionDigits: 2,
+    });
+  }
+  function parseAmountInput(s) {
+    if (s == null) return 0;
+    s = String(s).trim().replace(/[\s']/g, '');
+    if (!s) return 0;
+    const m = s.match(/^(-?)(.*?)([.,])(\d{1,2})$/);
+    if (m) return +((m[1] || '') + m[2].replace(/[.,]/g, '') + '.' + m[4]) || 0;
+    return +s.replace(/[.,]/g, '') || 0;
+  }
+  const TRASH_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3M6 7v13a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7M10 11v7M14 11v7"/></svg>';
 
   // ============ Compute ============
   function compute(p) {
@@ -972,7 +1005,9 @@
     const p = current();
     const c = compute(p);
     $('#curSym').textContent = curSymOf(p.currency);
-    if (document.activeElement !== $('#budget')) $('#budget').value = p.amount || '';
+    if (document.activeElement !== $('#budget')) {
+      $('#budget').value = p.amount > 0 ? fmtAmount(p.amount) : '';
+    }
     $('#allocatedVal').textContent = fmt(c.allocated);
     $('#remainingVal').textContent = fmt(c.pool);
     $('#shortVal').textContent = fmt(c.totalShort);
@@ -1183,10 +1218,33 @@
   $('#moveUp').addEventListener('click', () => moveKey(-1));
   $('#moveDown').addEventListener('click', () => moveKey(1));
 
-  // ============ Budget input (step 50) ============
+  // ============ Budget input (thousands separator, arrow keys step 50) ============
+  $('#budget').addEventListener('focus', e => {
+    const v = current().amount;
+    e.target.value = v > 0 ? String(v) : '';
+    setTimeout(() => e.target.select(), 0);
+  });
+  $('#budget').addEventListener('blur', () => {
+    const v = current().amount;
+    $('#budget').value = v > 0 ? fmtAmount(v) : '';
+  });
   $('#budget').addEventListener('input', e => {
-    current().amount = +e.target.value || 0;
+    current().amount = parseAmountInput(e.target.value);
     save(); renderHero(); renderKeys();
+  });
+  $('#budget').addEventListener('keydown', e => {
+    if (e.key !== 'ArrowUp' && e.key !== 'ArrowDown') return;
+    e.preventDefault();
+    const p = current();
+    const delta = e.key === 'ArrowUp' ? 50 : -50;
+    const cur = +p.amount || 0;
+    const next = Math.max(0, delta > 0
+      ? Math.floor(cur / 50) * 50 + 50
+      : Math.ceil(cur / 50) * 50 - 50);
+    p.amount = next;
+    save();
+    e.target.value = String(next);
+    renderHero(); renderKeys();
   });
 
   // ============ Profile sheet ============
@@ -1205,7 +1263,7 @@
         </div>
         ${isActive ? '<span class="check">✓</span>' : ''}
         <button class="btn ghost" type="button" data-rename="${id}" style="padding:6px 10px;font-size:14px">${t('rename')}</button>
-        ${canDelete ? `<button class="btn ghost danger" type="button" data-delete="${id}" style="padding:6px 10px;font-size:14px">${t('del')}</button>` : ''}`;
+        ${canDelete ? `<button class="icon-btn danger" type="button" data-delete="${id}" aria-label="${esc(t('delete'))}" title="${esc(t('delete'))}">${TRASH_SVG}</button>` : ''}`;
       row.addEventListener('click', e => {
         if (e.target.closest('[data-rename], [data-delete]')) return;
         state.currentId = id; save(); renderAll(); applyStaticTexts(); closeSheet('profileSheet');
@@ -1302,7 +1360,7 @@
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `repartition-${new Date().toISOString().slice(0,10)}.json`;
+    a.download = `breakdown-${new Date().toISOString().slice(0,10)}.json`;
     document.body.appendChild(a); a.click(); a.remove();
     setTimeout(() => URL.revokeObjectURL(url), 1000);
   });

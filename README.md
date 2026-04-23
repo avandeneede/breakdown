@@ -1,8 +1,8 @@
-# repartition
+# breakdown
 
 App HTML qui décompose un montant selon une **clé de répartition** avec ordre de priorité. Pensée pour les chefs d'entreprise, comptables et particuliers qui veulent répartir revenus, budgets ou frais avec rigueur.
 
-**Live :** https://avandeneede.github.io/repartition/
+**Live :** https://avandeneede.github.io/breakdown/
 
 ## Fonctionnalités
 
@@ -17,7 +17,7 @@ App HTML qui décompose un montant selon une **clé de répartition** avec ordre
 - **12 couleurs** système iOS pour personnaliser chaque clé
 - **Multilingue** EN / FR / NL avec détection automatique (français par défaut si langue non supportée)
 - **Thème clair / sombre** automatique (suit le système)
-- **Saisie du montant par pas de 50** sur les flèches (clavier + spinner)
+- **Saisie du montant** avec séparateur de milliers suivant la locale, flèches ↑/↓ par pas de 50
 - **100 % local** — stockage `localStorage`, aucun serveur, aucune donnée envoyée
 - **Mobile-first** — s'ajoute à l'écran d'accueil iOS/Android comme une app native
 
@@ -27,7 +27,9 @@ App HTML qui décompose un montant selon une **clé de répartition** avec ordre
 
 ### 1. Définir le montant
 
-Tapez le montant à répartir en haut de l'écran. Les flèches ↑/↓ du clavier et les boutons spinner incrémentent par pas de **50**. Touchez le symbole de devise pour ouvrir le sélecteur (toutes les devises internationales).
+Tapez le montant à répartir en haut de l'écran. L'affichage utilise les séparateurs de milliers de votre langue (`5 000` en français, `5,000` en anglais, `5.000` en néerlandais). Les flèches ↑/↓ du clavier incrémentent par pas de **50**.
+
+Touchez le symbole de devise pour ouvrir le sélecteur (45+ devises).
 
 ### 2. Ajouter des clés
 
@@ -56,6 +58,8 @@ Pour réorganiser, ouvrez une clé et utilisez `↑ Monter` / `↓ Descendre`.
 
 En haut à droite, tapez sur le nom du profil. Créez un profil par cas d'usage. Chaque profil a ses **propres clés, montant et devise** — utile pour séparer « paie personnelle », « chiffre d'affaires », « budget projet X », « charges à partager entre associés », etc.
 
+Supprimez un profil via l'**icône corbeille rouge** dans la liste des profils (au moins un profil doit rester).
+
 ### 5. Langue et devise
 
 - **Langue** : détectée automatiquement depuis le système. Si la langue de l'appareil n'est pas supportée (EN / FR / NL), l'app utilise le **français par défaut**. Pour changer manuellement : **Données → Langue**.
@@ -70,7 +74,7 @@ Les données vivent uniquement dans le navigateur de l'appareil. Pour sauvegarde
 ### Exporter ses profils
 
 1. Section **Données** → **Exporter mes profils**
-2. Un fichier `repartition-YYYY-MM-DD.json` est téléchargé contenant tous vos profils, clés, devises et langue
+2. Un fichier `breakdown-YYYY-MM-DD.json` est téléchargé contenant tous vos profils, clés, devises et langue
 3. Sauvegardez-le (iCloud Drive, Dropbox, Google Drive, email…) ou envoyez-le vers un autre appareil via AirDrop
 
 ### Importer sur un autre appareil
@@ -90,6 +94,13 @@ Les données vivent uniquement dans le navigateur de l'appareil. Pour sauvegarde
 2. Bouton Partager → **« Sur l'écran d'accueil »**
 3. L'app s'ouvre ensuite en plein écran, comme une app native
 
+## Installer sur Android
+
+1. Ouvrez l'URL dans Chrome (ou Edge, Samsung Internet, Firefox)
+2. Menu `⋮` → **« Installer l'application »** ou **« Ajouter à l'écran d'accueil »**
+3. Confirmez le nom de l'app
+4. L'app s'ouvre ensuite en plein écran, comme une app native
+
 ## Utilisation locale
 
 Ouvrez simplement `index.html` dans un navigateur — aucune installation requise.
@@ -97,3 +108,9 @@ Ouvrez simplement `index.html` dans un navigateur — aucune installation requis
 ## Activer GitHub Pages
 
 Settings → Pages → Source : branch `main`, dossier `/` (root) → Save.
+
+---
+
+## Historique
+
+L'app s'appelait auparavant **repartition** (URL `avandeneede.github.io/repartition/`). GitHub redirige automatiquement l'ancienne URL vers la nouvelle. Les données `localStorage` existantes sont migrées automatiquement (clé `repartition.v6` → `breakdown.v6`).

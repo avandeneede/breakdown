@@ -247,6 +247,8 @@
     <div class="row" id="importRow"><div class="row-main"><div class="row-title" id="importRowTitle">—</div><div class="row-sub" id="importRowSub">—</div></div><span class="chevron">›</span></div>
     <div class="row" id="currencyRow"><div class="row-main"><div class="row-title" id="currencyRowTitle">—</div><div class="row-sub" id="currencyRowSub">—</div></div><span class="chevron">›</span></div>
     <div class="row" id="langRow"><div class="row-main"><div class="row-title" id="langRowTitle">—</div><div class="row-sub" id="langRowSub">—</div></div><span class="chevron">›</span></div>
+    <div class="row" id="demoRow"><div class="row-main"><div class="row-title" id="demoRowTitle">—</div><div class="row-sub" id="demoRowSub">—</div></div><span class="chevron">›</span></div>
+    <div class="row" id="resetRow"><div class="row-main"><div class="row-title" id="resetRowTitle" style="color:var(--danger)">—</div><div class="row-sub" id="resetRowSub">—</div></div><span class="chevron">›</span></div>
   </div>
   <input id="importFile" type="file" accept="application/json" class="hide">
 
@@ -365,8 +367,18 @@
       dlgImport: 'Import this file?', dlgImportMsg: 'All current data will be replaced.',
       dlgImportBtn: 'Import', dlgImportFailed: 'Import failed',
       guideGot: 'Got it',
+      demoRowTitle: 'Load demo data',
+      demoRowSub: 'Replace with a sample distribution',
+      resetRowTitle: 'Reset app',
+      resetRowSub: 'Clear all profiles and keys',
+      dlgDemo: 'Load demo data?',
+      dlgDemoMsg: 'All current data will be replaced with a sample distribution.',
+      dlgDemoBtn: 'Load',
+      dlgReset: 'Reset app?',
+      dlgResetMsg: 'All profiles and keys will be deleted. This action cannot be undone.',
+      dlgResetBtn: 'Reset',
       defaultProfileName: 'Default',
-      defaultKeys: { housing: 'Rent', groceries: 'Supplies', transport: 'Transport', dining: 'Meals', savings: 'Reserve', leisure: 'Marketing' },
+      defaultKeys: { rent: 'Rent', salaries: 'Salaries', supplies: 'Supplies', marketing: 'Marketing', reserve: 'Reserve' },
       guideHtml: `
         <p>This app breaks down an amount according to a <strong>distribution key</strong>. Each line is a fixed amount (<code>€</code>), a percentage of the total, or a percentage of what remains after higher-priority keys.</p>
         <h3>1. Set the amount</h3>
@@ -427,8 +439,18 @@
       dlgImport: 'Importer ce fichier ?', dlgImportMsg: 'Toutes les données actuelles seront remplacées.',
       dlgImportBtn: 'Importer', dlgImportFailed: 'Import échoué',
       guideGot: 'Compris',
+      demoRowTitle: 'Charger les données de démo',
+      demoRowSub: 'Remplacer par un exemple de répartition',
+      resetRowTitle: 'Réinitialiser l\'app',
+      resetRowSub: 'Effacer tous les profils et clés',
+      dlgDemo: 'Charger les données de démo ?',
+      dlgDemoMsg: 'Toutes les données actuelles seront remplacées par un exemple de répartition.',
+      dlgDemoBtn: 'Charger',
+      dlgReset: 'Réinitialiser l\'app ?',
+      dlgResetMsg: 'Tous les profils et clés seront supprimés. Cette action est irréversible.',
+      dlgResetBtn: 'Réinitialiser',
       defaultProfileName: 'Défaut',
-      defaultKeys: { housing: 'Loyer', groceries: 'Fournitures', transport: 'Transport', dining: 'Repas', savings: 'Réserve', leisure: 'Marketing' },
+      defaultKeys: { rent: 'Loyer', salaries: 'Salaires', supplies: 'Fournitures', marketing: 'Marketing', reserve: 'Réserve' },
       guideHtml: `
         <p>Cette app décompose un montant selon une <strong>clé de répartition</strong>. Chaque ligne est soit un montant fixe (<code>€</code>), soit un pourcentage du total, soit un pourcentage de ce qui reste après les clés de priorité supérieure.</p>
         <h3>1. Définir le montant</h3>
@@ -489,8 +511,18 @@
       dlgImport: 'Dit bestand importeren?', dlgImportMsg: 'Alle huidige gegevens worden vervangen.',
       dlgImportBtn: 'Importeren', dlgImportFailed: 'Import mislukt',
       guideGot: 'Begrepen',
+      demoRowTitle: 'Demo gegevens laden',
+      demoRowSub: 'Vervangen door een voorbeeldverdeling',
+      resetRowTitle: 'App resetten',
+      resetRowSub: 'Alle profielen en sleutels wissen',
+      dlgDemo: 'Demo gegevens laden?',
+      dlgDemoMsg: 'Alle huidige gegevens worden vervangen door een voorbeeldverdeling.',
+      dlgDemoBtn: 'Laden',
+      dlgReset: 'App resetten?',
+      dlgResetMsg: 'Alle profielen en sleutels worden verwijderd. Deze actie kan niet ongedaan gemaakt worden.',
+      dlgResetBtn: 'Resetten',
       defaultProfileName: 'Standaard',
-      defaultKeys: { housing: 'Huur', groceries: 'Benodigdheden', transport: 'Transport', dining: 'Maaltijden', savings: 'Reserve', leisure: 'Marketing' },
+      defaultKeys: { rent: 'Huur', salaries: 'Lonen', supplies: 'Benodigdheden', marketing: 'Marketing', reserve: 'Reserve' },
       guideHtml: `
         <p>Deze app verdeelt een bedrag volgens een <strong>verdeelsleutel</strong>. Elke regel is een vast bedrag (<code>€</code>), een percentage van het totaal, of een percentage van wat overblijft na sleutels met hogere prioriteit.</p>
         <h3>1. Bedrag instellen</h3>
@@ -725,6 +757,8 @@
     up:    '<svg viewBox="0 0 24 24"><path d="M12 20V6m0 0L7 11m5-5l5 5M5 4h14"/></svg>',
     globe: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.8 3 2.8 15 0 18M12 3c-2.8 3-2.8 15 0 18"/></svg>',
     coin:  '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 7v10"/></svg>',
+    sparkle: '<svg viewBox="0 0 24 24"><path d="M12 4v4M12 16v4M4 12h4M16 12h4M6.5 6.5l2.5 2.5M15 15l2.5 2.5M6.5 17.5l2.5-2.5M15 9l2.5-2.5"/></svg>',
+    refresh: '<svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 13-6L21 8M20 12a8 8 0 0 1-13 6L3 16M21 4v4h-4M3 20v-4h4"/></svg>',
   };
 
   const EMOJI_MAP = {
@@ -776,8 +810,8 @@
     return 'amount';
   }
 
-  function defaultState() {
-    const lang = detectLang();
+  function demoState(lang) {
+    lang = lang || detectLang();
     const tr = T[lang];
     return {
       v: 6, lang,
@@ -786,16 +820,28 @@
         p_default: {
           name: tr.defaultProfileName, currency: 'EUR', amount: 5000,
           keys: [
-            { id: uid(), icon: 'house',     color: 'blue',   name: tr.defaultKeys.housing,   type: 'amount',        value: 1800 },
-            { id: uid(), icon: 'people',    color: 'indigo', name: tr.defaultKeys.savings + ' / ' + tr.defaultKeys.groceries, type: 'percent-total', value: 40 },
-            { id: uid(), icon: 'briefcase', color: 'gray',   name: tr.defaultKeys.transport, type: 'amount',        value: 300 },
-            { id: uid(), icon: 'megaphone', color: 'pink',   name: tr.defaultKeys.leisure,   type: 'amount',        value: 200 },
-            { id: uid(), icon: 'piggy',     color: 'green',  name: tr.defaultKeys.savings,   type: 'percent-rest',  value: 30 },
+            { id: uid(), icon: 'house',     color: 'blue',   i18nKey: 'rent',      name: tr.defaultKeys.rent,      type: 'amount',        value: 1800 },
+            { id: uid(), icon: 'people',    color: 'indigo', i18nKey: 'salaries',  name: tr.defaultKeys.salaries,  type: 'percent-total', value: 40 },
+            { id: uid(), icon: 'briefcase', color: 'gray',   i18nKey: 'supplies',  name: tr.defaultKeys.supplies,  type: 'amount',        value: 300 },
+            { id: uid(), icon: 'megaphone', color: 'pink',   i18nKey: 'marketing', name: tr.defaultKeys.marketing, type: 'amount',        value: 200 },
+            { id: uid(), icon: 'piggy',     color: 'green',  i18nKey: 'reserve',   name: tr.defaultKeys.reserve,   type: 'percent-rest',  value: 30 },
           ],
         },
       },
     };
   }
+  function emptyState(lang) {
+    lang = lang || detectLang();
+    const tr = T[lang];
+    return {
+      v: 6, lang,
+      currentId: 'p_default',
+      profiles: {
+        p_default: { name: tr.defaultProfileName, currency: 'EUR', amount: 0, keys: [] },
+      },
+    };
+  }
+  const defaultState = () => demoState();
 
   function migrate(raw) {
     if (!raw) return null;
@@ -827,13 +873,15 @@
           icon = icon || ic; color = color || co;
         }
         if (!ICONS[icon]) icon = 'wallet';
-        return {
+        const out = {
           id: k.id || uid(),
           icon, color,
           name: k.name || '',
           type: normalizeType(k.type),
           value: +k.value || 0,
         };
+        if (k.i18nKey) out.i18nKey = k.i18nKey;
+        return out;
       });
     });
     if (!s.profiles[s.currentId]) s.currentId = Object.keys(s.profiles)[0] || 'p_default';
@@ -1037,6 +1085,10 @@
     $('#currencyRowTitle').textContent = t('currencyRowTitle');
     $('#langRowTitle').textContent = t('langRowTitle');
     $('#langRowSub').textContent = LANG_NAMES[state.lang];
+    $('#demoRowTitle').textContent = t('demoRowTitle');
+    $('#demoRowSub').textContent = t('demoRowSub');
+    $('#resetRowTitle').textContent = t('resetRowTitle');
+    $('#resetRowSub').textContent = t('resetRowSub');
     const c = current();
     $('#currencyRowSub').textContent = `${c.currency} · ${curSymOf(c.currency)} · ${currencyName(c.currency, tr().appLocale)}`;
     $('#footerText').textContent = t('footer');
@@ -1084,6 +1136,15 @@
     $('#currencyRowSub').textContent = `${p.currency} · ${curSymOf(p.currency)} · ${currencyName(p.currency, tr().appLocale)}`;
   }
 
+  function displayName(k) {
+    if (k && k.i18nKey) {
+      const cur = tr().defaultKeys?.[k.i18nKey];
+      const anyLangMatch = Object.values(T).some(lang => lang.defaultKeys?.[k.i18nKey] === k.name);
+      if (cur && (anyLangMatch || !k.name)) return cur;
+    }
+    return k.name || t('key');
+  }
+
   function settingText(k, p) {
     const sym = curSymOf(p.currency);
     if (k.type === 'percent-total') return `${fmt(k.value)} % · ${t('pctOfTotal')}`;
@@ -1111,7 +1172,7 @@
         <div class="row-rank">${i + 1}</div>
         <div class="icon-tile" style="--tile-bg:${colorHex(k.color)}">${svgIcon(k.icon)}</div>
         <div class="row-main">
-          <div class="row-title">${esc(k.name || t('key'))}</div>
+          <div class="row-title">${esc(displayName(k))}</div>
           <div class="row-sub">${settingText(k, p)}</div>
         </div>
         <div class="row-right">
@@ -1132,6 +1193,8 @@
   $('#importRow').prepend(Object.assign(document.createElement('div'), { className: 'row-action-icon', innerHTML: ACTION_SVG.up }));
   $('#currencyRow').prepend(Object.assign(document.createElement('div'), { className: 'row-action-icon', innerHTML: ACTION_SVG.coin }));
   $('#langRow').prepend(Object.assign(document.createElement('div'), { className: 'row-action-icon', innerHTML: ACTION_SVG.globe }));
+  $('#demoRow').prepend(Object.assign(document.createElement('div'), { className: 'row-action-icon', innerHTML: ACTION_SVG.sparkle }));
+  $('#resetRow').prepend(Object.assign(document.createElement('div'), { className: 'row-action-icon', innerHTML: ACTION_SVG.refresh }));
 
   // ============ Key sheet ============
   let editingId = null;
@@ -1224,7 +1287,7 @@
     draftColor = COLOR_MAP[k.color] ? k.color : 'blue';
     updateIconBtn(); updateColorActive(); updateIconGridActive();
     iconGrid.classList.add('hide');
-    $('#keyName').value = k.name;
+    $('#keyName').value = isNew ? k.name : displayName(k);
     $('#keyValue').value = k.value || '';
     $('#typeAbs').textContent = curSymOf(p.currency);
     setType(k.type);
@@ -1238,13 +1301,20 @@
 
   $('#keySave').addEventListener('click', () => {
     const p = current();
+    const existing = editingId ? p.keys.find(x => x.id === editingId) : null;
+    const typed = ($('#keyName').value || '').trim();
     const draft = {
       id: editingId || uid(),
       icon: draftIcon, color: draftColor,
-      name: ($('#keyName').value || '').trim() || t('key'),
+      name: typed || t('key'),
       type: getType(),
       value: +$('#keyValue').value || 0,
     };
+    // Preserve i18nKey if the user didn't rename a default key
+    if (existing && existing.i18nKey && typed === displayName(existing)) {
+      draft.i18nKey = existing.i18nKey;
+      draft.name = existing.name; // keep original stored name so translation logic keeps working
+    }
     if (editingId) {
       const i = p.keys.findIndex(x => x.id === editingId);
       if (i >= 0) p.keys[i] = draft; else p.keys.push(draft);
@@ -1450,6 +1520,26 @@
 
   $('#guideRow').addEventListener('click', () => openSheet('guideSheet'));
   $('#guideClose').addEventListener('click', () => closeSheet('guideSheet'));
+
+  $('#demoRow').addEventListener('click', async () => {
+    const ok = await dialog({
+      title: t('dlgDemo'), message: t('dlgDemoMsg'),
+      okText: t('dlgDemoBtn'), okStyle: 'primary',
+    });
+    if (!ok) return;
+    state = demoState(state.lang);
+    save(); applyStaticTexts(); renderAll();
+  });
+
+  $('#resetRow').addEventListener('click', async () => {
+    const ok = await dialog({
+      title: t('dlgReset'), message: t('dlgResetMsg'),
+      okText: t('dlgResetBtn'), okStyle: 'danger primary',
+    });
+    if (!ok) return;
+    state = emptyState(state.lang);
+    save(); applyStaticTexts(); renderAll();
+  });
 
   // ============ Boot ============
   applyStaticTexts();

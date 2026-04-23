@@ -15,7 +15,7 @@ App HTML qui décompose un montant selon une **clé de répartition** avec ordre
 - **~45 devises** internationales (EUR, USD, GBP, CHF, JPY, CNY, CAD, AUD, INR, BRL, MXN, ZAR, AED, etc.)
 - **100+ icônes business** (finance, équipe, documents, tech, immobilier, transport, énergie, industrie, services…)
 - **12 couleurs** système iOS pour personnaliser chaque clé
-- **Multilingue** EN / FR / NL avec détection automatique (français par défaut si langue non supportée)
+- **Multilingue** EN / FR / NL avec détection automatique (français par défaut si langue non supportée) — les clés par défaut se retraduisent automatiquement quand vous changez de langue, tant que vous ne les avez pas renommées
 - **Thème clair / sombre** automatique (suit le système)
 - **Saisie du montant** avec séparateur de milliers suivant la locale, flèches ↑/↓ par pas de 50
 - **100 % local** — stockage `localStorage`, aucun serveur, aucune donnée envoyée
@@ -64,6 +64,14 @@ Supprimez un profil via l'**icône corbeille rouge** dans la liste des profils (
 
 - **Langue** : détectée automatiquement depuis le système. Si la langue de l'appareil n'est pas supportée (EN / FR / NL), l'app utilise le **français par défaut**. Pour changer manuellement : **Données → Langue**.
 - **Devise** : par profil. Touchez le symbole à gauche du montant ou passez par **Données → Devise**.
+- Les **clés par défaut** (Loyer, Salaires, Fournitures, Marketing, Réserve) se retraduisent automatiquement quand vous changez de langue. Dès que vous renommez une clé, le nom personnalisé est préservé.
+
+### 6. Réinitialisation et démo
+
+- **Données → Charger les données de démo** : remplace toutes les données actuelles par un exemple de répartition (Loyer, Salaires, Fournitures, Marketing, Réserve).
+- **Données → Réinitialiser l'app** (rouge) : supprime tous les profils et clés, remet un profil vide.
+
+Les deux actions demandent une confirmation avant d'effacer quoi que ce soit.
 
 ---
 

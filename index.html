@@ -13,37 +13,19 @@
 <style>
   :root {
     color-scheme: light dark;
-    --bg: #f2f2f7;
-    --bg-elevated: #ffffff;
-    --card: #ffffff;
-    --text: #000000;
-    --text-2: rgba(60,60,67,0.85);
-    --muted: #8e8e93;
+    --bg: #f2f2f7; --bg-elevated: #ffffff; --card: #ffffff;
+    --text: #000000; --text-2: rgba(60,60,67,0.85); --muted: #8e8e93;
     --separator: rgba(60,60,67,0.16);
-    --accent: #007aff;
-    --success: #34c759;
-    --warning: #ff9500;
-    --danger: #ff3b30;
-    --fill: rgba(118,118,128,0.12);
-    --fill-2: rgba(118,118,128,0.08);
-    --fill-3: rgba(118,118,128,0.20);
+    --accent: #007aff; --success: #34c759; --warning: #ff9500; --danger: #ff3b30;
+    --fill: rgba(118,118,128,0.12); --fill-2: rgba(118,118,128,0.08); --fill-3: rgba(118,118,128,0.20);
   }
   @media (prefers-color-scheme: dark) {
     :root {
-      --bg: #000000;
-      --bg-elevated: #1c1c1e;
-      --card: #1c1c1e;
-      --text: #ffffff;
-      --text-2: rgba(235,235,245,0.85);
-      --muted: #8e8e93;
+      --bg: #000000; --bg-elevated: #1c1c1e; --card: #1c1c1e;
+      --text: #ffffff; --text-2: rgba(235,235,245,0.85); --muted: #8e8e93;
       --separator: rgba(84,84,88,0.60);
-      --accent: #0a84ff;
-      --success: #30d158;
-      --warning: #ff9f0a;
-      --danger: #ff453a;
-      --fill: rgba(118,118,128,0.24);
-      --fill-2: rgba(118,118,128,0.18);
-      --fill-3: rgba(118,118,128,0.36);
+      --accent: #0a84ff; --success: #30d158; --warning: #ff9f0a; --danger: #ff453a;
+      --fill: rgba(118,118,128,0.24); --fill-2: rgba(118,118,128,0.18); --fill-3: rgba(118,118,128,0.36);
     }
   }
 
@@ -54,210 +36,90 @@
     font: 17px/1.35 -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro", "Segoe UI", Roboto, system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     padding: env(safe-area-inset-top) 0 env(safe-area-inset-bottom);
-    min-height: 100vh;
-    overscroll-behavior-y: contain;
+    min-height: 100vh; overscroll-behavior-y: contain;
   }
-
   .wrap { max-width: 560px; margin: 0 auto; padding: 8px 16px 48px; }
 
-  .nav {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 12px 4px 16px;
-  }
+  .nav { display: flex; justify-content: space-between; align-items: center; padding: 12px 4px 16px; }
   .nav .title { font-size: 34px; font-weight: 700; letter-spacing: -0.035em; }
   .nav .profile {
     background: none; border: none; color: var(--accent);
-    font-size: 17px; font-weight: 400; cursor: pointer;
-    display: inline-flex; align-items: center; gap: 4px;
-    padding: 6px 8px;
-    font-family: inherit;
+    font-size: 17px; cursor: pointer; font-family: inherit;
+    display: inline-flex; align-items: center; gap: 4px; padding: 6px 8px;
   }
   .nav .profile:active { opacity: 0.6; }
 
-  .hero {
-    background: var(--card);
-    border-radius: 16px;
-    padding: 20px 20px 16px;
-    margin-bottom: 28px;
-  }
-  .hero-label {
-    font-size: 13px; color: var(--muted);
-    text-transform: uppercase; letter-spacing: 0.05em;
-    font-weight: 500; margin-bottom: 6px;
-  }
-  .hero-amount {
-    display: flex; align-items: baseline; gap: 6px;
-    font-size: 40px; font-weight: 700; letter-spacing: -0.03em;
-    line-height: 1.1;
-  }
+  .hero { background: var(--card); border-radius: 16px; padding: 20px 20px 16px; margin-bottom: 28px; }
+  .hero-label { font-size: 13px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 500; margin-bottom: 6px; }
+  .hero-amount { display: flex; align-items: baseline; gap: 6px; font-size: 40px; font-weight: 700; letter-spacing: -0.03em; line-height: 1.1; }
   .hero-amount .cur {
-    color: var(--muted); font-weight: 500; cursor: pointer;
-    min-width: 0.6em; text-align: center;
-    user-select: none;
+    color: var(--accent); font-weight: 500; cursor: pointer;
+    min-width: 0.6em; text-align: center; user-select: none;
+    padding: 0 4px; border-radius: 6px;
   }
-  .hero-amount input {
-    all: unset; flex: 1; min-width: 0;
-    font: inherit; color: inherit;
-    font-variant-numeric: tabular-nums;
-  }
+  .hero-amount .cur:active { background: var(--fill); }
+  .hero-amount input { all: unset; flex: 1; min-width: 0; font: inherit; color: inherit; font-variant-numeric: tabular-nums; }
   .hero-amount input::placeholder { color: var(--muted); opacity: 0.6; }
 
-  .progress {
-    height: 6px; background: var(--fill);
-    border-radius: 3px; overflow: hidden;
-    margin-top: 18px;
-  }
-  .progress > div {
-    height: 100%; background: var(--accent);
-    border-radius: 3px;
-    transition: width .3s cubic-bezier(.4,0,.2,1), background .2s;
-  }
+  .progress { height: 6px; background: var(--fill); border-radius: 3px; overflow: hidden; margin-top: 18px; }
+  .progress > div { height: 100%; background: var(--accent); border-radius: 3px; transition: width .3s cubic-bezier(.4,0,.2,1), background .2s; }
 
-  .stats {
-    display: flex; gap: 14px; margin-top: 16px;
-    padding-top: 14px; border-top: 0.5px solid var(--separator);
-  }
+  .stats { display: flex; gap: 14px; margin-top: 16px; padding-top: 14px; border-top: 0.5px solid var(--separator); }
   .stat { flex: 1; min-width: 0; }
-  .stat-label {
-    font-size: 11px; color: var(--muted);
-    text-transform: uppercase; letter-spacing: 0.06em;
-    font-weight: 500;
-  }
-  .stat-value {
-    font-size: 17px; font-weight: 600;
-    margin-top: 2px;
-    font-variant-numeric: tabular-nums;
-  }
+  .stat-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 500; }
+  .stat-value { font-size: 17px; font-weight: 600; margin-top: 2px; font-variant-numeric: tabular-nums; }
   .stat.danger .stat-value { color: var(--danger); }
   .stat.success .stat-value { color: var(--success); }
 
   .section-head {
     display: flex; justify-content: space-between; align-items: center;
-    font-size: 13px; color: var(--muted);
-    text-transform: uppercase; letter-spacing: 0.06em;
-    font-weight: 500;
+    font-size: 13px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 500;
     padding: 4px 16px 8px;
   }
-  .section-head button {
-    background: none; border: none; color: var(--accent);
-    font-size: 22px; line-height: 1; padding: 4px 8px;
-    cursor: pointer; border-radius: 50%;
-    font-family: inherit;
-  }
+  .section-head button { background: none; border: none; color: var(--accent); font-size: 22px; line-height: 1; padding: 4px 8px; cursor: pointer; border-radius: 50%; font-family: inherit; }
   .section-head button:active { background: var(--fill); }
 
-  .group {
-    background: var(--card);
-    border-radius: 14px;
-    overflow: hidden;
-    margin-bottom: 28px;
-  }
+  .group { background: var(--card); border-radius: 14px; overflow: hidden; margin-bottom: 28px; }
 
-  .row {
-    display: flex; align-items: center; gap: 12px;
-    padding: 12px 16px;
-    position: relative;
-    cursor: pointer;
-    background: var(--card);
-    transition: background .15s;
-  }
-  .row::after {
-    content: ''; position: absolute;
-    left: 16px; right: 0; bottom: 0;
-    border-bottom: 0.5px solid var(--separator);
-  }
+  .row { display: flex; align-items: center; gap: 12px; padding: 12px 16px; position: relative; cursor: pointer; background: var(--card); transition: background .15s; }
+  .row::after { content: ''; position: absolute; left: 16px; right: 0; bottom: 0; border-bottom: 0.5px solid var(--separator); }
   .row:last-child::after { display: none; }
   .row:active { background: var(--fill-2); }
 
-  .row-rank {
-    width: 22px; text-align: center;
-    font-size: 13px; font-weight: 600;
-    color: var(--muted);
-    font-variant-numeric: tabular-nums;
-    flex-shrink: 0;
-  }
-  .icon-tile {
-    width: 34px; height: 34px; border-radius: 9px;
-    display: grid; place-items: center;
-    flex-shrink: 0;
-    background: var(--tile-bg, #8e8e93);
-    color: white;
-  }
-  .icon-tile svg {
-    width: 20px; height: 20px;
-    fill: none; stroke: currentColor;
-    stroke-width: 1.75;
-    stroke-linecap: round; stroke-linejoin: round;
-  }
+  .row-rank { width: 22px; text-align: center; font-size: 13px; font-weight: 600; color: var(--muted); font-variant-numeric: tabular-nums; flex-shrink: 0; }
+  .icon-tile { width: 34px; height: 34px; border-radius: 9px; display: grid; place-items: center; flex-shrink: 0; background: var(--tile-bg, #8e8e93); color: white; }
+  .icon-tile svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
 
   .row-main { flex: 1; min-width: 0; }
-  .row-title {
-    font-size: 16px; font-weight: 500;
-    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-  }
-  .row-sub {
-    font-size: 13px; color: var(--muted);
-    margin-top: 2px;
-    font-variant-numeric: tabular-nums;
-  }
+  .row-title { font-size: 16px; font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .row-sub { font-size: 13px; color: var(--muted); margin-top: 2px; font-variant-numeric: tabular-nums; }
   .row-right { text-align: right; flex-shrink: 0; min-width: 0; }
-  .row-amount {
-    font-size: 16px; font-weight: 600;
-    font-variant-numeric: tabular-nums;
-  }
+  .row-amount { font-size: 16px; font-weight: 600; font-variant-numeric: tabular-nums; }
   .row-amount.short { color: var(--warning); }
   .row-amount.zero { color: var(--muted); }
-  .row-meta {
-    font-size: 12px; color: var(--muted);
-    margin-top: 2px;
-    font-variant-numeric: tabular-nums;
-  }
+  .row-meta { font-size: 12px; color: var(--muted); margin-top: 2px; font-variant-numeric: tabular-nums; }
   .row-meta.short { color: var(--warning); }
-  .chevron {
-    color: var(--muted); opacity: 0.45;
-    font-size: 18px; line-height: 1; margin-left: 4px;
-  }
+  .chevron { color: var(--muted); opacity: 0.45; font-size: 18px; line-height: 1; margin-left: 4px; }
 
-  .row-action-icon {
-    width: 26px; height: 26px; border-radius: 7px;
-    background: var(--fill); color: var(--text-2);
-    display: grid; place-items: center;
-    flex-shrink: 0;
-  }
-  .row-action-icon svg {
-    width: 16px; height: 16px;
-    fill: none; stroke: currentColor;
-    stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round;
-  }
+  .row-action-icon { width: 26px; height: 26px; border-radius: 7px; background: var(--fill); color: var(--text-2); display: grid; place-items: center; flex-shrink: 0; }
+  .row-action-icon svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
 
-  .group-empty {
-    padding: 28px 20px; text-align: center;
-    color: var(--muted); font-size: 15px;
-  }
+  .group-empty { padding: 28px 20px; text-align: center; color: var(--muted); font-size: 15px; }
 
   .input {
-    width: 100%;
-    background: var(--fill); border: none;
-    border-radius: 10px;
-    padding: 12px 14px;
-    color: var(--text); font-size: 17px;
-    outline: none;
-    font-family: inherit;
-    font-variant-numeric: tabular-nums;
-    transition: background .15s;
+    width: 100%; background: var(--fill); border: none;
+    border-radius: 10px; padding: 12px 14px;
+    color: var(--text); font-size: 17px; outline: none;
+    font-family: inherit; font-variant-numeric: tabular-nums; transition: background .15s;
   }
   .input:focus { background: var(--fill-2); }
   .input::placeholder { color: var(--muted); opacity: 0.7; }
 
   .btn {
-    font-family: inherit;
-    font-size: 17px; font-weight: 500;
-    cursor: pointer;
+    font-family: inherit; font-size: 17px; font-weight: 500; cursor: pointer;
     background: var(--fill); color: var(--text);
-    border: none; border-radius: 12px;
-    padding: 12px 18px;
-    transition: background .15s, transform .05s, opacity .15s;
-    text-align: center;
+    border: none; border-radius: 12px; padding: 12px 18px;
+    transition: background .15s, transform .05s; text-align: center;
   }
   .btn:active { transform: scale(0.98); }
   .btn:hover { background: var(--fill-2); }
@@ -269,46 +131,21 @@
   .btn-row { display: flex; gap: 10px; }
   .btn-row .btn { flex: 1; }
 
-  .segmented {
-    display: inline-flex; background: var(--fill);
-    border-radius: 9px; padding: 2px; gap: 2px;
-  }
+  .segmented { display: inline-flex; background: var(--fill); border-radius: 9px; padding: 2px; gap: 2px; }
   .segmented button {
     background: transparent; border: none; cursor: pointer;
     padding: 7px 14px; font: inherit; font-size: 14px; font-weight: 500;
-    border-radius: 7px; color: var(--text-2);
-    min-width: 52px;
-    font-family: inherit;
+    border-radius: 7px; color: var(--text-2); min-width: 52px; font-family: inherit;
   }
-  .segmented button.active {
-    background: var(--bg-elevated); color: var(--text);
-    box-shadow: 0 2px 6px rgba(0,0,0,0.08), 0 0 0 0.5px rgba(0,0,0,0.04);
-    font-weight: 600;
-  }
-  @media (prefers-color-scheme: dark) {
-    .segmented button.active {
-      background: #48484a;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-    }
-  }
+  .segmented button.active { background: var(--bg-elevated); color: var(--text); box-shadow: 0 2px 6px rgba(0,0,0,0.08), 0 0 0 0.5px rgba(0,0,0,0.04); font-weight: 600; }
+  @media (prefers-color-scheme: dark) { .segmented button.active { background: #48484a; box-shadow: 0 2px 6px rgba(0,0,0,0.3); } }
 
-  .sheet-backdrop {
-    position: fixed; inset: 0;
-    background: rgba(0,0,0,0);
-    z-index: 100;
-    pointer-events: none;
-    transition: background .25s;
-  }
-  .sheet-backdrop.open {
-    background: rgba(0,0,0,0.4);
-    pointer-events: auto;
-  }
+  .sheet-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0); z-index: 100; pointer-events: none; transition: background .25s; }
+  .sheet-backdrop.open { background: rgba(0,0,0,0.4); pointer-events: auto; }
   #dialogSheet { z-index: 200; }
   .sheet {
-    position: fixed;
-    left: 0; right: 0; bottom: 0;
-    background: var(--bg);
-    border-radius: 14px 14px 0 0;
+    position: fixed; left: 0; right: 0; bottom: 0;
+    background: var(--bg); border-radius: 14px 14px 0 0;
     padding: 8px 20px calc(env(safe-area-inset-bottom) + 24px);
     max-width: 560px; margin: 0 auto;
     max-height: 90vh; overflow-y: auto;
@@ -316,142 +153,58 @@
     transition: transform .3s cubic-bezier(.32,.72,.28,1);
   }
   .sheet-backdrop.open .sheet { transform: translateY(0); }
-  .sheet-handle {
-    width: 36px; height: 5px;
-    background: var(--muted); opacity: 0.45;
-    border-radius: 3px;
-    margin: 6px auto 16px;
-  }
-  .sheet h2 {
-    font-size: 20px; font-weight: 600;
-    margin: 0 0 18px;
-    letter-spacing: -0.02em;
-  }
-  .sheet h3 {
-    font-size: 15px; font-weight: 600;
-    margin: 22px 0 6px;
-    letter-spacing: -0.01em;
-  }
+  .sheet-handle { width: 36px; height: 5px; background: var(--muted); opacity: 0.45; border-radius: 3px; margin: 6px auto 16px; }
+  .sheet h2 { font-size: 20px; font-weight: 600; margin: 0 0 18px; letter-spacing: -0.02em; }
+  .sheet h3 { font-size: 15px; font-weight: 600; margin: 22px 0 6px; letter-spacing: -0.01em; }
   .sheet p { margin: 0 0 10px; color: var(--text-2); font-size: 15px; line-height: 1.45; }
   .sheet ol, .sheet ul { padding-left: 22px; color: var(--text-2); font-size: 15px; line-height: 1.5; }
   .sheet li { margin-bottom: 6px; }
-  .sheet code {
-    font-family: "SF Mono", Menlo, monospace; font-size: 13px;
-    background: var(--fill); padding: 1px 6px; border-radius: 5px;
-  }
-  .callout {
-    background: var(--fill);
-    border-radius: 10px;
-    padding: 12px 14px;
-    font-size: 14px; color: var(--text-2);
-    margin: 12px 0;
-  }
-  .field-label {
-    font-size: 13px; color: var(--muted);
-    font-weight: 500; margin: 18px 0 8px;
-    text-transform: uppercase; letter-spacing: 0.05em;
-  }
+  .sheet code { font-family: "SF Mono", Menlo, monospace; font-size: 13px; background: var(--fill); padding: 1px 6px; border-radius: 5px; }
+  .callout { background: var(--fill); border-radius: 10px; padding: 12px 14px; font-size: 14px; color: var(--text-2); margin: 12px 0; }
+  .field-label { font-size: 13px; color: var(--muted); font-weight: 500; margin: 18px 0 8px; text-transform: uppercase; letter-spacing: 0.05em; }
   .field-label:first-child { margin-top: 0; }
 
   .icon-picker-btn {
-    width: 48px; height: 48px;
-    border-radius: 11px;
-    border: none;
-    display: grid; place-items: center;
-    flex-shrink: 0;
-    cursor: pointer;
-    background: var(--tile-bg, #007aff);
-    color: white;
-    transition: transform .1s;
+    width: 48px; height: 48px; border-radius: 11px; border: none;
+    display: grid; place-items: center; flex-shrink: 0; cursor: pointer;
+    background: var(--tile-bg, #007aff); color: white; transition: transform .1s;
   }
   .icon-picker-btn:active { transform: scale(0.94); }
-  .icon-picker-btn svg {
-    width: 26px; height: 26px;
-    fill: none; stroke: currentColor;
-    stroke-width: 1.75;
-    stroke-linecap: round; stroke-linejoin: round;
-  }
+  .icon-picker-btn svg { width: 26px; height: 26px; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
 
-  .icon-grid {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 4px; margin-top: 12px;
-    padding: 8px; background: var(--fill); border-radius: 12px;
-  }
+  .icon-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; margin-top: 12px; padding: 8px; background: var(--fill); border-radius: 12px; max-height: 320px; overflow-y: auto; }
   .icon-grid button {
-    background: transparent; border: none;
-    padding: 10px 0;
-    border-radius: 10px; cursor: pointer;
-    display: grid; place-items: center;
-    color: var(--text-2);
-    transition: background .15s, transform .1s;
-    font-family: inherit;
+    background: transparent; border: none; padding: 9px 0;
+    border-radius: 9px; cursor: pointer; display: grid; place-items: center;
+    color: var(--text-2); transition: background .15s, transform .1s; font-family: inherit;
   }
   .icon-grid button:hover { background: var(--fill-3); }
   .icon-grid button:active { transform: scale(0.9); }
-  .icon-grid button.active {
-    background: var(--fill-3);
-    color: var(--text);
-  }
-  .icon-grid svg {
-    width: 22px; height: 22px;
-    fill: none; stroke: currentColor;
-    stroke-width: 1.75;
-    stroke-linecap: round; stroke-linejoin: round;
-  }
+  .icon-grid button.active { background: var(--fill-3); color: var(--text); }
+  .icon-grid svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
 
-  .color-row {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    gap: 6px; margin-top: 12px;
-  }
-  .color-dot {
-    aspect-ratio: 1;
-    border-radius: 50%;
-    cursor: pointer; border: none;
-    position: relative;
-    padding: 0;
-    background: var(--color);
-    transition: transform .1s;
-  }
+  .color-row { display: grid; grid-template-columns: repeat(12, 1fr); gap: 6px; margin-top: 12px; }
+  .color-dot { aspect-ratio: 1; border-radius: 50%; cursor: pointer; border: none; position: relative; padding: 0; background: var(--color); transition: transform .1s; }
   .color-dot:active { transform: scale(0.9); }
-  .color-dot.active::after {
-    content: ''; position: absolute; inset: -3px;
-    border-radius: 50%;
-    border: 2px solid var(--text);
-    pointer-events: none;
-  }
+  .color-dot.active::after { content: ''; position: absolute; inset: -3px; border-radius: 50%; border: 2px solid var(--text); pointer-events: none; }
 
-  .reorder {
-    display: flex; gap: 8px; margin-top: 12px;
-  }
+  .reorder { display: flex; gap: 8px; margin-top: 12px; }
   .reorder .btn { flex: 1; font-size: 15px; padding: 10px; }
 
   .muted { color: var(--muted); font-size: 13px; }
   .hide { display: none !important; }
-
-  .check {
-    color: var(--accent); font-size: 18px; font-weight: 600;
-    width: 18px; text-align: center;
-  }
-
-  .footer {
-    text-align: center; color: var(--muted);
-    font-size: 12px; padding: 16px 0;
-  }
+  .check { color: var(--accent); font-size: 18px; font-weight: 600; width: 18px; text-align: center; }
+  .footer { text-align: center; color: var(--muted); font-size: 12px; padding: 16px 0; }
 </style>
 </head>
 <body>
 
 <div class="wrap">
-
   <div class="nav">
     <div class="title" id="appTitle">Répartition</div>
     <button class="profile" id="profileBtn">
       <span id="profileName">—</span>
-      <svg width="11" height="11" viewBox="0 0 12 12" aria-hidden="true">
-        <path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
+      <svg width="11" height="11" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </button>
   </div>
 
@@ -459,143 +212,106 @@
     <div class="hero-label" id="amountLabel">—</div>
     <div class="hero-amount">
       <span class="cur" id="curSym">€</span>
-      <input id="budget" type="number" inputmode="decimal" step="0.01" placeholder="0">
+      <input id="budget" type="number" inputmode="decimal" step="50" min="0" placeholder="0">
     </div>
     <div class="progress"><div id="progressBar" style="width:0%"></div></div>
     <div class="stats">
-      <div class="stat">
-        <div class="stat-label" id="allocatedLabel">—</div>
-        <div class="stat-value" id="allocatedVal">—</div>
-      </div>
-      <div class="stat" id="remainingStat">
-        <div class="stat-label" id="freeLabel">—</div>
-        <div class="stat-value" id="remainingVal">—</div>
-      </div>
-      <div class="stat hide" id="shortStat">
-        <div class="stat-label" id="shortLabel">—</div>
-        <div class="stat-value" id="shortVal">—</div>
-      </div>
+      <div class="stat"><div class="stat-label" id="allocatedLabel">—</div><div class="stat-value" id="allocatedVal">—</div></div>
+      <div class="stat" id="remainingStat"><div class="stat-label" id="freeLabel">—</div><div class="stat-value" id="remainingVal">—</div></div>
+      <div class="stat hide" id="shortStat"><div class="stat-label" id="shortLabel">—</div><div class="stat-value" id="shortVal">—</div></div>
     </div>
   </div>
 
-  <div class="section-head">
-    <span id="keysSection">—</span>
-    <button id="addKeyBtn" title="+">＋</button>
-  </div>
+  <div class="section-head"><span id="keysSection">—</span><button id="addKeyBtn" title="+">＋</button></div>
   <div class="group" id="keysList"></div>
 
   <div class="section-head"><span id="dataSection">—</span></div>
   <div class="group">
-    <div class="row" id="guideRow">
-      <div class="row-main"><div class="row-title" id="guideRowTitle">—</div><div class="row-sub" id="guideRowSub">—</div></div>
-      <span class="chevron">›</span>
-    </div>
-    <div class="row" id="exportRow">
-      <div class="row-main"><div class="row-title" id="exportRowTitle">—</div><div class="row-sub" id="exportRowSub">—</div></div>
-      <span class="chevron">›</span>
-    </div>
-    <div class="row" id="importRow">
-      <div class="row-main"><div class="row-title" id="importRowTitle">—</div><div class="row-sub" id="importRowSub">—</div></div>
-      <span class="chevron">›</span>
-    </div>
-    <div class="row" id="langRow">
-      <div class="row-main"><div class="row-title" id="langRowTitle">—</div><div class="row-sub" id="langRowSub">—</div></div>
-      <span class="chevron">›</span>
-    </div>
+    <div class="row" id="guideRow"><div class="row-main"><div class="row-title" id="guideRowTitle">—</div><div class="row-sub" id="guideRowSub">—</div></div><span class="chevron">›</span></div>
+    <div class="row" id="exportRow"><div class="row-main"><div class="row-title" id="exportRowTitle">—</div><div class="row-sub" id="exportRowSub">—</div></div><span class="chevron">›</span></div>
+    <div class="row" id="importRow"><div class="row-main"><div class="row-title" id="importRowTitle">—</div><div class="row-sub" id="importRowSub">—</div></div><span class="chevron">›</span></div>
+    <div class="row" id="currencyRow"><div class="row-main"><div class="row-title" id="currencyRowTitle">—</div><div class="row-sub" id="currencyRowSub">—</div></div><span class="chevron">›</span></div>
+    <div class="row" id="langRow"><div class="row-main"><div class="row-title" id="langRowTitle">—</div><div class="row-sub" id="langRowSub">—</div></div><span class="chevron">›</span></div>
   </div>
   <input id="importFile" type="file" accept="application/json" class="hide">
 
   <div class="footer" id="footerText">—</div>
 </div>
 
-<!-- Profile sheet -->
-<div class="sheet-backdrop" id="profileSheet">
-  <div class="sheet">
-    <div class="sheet-handle"></div>
-    <h2 id="profileSheetTitle">—</h2>
-    <div class="group" id="profileList"></div>
-    <button class="btn primary" type="button" id="newProfileBtn" style="width:100%">—</button>
+<div class="sheet-backdrop" id="profileSheet"><div class="sheet">
+  <div class="sheet-handle"></div>
+  <h2 id="profileSheetTitle">—</h2>
+  <div class="group" id="profileList"></div>
+  <button class="btn primary" type="button" id="newProfileBtn" style="width:100%">—</button>
+</div></div>
+
+<div class="sheet-backdrop" id="keySheet"><div class="sheet">
+  <div class="sheet-handle"></div>
+  <h2 id="keySheetTitle">—</h2>
+  <div style="display:flex;gap:12px;align-items:center">
+    <button class="icon-picker-btn" id="keyIconBtn" type="button"></button>
+    <input type="text" class="input" id="keyName" placeholder="—" autocomplete="off">
   </div>
-</div>
-
-<!-- Key sheet -->
-<div class="sheet-backdrop" id="keySheet">
-  <div class="sheet">
-    <div class="sheet-handle"></div>
-    <h2 id="keySheetTitle">—</h2>
-
-    <div style="display:flex;gap:12px;align-items:center">
-      <button class="icon-picker-btn" id="keyIconBtn" type="button"></button>
-      <input type="text" class="input" id="keyName" placeholder="—" autocomplete="off">
-    </div>
-
-    <div class="color-row" id="colorRow"></div>
-    <div class="icon-grid hide" id="iconGrid"></div>
-
-    <div class="field-label" id="typeValueLabel">—</div>
-    <div style="display:flex;gap:10px;align-items:center">
-      <input type="number" inputmode="decimal" step="0.01" class="input" id="keyValue" placeholder="0" style="flex:1">
-      <div class="segmented">
-        <button type="button" id="typeAbs" class="active" data-type="amount">€</button>
-        <button type="button" id="typePct" data-type="percent">%</button>
-      </div>
-    </div>
-    <div id="percentModeWrap" class="hide" style="margin-top:10px">
-      <div class="segmented" style="display:flex;width:100%">
-        <button type="button" id="pctTotal" class="active" style="flex:1" data-pct="total">—</button>
-        <button type="button" id="pctRest" style="flex:1" data-pct="rest">—</button>
-      </div>
-    </div>
-    <div class="muted" id="valueHint" style="margin-top:6px"></div>
-
-    <div id="reorderSection" class="hide">
-      <div class="field-label" id="priorityLabel">—</div>
-      <div class="reorder">
-        <button class="btn" type="button" id="moveUp">—</button>
-        <button class="btn" type="button" id="moveDown">—</button>
-      </div>
-      <div class="muted" id="priorityHint" style="margin-top:8px">—</div>
-    </div>
-
-    <div class="btn-row" style="margin-top:24px">
-      <button class="btn danger" type="button" id="keyDelete">—</button>
-      <button class="btn primary" type="button" id="keySave" style="flex:2">—</button>
+  <div class="color-row" id="colorRow"></div>
+  <div class="icon-grid hide" id="iconGrid"></div>
+  <div class="field-label" id="typeValueLabel">—</div>
+  <div style="display:flex;gap:10px;align-items:center">
+    <input type="number" inputmode="decimal" step="0.01" class="input" id="keyValue" placeholder="0" style="flex:1">
+    <div class="segmented">
+      <button type="button" id="typeAbs" class="active" data-type="amount">€</button>
+      <button type="button" id="typePct" data-type="percent">%</button>
     </div>
   </div>
-</div>
-
-<!-- Guide sheet -->
-<div class="sheet-backdrop" id="guideSheet">
-  <div class="sheet">
-    <div class="sheet-handle"></div>
-    <h2 id="guideSheetTitle">—</h2>
-    <div id="guideContent"></div>
-    <button class="btn primary" type="button" id="guideClose" style="width:100%;margin-top:20px">—</button>
-  </div>
-</div>
-
-<!-- Language sheet -->
-<div class="sheet-backdrop" id="langSheet">
-  <div class="sheet">
-    <div class="sheet-handle"></div>
-    <h2 id="langSheetTitle">—</h2>
-    <div class="group" id="langList"></div>
-  </div>
-</div>
-
-<!-- Dialog sheet -->
-<div class="sheet-backdrop" id="dialogSheet">
-  <div class="sheet">
-    <div class="sheet-handle"></div>
-    <h2 id="dialogTitle"></h2>
-    <p id="dialogMessage" class="hide"></p>
-    <input type="text" class="input hide" id="dialogInput" autocomplete="off">
-    <div class="btn-row" style="margin-top:16px">
-      <button class="btn" type="button" id="dialogCancel">—</button>
-      <button class="btn primary" type="button" id="dialogOk">—</button>
+  <div id="percentModeWrap" class="hide" style="margin-top:10px">
+    <div class="segmented" style="display:flex;width:100%">
+      <button type="button" id="pctTotal" class="active" style="flex:1" data-pct="total">—</button>
+      <button type="button" id="pctRest" style="flex:1" data-pct="rest">—</button>
     </div>
   </div>
-</div>
+  <div class="muted" id="valueHint" style="margin-top:6px"></div>
+  <div id="reorderSection" class="hide">
+    <div class="field-label" id="priorityLabel">—</div>
+    <div class="reorder">
+      <button class="btn" type="button" id="moveUp">—</button>
+      <button class="btn" type="button" id="moveDown">—</button>
+    </div>
+    <div class="muted" id="priorityHint" style="margin-top:8px">—</div>
+  </div>
+  <div class="btn-row" style="margin-top:24px">
+    <button class="btn danger" type="button" id="keyDelete">—</button>
+    <button class="btn primary" type="button" id="keySave" style="flex:2">—</button>
+  </div>
+</div></div>
+
+<div class="sheet-backdrop" id="guideSheet"><div class="sheet">
+  <div class="sheet-handle"></div>
+  <h2 id="guideSheetTitle">—</h2>
+  <div id="guideContent"></div>
+  <button class="btn primary" type="button" id="guideClose" style="width:100%;margin-top:20px">—</button>
+</div></div>
+
+<div class="sheet-backdrop" id="langSheet"><div class="sheet">
+  <div class="sheet-handle"></div>
+  <h2 id="langSheetTitle">—</h2>
+  <div class="group" id="langList"></div>
+</div></div>
+
+<div class="sheet-backdrop" id="currencySheet"><div class="sheet">
+  <div class="sheet-handle"></div>
+  <h2 id="currencySheetTitle">—</h2>
+  <div class="group" id="currencyList"></div>
+</div></div>
+
+<div class="sheet-backdrop" id="dialogSheet"><div class="sheet">
+  <div class="sheet-handle"></div>
+  <h2 id="dialogTitle"></h2>
+  <p id="dialogMessage" class="hide"></p>
+  <input type="text" class="input hide" id="dialogInput" autocomplete="off">
+  <div class="btn-row" style="margin-top:16px">
+    <button class="btn" type="button" id="dialogCancel">—</button>
+    <button class="btn primary" type="button" id="dialogOk">—</button>
+  </div>
+</div></div>
 
 <script>
 (() => {
@@ -605,295 +321,240 @@
   const T = {
     en: {
       htmlLang: 'en', appLocale: 'en-US',
-      title: 'Breakdown',
-      amountLabel: 'Amount to break down',
-      allocated: 'Allocated',
-      free: 'Free',
-      short: 'Short',
-      keysSection: 'Distribution keys',
-      dataSection: 'Data',
-      guideTitle: 'Quick guide',
-      guideSub: 'How to use, export, import',
-      exportTitle: 'Export my profiles',
-      exportSub: 'Download a JSON file',
-      importTitle: 'Import a file',
-      importSub: 'Restore or transfer from another device',
-      langRowTitle: 'Language',
+      title: 'Breakdown', amountLabel: 'Amount to break down',
+      allocated: 'Allocated', free: 'Free', short: 'Short',
+      keysSection: 'Distribution keys', dataSection: 'Data',
+      guideTitle: 'Quick guide', guideSub: 'How to use, export, import',
+      exportTitle: 'Export my profiles', exportSub: 'Download a JSON file',
+      importTitle: 'Import a file', importSub: 'Restore or transfer from another device',
+      currencyRowTitle: 'Currency', langRowTitle: 'Language',
       footer: 'Data stored locally on this device.',
-      profilesTitle: 'Profiles',
-      newProfile: 'New profile',
-      rename: 'Rename',
-      delete: 'Delete',
-      del: 'Del.',
-      key: 'Key',
-      newKey: 'New key',
-      editKey: 'Edit key',
-      keyNamePH: 'Key name',
+      profilesTitle: 'Profiles', newProfile: 'New profile',
+      rename: 'Rename', delete: 'Delete', del: 'Del.',
+      key: 'Key', newKey: 'New key', editKey: 'Edit key', keyNamePH: 'Key name',
       typeValue: 'Type and value',
-      pctTotalBtn: 'Of total',
-      pctRestBtn: 'Of remaining',
-      priorityOrder: 'Priority order',
-      moveUp: '↑ Move up',
-      moveDown: '↓ Move down',
+      pctTotalBtn: 'Of total', pctRestBtn: 'Of remaining',
+      priorityOrder: 'Priority order', moveUp: '↑ Move up', moveDown: '↓ Move down',
       priorityHint: 'Keys at the top are served first if the amount is insufficient.',
-      save: 'Save',
-      noKeys: 'No keys. Tap ＋ to add one.',
-      fixed: 'fixed',
-      pctOfTotal: 'of total',
-      pctOfRest: 'of remaining',
-      requested: 'requested',
+      save: 'Save', noKeys: 'No keys. Tap ＋ to add one.',
+      fixed: 'fixed', pctOfTotal: 'of total', pctOfRest: 'of remaining', requested: 'requested',
       hintPctTotal: '≈ {amount} {currency} of {total}',
       hintPctRest: '≈ {amount} {currency} of the remaining pool',
       hintAmt: '≈ {pct} % of the amount',
       hintSetAmount: 'Set the amount to see the share.',
       dlgOk: 'OK', dlgCancel: 'Cancel',
-      dlgDeleteKey: 'Delete this key?',
-      dlgDeleteKeyMsg: 'This action cannot be undone.',
-      dlgDeleteProfile: 'Delete "{name}"?',
-      dlgDeleteProfileMsg: 'All keys in this profile will be lost.',
-      dlgDelete: 'Delete',
-      dlgRename: 'Rename profile',
-      dlgNewProfile: 'New profile',
-      dlgNewProfilePH: 'Profile name',
-      dlgCreate: 'Create',
-      dlgImport: 'Import this file?',
-      dlgImportMsg: 'All current data will be replaced.',
-      dlgImportBtn: 'Import',
-      dlgImportFailed: 'Import failed',
+      dlgDeleteKey: 'Delete this key?', dlgDeleteKeyMsg: 'This action cannot be undone.',
+      dlgDeleteProfile: 'Delete "{name}"?', dlgDeleteProfileMsg: 'All keys in this profile will be lost.',
+      dlgDelete: 'Delete', dlgRename: 'Rename profile',
+      dlgNewProfile: 'New profile', dlgNewProfilePH: 'Profile name', dlgCreate: 'Create',
+      dlgImport: 'Import this file?', dlgImportMsg: 'All current data will be replaced.',
+      dlgImportBtn: 'Import', dlgImportFailed: 'Import failed',
       guideGot: 'Got it',
       defaultProfileName: 'Default',
-      defaultKeys: { housing: 'Housing', groceries: 'Groceries', transport: 'Transport', dining: 'Dining', savings: 'Savings', leisure: 'Leisure' },
+      defaultKeys: { housing: 'Rent', groceries: 'Supplies', transport: 'Transport', dining: 'Meals', savings: 'Reserve', leisure: 'Marketing' },
       guideHtml: `
-        <p>This app breaks down an amount according to a <strong>distribution key</strong>. Each line is either a fixed amount in <code>€</code>, a percentage of the total, or a percentage of what remains after higher-priority keys.</p>
+        <p>This app breaks down an amount according to a <strong>distribution key</strong>. Each line is a fixed amount (<code>€</code>), a percentage of the total, or a percentage of what remains after higher-priority keys.</p>
         <h3>1. Set the amount</h3>
-        <p>Type the amount at the top of the screen. Tap the currency symbol to cycle (€, $, £, CHF, kr).</p>
+        <p>Type the amount at the top. Arrow keys and spinner step by <code>50</code>. Tap the currency symbol to open the currency picker (40+ currencies).</p>
         <h3>2. Add keys</h3>
         <ol>
           <li>Tap <code>＋</code> in the "Distribution keys" section</li>
-          <li>Pick an icon and a color, enter a name (e.g. "Rent")</li>
-          <li>Enter the value and pick <code>€</code> (fixed) or <code>%</code> — then "Of total" or "Of remaining"</li>
+          <li>Pick one of <strong>100+ business icons</strong> and a color, enter a name</li>
+          <li>Enter the value and choose <code>€</code> (fixed) or <code>%</code> — then "Of total" or "Of remaining"</li>
         </ol>
         <h3>3. Priority order</h3>
         <p>Keys are processed <strong>top-down</strong>. If the amount is not enough, top keys get served first; the rest receive whatever is left. Reorder by opening a key and using <code>↑ Move up</code> / <code>↓ Move down</code>.</p>
-        <div class="callout"><strong>Example.</strong> Amount 2,000 €. Rent 900 € (P1), Savings 20% of total (P2), Extras 300 € (P3). → Rent 900, Savings 400, Extras 300, free 400.</div>
+        <div class="callout"><strong>Example.</strong> Amount 5,000 €. Rent 1,800 € (P1), Salaries 40% of total (P2), Reserve 20% of remaining (P3). → Rent 1,800, Salaries 2,000, Reserve 240, free 960.</div>
         <h3>4. Multiple profiles</h3>
-        <p>Top right, tap the profile name. Create one profile per use case (personal pay, costs split between projects, etc.). Each profile has its own keys.</p>
-        <h3>Export your profiles</h3>
+        <p>Top right, tap the profile name. Create one profile per use case (personal pay, business revenue, project budget, etc.). Each profile has its own keys, amount, and currency.</p>
+        <h3>5. Language and currency</h3>
+        <p>Language auto-detects from your device (English, French, Dutch — French if unsupported). Change via Data → Language. Currency is per-profile — tap the symbol next to the amount.</p>
+        <h3>Export / Import</h3>
         <ol>
-          <li>Data section → <strong>Export my profiles</strong></li>
-          <li>A file <code>repartition-YYYY-MM-DD.json</code> is downloaded</li>
-          <li>Save it (iCloud Drive, Dropbox, email…) or send it to another device via AirDrop</li>
+          <li>Data → <strong>Export my profiles</strong> → a <code>repartition-YYYY-MM-DD.json</code> file is downloaded</li>
+          <li>Send it to another device (iCloud Drive, email, AirDrop)</li>
+          <li>On the other device, Data → <strong>Import a file</strong> → pick the JSON</li>
         </ol>
-        <h3>Import on another device</h3>
-        <ol>
-          <li>Open the app on the new device (or in a new browser)</li>
-          <li>Data section → <strong>Import a file</strong></li>
-          <li>Pick the exported JSON file</li>
-        </ol>
-        <div class="callout">⚠️ Importing <strong>replaces</strong> all current data. Export first if you want to keep it.</div>
+        <div class="callout">⚠️ Importing <strong>replaces</strong> all current data. Export first to keep it.</div>
         <h3>Install on iPhone</h3>
-        <p>Safari → Share → <strong>"Add to Home Screen"</strong>. The app then opens fullscreen, like a native app.</p>`,
+        <p>Safari → Share → <strong>"Add to Home Screen"</strong>.</p>`,
     },
     fr: {
       htmlLang: 'fr', appLocale: 'fr-FR',
-      title: 'Répartition',
-      amountLabel: 'Montant à répartir',
-      allocated: 'Alloué',
-      free: 'Libre',
-      short: 'Manquant',
-      keysSection: 'Clés de répartition',
-      dataSection: 'Données',
-      guideTitle: 'Guide rapide',
-      guideSub: 'Utilisation, export, import',
-      exportTitle: 'Exporter mes profils',
-      exportSub: 'Télécharger un fichier JSON',
-      importTitle: 'Importer un fichier',
-      importSub: 'Restaurer ou transférer depuis un autre appareil',
-      langRowTitle: 'Langue',
+      title: 'Répartition', amountLabel: 'Montant à répartir',
+      allocated: 'Alloué', free: 'Libre', short: 'Manquant',
+      keysSection: 'Clés de répartition', dataSection: 'Données',
+      guideTitle: 'Guide rapide', guideSub: 'Utilisation, export, import',
+      exportTitle: 'Exporter mes profils', exportSub: 'Télécharger un fichier JSON',
+      importTitle: 'Importer un fichier', importSub: 'Restaurer ou transférer depuis un autre appareil',
+      currencyRowTitle: 'Devise', langRowTitle: 'Langue',
       footer: 'Données stockées localement sur cet appareil.',
-      profilesTitle: 'Profils',
-      newProfile: 'Nouveau profil',
-      rename: 'Renommer',
-      delete: 'Supprimer',
-      del: 'Suppr.',
-      key: 'Clé',
-      newKey: 'Nouvelle clé',
-      editKey: 'Modifier la clé',
-      keyNamePH: 'Nom de la clé',
+      profilesTitle: 'Profils', newProfile: 'Nouveau profil',
+      rename: 'Renommer', delete: 'Supprimer', del: 'Suppr.',
+      key: 'Clé', newKey: 'Nouvelle clé', editKey: 'Modifier la clé', keyNamePH: 'Nom de la clé',
       typeValue: 'Type et valeur',
-      pctTotalBtn: 'Du total',
-      pctRestBtn: 'Du reste',
-      priorityOrder: 'Ordre de priorité',
-      moveUp: '↑ Monter',
-      moveDown: '↓ Descendre',
+      pctTotalBtn: 'Du total', pctRestBtn: 'Du reste',
+      priorityOrder: 'Ordre de priorité', moveUp: '↑ Monter', moveDown: '↓ Descendre',
       priorityHint: 'Les clés en haut sont servies en premier si le montant ne suffit pas.',
-      save: 'Enregistrer',
-      noKeys: 'Aucune clé. Touchez ＋ pour en ajouter.',
-      fixed: 'fixe',
-      pctOfTotal: 'du total',
-      pctOfRest: 'du reste',
-      requested: 'demandé',
+      save: 'Enregistrer', noKeys: 'Aucune clé. Touchez ＋ pour en ajouter.',
+      fixed: 'fixe', pctOfTotal: 'du total', pctOfRest: 'du reste', requested: 'demandé',
       hintPctTotal: '≈ {amount} {currency} sur {total}',
       hintPctRest: '≈ {amount} {currency} du reste disponible',
       hintAmt: '≈ {pct} % du montant',
       hintSetAmount: 'Définissez le montant pour voir la part.',
       dlgOk: 'OK', dlgCancel: 'Annuler',
-      dlgDeleteKey: 'Supprimer cette clé ?',
-      dlgDeleteKeyMsg: 'Cette action ne peut pas être annulée.',
-      dlgDeleteProfile: 'Supprimer « {name} » ?',
-      dlgDeleteProfileMsg: 'Toutes les clés de ce profil seront perdues.',
-      dlgDelete: 'Supprimer',
-      dlgRename: 'Renommer le profil',
-      dlgNewProfile: 'Nouveau profil',
-      dlgNewProfilePH: 'Nom du profil',
-      dlgCreate: 'Créer',
-      dlgImport: 'Importer ce fichier ?',
-      dlgImportMsg: 'Toutes les données actuelles seront remplacées.',
-      dlgImportBtn: 'Importer',
-      dlgImportFailed: 'Import échoué',
+      dlgDeleteKey: 'Supprimer cette clé ?', dlgDeleteKeyMsg: 'Cette action ne peut pas être annulée.',
+      dlgDeleteProfile: 'Supprimer « {name} » ?', dlgDeleteProfileMsg: 'Toutes les clés de ce profil seront perdues.',
+      dlgDelete: 'Supprimer', dlgRename: 'Renommer le profil',
+      dlgNewProfile: 'Nouveau profil', dlgNewProfilePH: 'Nom du profil', dlgCreate: 'Créer',
+      dlgImport: 'Importer ce fichier ?', dlgImportMsg: 'Toutes les données actuelles seront remplacées.',
+      dlgImportBtn: 'Importer', dlgImportFailed: 'Import échoué',
       guideGot: 'Compris',
       defaultProfileName: 'Défaut',
-      defaultKeys: { housing: 'Logement', groceries: 'Courses', transport: 'Transport', dining: 'Restos', savings: 'Épargne', leisure: 'Loisirs' },
+      defaultKeys: { housing: 'Loyer', groceries: 'Fournitures', transport: 'Transport', dining: 'Repas', savings: 'Réserve', leisure: 'Marketing' },
       guideHtml: `
-        <p>Cette app décompose un montant selon une <strong>clé de répartition</strong>. Chaque ligne prend soit un montant fixe en <code>€</code>, soit un pourcentage du total, soit un pourcentage de ce qui reste après les clés de priorité supérieure.</p>
+        <p>Cette app décompose un montant selon une <strong>clé de répartition</strong>. Chaque ligne est soit un montant fixe (<code>€</code>), soit un pourcentage du total, soit un pourcentage de ce qui reste après les clés de priorité supérieure.</p>
         <h3>1. Définir le montant</h3>
-        <p>Tapez le montant à répartir en haut de l'écran. Tapez sur le symbole de devise pour changer (€, $, £, CHF, kr).</p>
+        <p>Tapez le montant en haut. Les flèches (clavier et spinner) incrémentent par pas de <code>50</code>. Touchez le symbole de devise pour ouvrir le sélecteur (40+ devises).</p>
         <h3>2. Ajouter des clés</h3>
         <ol>
           <li>Touchez <code>＋</code> dans la section « Clés de répartition »</li>
-          <li>Choisissez une icône et une couleur, donnez un nom (ex. « Loyer »)</li>
+          <li>Choisissez parmi <strong>100+ icônes business</strong> et une couleur, donnez un nom</li>
           <li>Entrez la valeur puis choisissez <code>€</code> (fixe) ou <code>%</code> — puis « Du total » ou « Du reste »</li>
         </ol>
         <h3>3. Ordre de priorité</h3>
         <p>Les clés sont traitées <strong>de haut en bas</strong>. Si le montant ne suffit pas, celles du haut sont servies en premier ; les suivantes reçoivent ce qui reste. Pour réorganiser, ouvrez une clé et utilisez <code>↑ Monter</code> / <code>↓ Descendre</code>.</p>
-        <div class="callout"><strong>Exemple.</strong> Montant 2 000 €. Loyer 900 € (P1), Épargne 20 % du total (P2), Imprévus 300 € (P3). → Loyer 900, Épargne 400, Imprévus 300, libre 400.</div>
+        <div class="callout"><strong>Exemple.</strong> Montant 5 000 €. Loyer 1 800 € (P1), Salaires 40 % du total (P2), Réserve 20 % du reste (P3). → Loyer 1 800, Salaires 2 000, Réserve 240, libre 960.</div>
         <h3>4. Plusieurs profils</h3>
-        <p>En haut à droite, tapez sur le nom du profil. Créez un profil par cas d'usage (paie personnelle, charges à répartir entre projets, etc.). Chaque profil a ses propres clés.</p>
-        <h3>Exporter ses profils</h3>
+        <p>En haut à droite, tapez sur le nom du profil. Créez un profil par cas d'usage (paie personnelle, chiffre d'affaires, budget projet, etc.). Chaque profil a ses propres clés, montant et devise.</p>
+        <h3>5. Langue et devise</h3>
+        <p>La langue est détectée automatiquement (English, Français, Nederlands — français par défaut si non supportée). Changez-la via Données → Langue. La devise est par profil — touchez le symbole à côté du montant.</p>
+        <h3>Exporter / Importer</h3>
         <ol>
-          <li>Section « Données » → <strong>Exporter mes profils</strong></li>
-          <li>Un fichier <code>repartition-YYYY-MM-DD.json</code> est téléchargé</li>
-          <li>Sauvegardez-le (iCloud Drive, Dropbox, email…) ou envoyez-le vers un autre appareil via AirDrop</li>
+          <li>Données → <strong>Exporter mes profils</strong> → un fichier <code>repartition-YYYY-MM-DD.json</code> est téléchargé</li>
+          <li>Envoyez-le vers un autre appareil (iCloud Drive, email, AirDrop)</li>
+          <li>Sur l'autre appareil, Données → <strong>Importer un fichier</strong> → choisissez le JSON</li>
         </ol>
-        <h3>Importer sur un autre appareil</h3>
-        <ol>
-          <li>Ouvrez l'app sur le nouvel appareil (ou un nouveau navigateur)</li>
-          <li>Section « Données » → <strong>Importer un fichier</strong></li>
-          <li>Choisissez le fichier JSON exporté</li>
-        </ol>
-        <div class="callout">⚠️ L'import <strong>remplace</strong> toutes les données actuelles. Exportez d'abord si vous voulez les conserver.</div>
+        <div class="callout">⚠️ L'import <strong>remplace</strong> toutes les données actuelles. Exportez d'abord pour les conserver.</div>
         <h3>Installer sur iPhone</h3>
-        <p>Safari → Partager → <strong>« Sur l'écran d'accueil »</strong>. L'app s'ouvre alors en plein écran, comme une app native.</p>`,
+        <p>Safari → Partager → <strong>« Sur l'écran d'accueil »</strong>.</p>`,
     },
     nl: {
       htmlLang: 'nl', appLocale: 'nl-NL',
-      title: 'Verdeling',
-      amountLabel: 'Bedrag om te verdelen',
-      allocated: 'Toegewezen',
-      free: 'Vrij',
-      short: 'Tekort',
-      keysSection: 'Verdeelsleutels',
-      dataSection: 'Gegevens',
-      guideTitle: 'Handleiding',
-      guideSub: 'Gebruik, exporteren, importeren',
-      exportTitle: 'Mijn profielen exporteren',
-      exportSub: 'Een JSON-bestand downloaden',
-      importTitle: 'Een bestand importeren',
-      importSub: 'Herstellen of overdragen van een ander apparaat',
-      langRowTitle: 'Taal',
+      title: 'Verdeling', amountLabel: 'Bedrag om te verdelen',
+      allocated: 'Toegewezen', free: 'Vrij', short: 'Tekort',
+      keysSection: 'Verdeelsleutels', dataSection: 'Gegevens',
+      guideTitle: 'Handleiding', guideSub: 'Gebruik, exporteren, importeren',
+      exportTitle: 'Mijn profielen exporteren', exportSub: 'Een JSON-bestand downloaden',
+      importTitle: 'Een bestand importeren', importSub: 'Herstellen of overdragen van een ander apparaat',
+      currencyRowTitle: 'Valuta', langRowTitle: 'Taal',
       footer: 'Gegevens worden lokaal op dit apparaat bewaard.',
-      profilesTitle: 'Profielen',
-      newProfile: 'Nieuw profiel',
-      rename: 'Hernoemen',
-      delete: 'Verwijderen',
-      del: 'Verw.',
-      key: 'Sleutel',
-      newKey: 'Nieuwe sleutel',
-      editKey: 'Sleutel bewerken',
-      keyNamePH: 'Naam van de sleutel',
+      profilesTitle: 'Profielen', newProfile: 'Nieuw profiel',
+      rename: 'Hernoemen', delete: 'Verwijderen', del: 'Verw.',
+      key: 'Sleutel', newKey: 'Nieuwe sleutel', editKey: 'Sleutel bewerken', keyNamePH: 'Naam van de sleutel',
       typeValue: 'Type en waarde',
-      pctTotalBtn: 'Van totaal',
-      pctRestBtn: 'Van rest',
-      priorityOrder: 'Prioriteitsvolgorde',
-      moveUp: '↑ Omhoog',
-      moveDown: '↓ Omlaag',
+      pctTotalBtn: 'Van totaal', pctRestBtn: 'Van rest',
+      priorityOrder: 'Prioriteitsvolgorde', moveUp: '↑ Omhoog', moveDown: '↓ Omlaag',
       priorityHint: 'Sleutels bovenaan worden eerst bediend als het bedrag onvoldoende is.',
-      save: 'Opslaan',
-      noKeys: 'Geen sleutels. Tik op ＋ om er een toe te voegen.',
-      fixed: 'vast',
-      pctOfTotal: 'van totaal',
-      pctOfRest: 'van rest',
-      requested: 'gevraagd',
+      save: 'Opslaan', noKeys: 'Geen sleutels. Tik op ＋ om er een toe te voegen.',
+      fixed: 'vast', pctOfTotal: 'van totaal', pctOfRest: 'van rest', requested: 'gevraagd',
       hintPctTotal: '≈ {amount} {currency} van {total}',
       hintPctRest: '≈ {amount} {currency} van het resterende bedrag',
       hintAmt: '≈ {pct} % van het bedrag',
       hintSetAmount: 'Stel het bedrag in om het deel te zien.',
       dlgOk: 'OK', dlgCancel: 'Annuleren',
-      dlgDeleteKey: 'Deze sleutel verwijderen?',
-      dlgDeleteKeyMsg: 'Deze actie kan niet ongedaan worden gemaakt.',
-      dlgDeleteProfile: '"{name}" verwijderen?',
-      dlgDeleteProfileMsg: 'Alle sleutels van dit profiel gaan verloren.',
-      dlgDelete: 'Verwijderen',
-      dlgRename: 'Profiel hernoemen',
-      dlgNewProfile: 'Nieuw profiel',
-      dlgNewProfilePH: 'Profielnaam',
-      dlgCreate: 'Aanmaken',
-      dlgImport: 'Dit bestand importeren?',
-      dlgImportMsg: 'Alle huidige gegevens worden vervangen.',
-      dlgImportBtn: 'Importeren',
-      dlgImportFailed: 'Import mislukt',
+      dlgDeleteKey: 'Deze sleutel verwijderen?', dlgDeleteKeyMsg: 'Deze actie kan niet ongedaan worden gemaakt.',
+      dlgDeleteProfile: '"{name}" verwijderen?', dlgDeleteProfileMsg: 'Alle sleutels van dit profiel gaan verloren.',
+      dlgDelete: 'Verwijderen', dlgRename: 'Profiel hernoemen',
+      dlgNewProfile: 'Nieuw profiel', dlgNewProfilePH: 'Profielnaam', dlgCreate: 'Aanmaken',
+      dlgImport: 'Dit bestand importeren?', dlgImportMsg: 'Alle huidige gegevens worden vervangen.',
+      dlgImportBtn: 'Importeren', dlgImportFailed: 'Import mislukt',
       guideGot: 'Begrepen',
       defaultProfileName: 'Standaard',
-      defaultKeys: { housing: 'Huur', groceries: 'Boodschappen', transport: 'Transport', dining: 'Restaurants', savings: 'Sparen', leisure: 'Ontspanning' },
+      defaultKeys: { housing: 'Huur', groceries: 'Benodigdheden', transport: 'Transport', dining: 'Maaltijden', savings: 'Reserve', leisure: 'Marketing' },
       guideHtml: `
-        <p>Deze app verdeelt een bedrag volgens een <strong>verdeelsleutel</strong>. Elke regel is ofwel een vast bedrag in <code>€</code>, een percentage van het totaal, of een percentage van wat overblijft na sleutels met hogere prioriteit.</p>
+        <p>Deze app verdeelt een bedrag volgens een <strong>verdeelsleutel</strong>. Elke regel is een vast bedrag (<code>€</code>), een percentage van het totaal, of een percentage van wat overblijft na sleutels met hogere prioriteit.</p>
         <h3>1. Bedrag instellen</h3>
-        <p>Voer bovenaan het te verdelen bedrag in. Tik op het valutasymbool om te wisselen (€, $, £, CHF, kr).</p>
+        <p>Voer het bedrag bovenaan in. Pijltjes en spinner springen met stappen van <code>50</code>. Tik op het valutasymbool om de valutakiezer te openen (40+ valuta's).</p>
         <h3>2. Sleutels toevoegen</h3>
         <ol>
           <li>Tik op <code>＋</code> in de sectie "Verdeelsleutels"</li>
-          <li>Kies een icoon en een kleur, geef een naam (bijv. "Huur")</li>
+          <li>Kies een van de <strong>100+ business iconen</strong> en een kleur, geef een naam</li>
           <li>Voer de waarde in en kies <code>€</code> (vast) of <code>%</code> — daarna "Van totaal" of "Van rest"</li>
         </ol>
         <h3>3. Prioriteitsvolgorde</h3>
         <p>Sleutels worden <strong>van boven naar beneden</strong> verwerkt. Als het bedrag niet volstaat, krijgen de bovenste sleutels voorrang; de volgende krijgen wat overblijft. Herorden door een sleutel te openen en <code>↑ Omhoog</code> / <code>↓ Omlaag</code> te gebruiken.</p>
-        <div class="callout"><strong>Voorbeeld.</strong> Bedrag 2.000 €. Huur 900 € (P1), Sparen 20% van totaal (P2), Onvoorzien 300 € (P3). → Huur 900, Sparen 400, Onvoorzien 300, vrij 400.</div>
+        <div class="callout"><strong>Voorbeeld.</strong> Bedrag 5.000 €. Huur 1.800 € (P1), Lonen 40% van totaal (P2), Reserve 20% van rest (P3). → Huur 1.800, Lonen 2.000, Reserve 240, vrij 960.</div>
         <h3>4. Meerdere profielen</h3>
-        <p>Rechtsboven tik je op de profielnaam. Maak één profiel per gebruik (persoonlijk loon, kosten verdelen tussen projecten, enz.). Elk profiel heeft eigen sleutels.</p>
-        <h3>Je profielen exporteren</h3>
+        <p>Rechtsboven tik je op de profielnaam. Maak één profiel per gebruik (persoonlijk loon, omzet, projectbudget, enz.). Elk profiel heeft eigen sleutels, bedrag en valuta.</p>
+        <h3>5. Taal en valuta</h3>
+        <p>Taal wordt automatisch gedetecteerd (English, Français, Nederlands — Frans als standaard bij niet-ondersteunde talen). Wijzig via Gegevens → Taal. Valuta is per profiel — tik op het symbool naast het bedrag.</p>
+        <h3>Exporteren / Importeren</h3>
         <ol>
-          <li>Sectie "Gegevens" → <strong>Mijn profielen exporteren</strong></li>
-          <li>Een bestand <code>repartition-JJJJ-MM-DD.json</code> wordt gedownload</li>
-          <li>Bewaar het (iCloud Drive, Dropbox, e-mail…) of stuur het naar een ander apparaat via AirDrop</li>
+          <li>Gegevens → <strong>Mijn profielen exporteren</strong> → bestand <code>repartition-JJJJ-MM-DD.json</code> wordt gedownload</li>
+          <li>Stuur het naar een ander apparaat (iCloud Drive, e-mail, AirDrop)</li>
+          <li>Op het andere apparaat, Gegevens → <strong>Een bestand importeren</strong> → kies het JSON</li>
         </ol>
-        <h3>Importeren op een ander apparaat</h3>
-        <ol>
-          <li>Open de app op het nieuwe apparaat (of in een nieuwe browser)</li>
-          <li>Sectie "Gegevens" → <strong>Een bestand importeren</strong></li>
-          <li>Kies het geëxporteerde JSON-bestand</li>
-        </ol>
-        <div class="callout">⚠️ Importeren <strong>vervangt</strong> alle huidige gegevens. Exporteer eerst als je ze wilt behouden.</div>
+        <div class="callout">⚠️ Importeren <strong>vervangt</strong> alle huidige gegevens. Exporteer eerst om ze te behouden.</div>
         <h3>Installeren op iPhone</h3>
-        <p>Safari → Deel → <strong>"Op beginscherm"</strong>. De app opent dan schermvullend, als een native app.</p>`,
+        <p>Safari → Deel → <strong>"Op beginscherm"</strong>.</p>`,
     },
   };
   const LANGS = ['en', 'fr', 'nl'];
   const LANG_NAMES = { en: 'English', fr: 'Français', nl: 'Nederlands' };
-
   function detectLang() {
-    const l = (navigator.language || 'en').slice(0, 2).toLowerCase();
-    return T[l] ? l : 'en';
+    const l = (navigator.language || '').slice(0, 2).toLowerCase();
+    return T[l] ? l : 'fr';
   }
 
-  // ============ Constants ============
-  const LS_KEY = 'repartition.v5';
-  const LS_OLD = ['repartition.v4', 'repartition.v3', 'envelopes.v2', 'repartition.v1'];
-  const $ = (s, r=document) => r.querySelector(s);
-  const $$ = (s, r=document) => [...r.querySelectorAll(s)];
-  const uid = () => 'k_' + Math.random().toString(36).slice(2, 10);
+  // ============ Currencies ============
+  const CURRENCY_SYMBOLS = {
+    EUR: '€', USD: '$', GBP: '£', CHF: 'CHF',
+    CAD: 'CA$', AUD: 'A$', NZD: 'NZ$',
+    JPY: '¥', CNY: '¥', HKD: 'HK$', SGD: 'S$', KRW: '₩', INR: '₹',
+    SEK: 'kr', NOK: 'kr', DKK: 'kr', ISK: 'kr',
+    PLN: 'zł', CZK: 'Kč', HUF: 'Ft', RON: 'lei', BGN: 'лв',
+    TRY: '₺', ILS: '₪', AED: 'AED', SAR: 'SAR', QAR: 'QAR',
+    BRL: 'R$', MXN: 'MX$', ARS: 'AR$', CLP: 'CLP$', COP: 'COL$', PEN: 'S/',
+    ZAR: 'R', EGP: 'E£', NGN: '₦', KES: 'KSh', MAD: 'DH',
+    THB: '฿', IDR: 'Rp', MYR: 'RM', PHP: '₱', VND: '₫',
+    RUB: '₽', UAH: '₴',
+  };
+  const CURRENCY_ORDER = [
+    'EUR','USD','GBP','CHF',
+    'CAD','AUD','NZD',
+    'JPY','CNY','HKD','SGD','KRW','INR',
+    'SEK','NOK','DKK','ISK',
+    'PLN','CZK','HUF','RON','BGN',
+    'TRY','ILS','AED','SAR','QAR',
+    'BRL','MXN','ARS','CLP','COP','PEN',
+    'ZAR','EGP','NGN','KES','MAD',
+    'THB','IDR','MYR','PHP','VND',
+    'RUB','UAH',
+  ];
+  const SYMBOL_TO_CODE = {
+    '€': 'EUR', '$': 'USD', '£': 'GBP', 'CHF': 'CHF',
+    '¥': 'JPY', '₩': 'KRW', '₹': 'INR', '₺': 'TRY', '₽': 'RUB',
+    '₴': 'UAH', '₱': 'PHP', '₫': 'VND', '฿': 'THB', '₪': 'ILS',
+    'kr': 'SEK', 'zł': 'PLN', 'Kč': 'CZK', 'Ft': 'HUF', 'lei': 'RON', 'лв': 'BGN',
+    'Rp': 'IDR', 'RM': 'MYR', 'R': 'ZAR',
+    'R$': 'BRL', 'MX$': 'MXN', 'CA$': 'CAD', 'A$': 'AUD', 'NZ$': 'NZD',
+    'HK$': 'HKD', 'S$': 'SGD', 'CLP$': 'CLP', 'AR$': 'ARS', 'COL$': 'COP',
+    'AED': 'AED', 'SAR': 'SAR', 'QAR': 'QAR', 'E£': 'EGP', '₦': 'NGN', 'KSh': 'KES', 'DH': 'MAD',
+    'S/': 'PEN',
+  };
+  function normalizeCurrency(c) {
+    if (!c) return 'EUR';
+    if (CURRENCY_SYMBOLS[c]) return c;
+    return SYMBOL_TO_CODE[c] || 'EUR';
+  }
+  const curSymOf = code => CURRENCY_SYMBOLS[code] || code;
+  function currencyName(code, locale) {
+    try { return new Intl.DisplayNames([locale], { type: 'currency' }).of(code); }
+    catch { return code; }
+  }
 
-  const CURRENCIES = ['€','$','£','CHF','kr'];
-
+  // ============ Colors (iOS system) ============
   const COLORS = [
     { k: 'red',    c: '#ff3b30' }, { k: 'orange', c: '#ff9500' },
     { k: 'yellow', c: '#ffcc00' }, { k: 'green',  c: '#34c759' },
@@ -905,106 +566,188 @@
   const COLOR_MAP = Object.fromEntries(COLORS.map(c => [c.k, c.c]));
   const colorHex = k => COLOR_MAP[k] || COLOR_MAP.blue;
 
+  // ============ Icons (100+ business-oriented) ============
   const ICONS = {
+    // Money & Finance
+    wallet:   '<path d="M4 7a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v2H5a1 1 0 0 1-1-1V7Zm0 2h15a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9Z"/><circle cx="17" cy="14" r="1" fill="currentColor" stroke="none"/>',
+    dollar:   '<path d="M12 3v18M16 7c-1-1.3-2.5-2-4-2-2.5 0-4 1.3-4 3s1 2.5 4 3 4 1.3 4 3-1.5 3-4 3c-1.5 0-3-.7-4-2"/>',
+    euro:     '<path d="M18 6a7 7 0 1 0 0 12M4 10h8M4 14h8"/>',
+    coin:     '<circle cx="12" cy="12" r="8"/><path d="M12 7v10M14 9.5c-.5-.8-1.5-1.3-2.5-1.3-1.5 0-2.5.8-2.5 1.8s1 1.5 2.5 2 2.5.8 2.5 2-1 1.8-2.5 1.8c-1 0-2-.4-2.5-1.3"/>',
+    coins:    '<ellipse cx="9" cy="7" rx="6" ry="2.5"/><path d="M3 7v4c0 1.4 2.7 2.5 6 2.5s6-1.1 6-2.5V7M3 11v4c0 1.4 2.7 2.5 6 2.5"/><ellipse cx="15" cy="15" rx="6" ry="2.5"/><path d="M9 15v4c0 1.4 2.7 2.5 6 2.5s6-1.1 6-2.5v-4"/>',
+    cash:     '<rect x="3" y="7" width="18" height="10" rx="1"/><circle cx="12" cy="12" r="2.5"/><circle cx="6.5" cy="12" r=".7" fill="currentColor" stroke="none"/><circle cx="17.5" cy="12" r=".7" fill="currentColor" stroke="none"/>',
+    piggy:    '<path d="M4 13a6 6 0 0 1 6-6h5a5 5 0 0 1 5 4l2 1v3l-2 1a5 5 0 0 1-2 2v3h-3v-2H9v2H6v-2a6 6 0 0 1-2-4Z"/><circle cx="17" cy="12" r=".8" fill="currentColor" stroke="none"/>',
+    bank:     '<path d="M3 10l9-6 9 6M5 10v8M9 10v8M15 10v8M19 10v8M3 20h18"/>',
+    safe:     '<rect x="3" y="4" width="18" height="16" rx="1"/><circle cx="14" cy="12" r="3.5"/><path d="M14 8.5v1M14 14.5v1M17.5 12h1M10.5 12h-1M4 20v1M20 20v1"/>',
+    card:     '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18M7 15h4"/>',
+    calculator:'<rect x="5" y="3" width="14" height="18" rx="2"/><rect x="7" y="5" width="10" height="4" rx="1"/><path d="M9 13h.01M13 13h.01M17 13h.01M9 17h.01M13 17h.01M17 17h.01"/>',
+    receipt:  '<path d="M5 3v18l2-1 2 1 2-1 2 1 2-1 2 1 2-1V3l-2 1-2-1-2 1-2-1-2 1-2-1-2 1-2-1Z"/><path d="M8 8h8M8 12h8M8 16h5"/>',
+    trendUp:  '<path d="M3 17l6-6 4 4 8-8M14 7h7v7"/>',
+    trendDown:'<path d="M3 7l6 6 4-4 8 8M14 17h7v-7"/>',
+    chartPie: '<path d="M12 3v9h9a9 9 0 1 1-9-9Z"/><path d="M14.5 3a7.5 7.5 0 0 1 6.5 6.5h-6.5V3Z"/>',
+    chartBar: '<path d="M3 21h18M6 17v-6M12 17V5M18 17v-9"/>',
+    chartLine:'<path d="M3 20h18M5 15l4-5 4 3 7-9"/>',
+    percent:  '<circle cx="7" cy="7" r="2.5"/><circle cx="17" cy="17" r="2.5"/><path d="M19 5L5 19"/>',
+
+    // People & Team
+    person:   '<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/>',
+    people:   '<circle cx="9" cy="8" r="3.5"/><circle cx="17" cy="10" r="3"/><path d="M2 20c0-3 3-5 7-5s7 2 7 5M14.5 13c3 .5 5 2 5 4"/>',
+    team:     '<circle cx="12" cy="6" r="2.5"/><circle cx="6" cy="11" r="2.5"/><circle cx="18" cy="11" r="2.5"/><path d="M2 20c0-2.5 2-4 4-4M22 20c0-2.5-2-4-4-4M7 21c0-3 2-5 5-5s5 2 5 5"/>',
+    userPlus: '<circle cx="10" cy="8" r="4"/><path d="M3 21c0-4 3-6 7-6M17 15v6M14 18h6"/>',
+
+    // Business & Documents
+    briefcase:'<rect x="3" y="7" width="18" height="13" rx="1.5"/><path d="M9 7V5.5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2V7M3 12h18"/>',
+    document: '<path d="M6 3h8l4 4v14a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z"/><path d="M14 3v4h4M8 13h8M8 17h5"/>',
+    contract: '<path d="M6 3h8l4 4v14a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z"/><path d="M14 3v4h4M8 12h4M8 16c1.5 0 2-1 3-1s1.5 1 3 1 2-.5 2-.5"/>',
+    folder:   '<path d="M3 6a1 1 0 0 1 1-1h5l2 2h8a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6Z"/>',
+    archive:  '<rect x="3" y="4" width="18" height="5" rx="1"/><path d="M5 9v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9M10 13h4"/>',
+    clipboard:'<rect x="7" y="4" width="10" height="18" rx="2"/><rect x="9" y="2" width="6" height="4" rx="1"/><path d="M10 11h4M10 15h4"/>',
+    stamp:    '<path d="M6 21h12M7 17h10v-2c0-2-1-3-2-4s-1-2-1-3V7a2 2 0 1 0-4 0v1c0 1 0 2-1 3s-2 2-2 4v2Z"/>',
+    news:     '<rect x="3" y="5" width="18" height="15" rx="1"/><path d="M7 9h6M7 13h6M7 17h6M16 9h2M16 13h2M16 17h2"/>',
+    book:     '<path d="M3 5a2 2 0 0 1 2-2h4a3 3 0 0 1 3 3v14a3 3 0 0 0-3-3H3V5Zm18 0a2 2 0 0 0-2-2h-4a3 3 0 0 0-3 3v14a3 3 0 0 1 3-3h6V5Z"/>',
+
+    // Communication
+    email:    '<rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 7l9 6 9-6"/>',
+    megaphone:'<path d="M3 11v2h3l8 5V6l-8 5H3Z"/><path d="M18 8a4 4 0 0 1 0 8M14 18v3h3v-2"/>',
+    speech:   '<path d="M4 6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H9l-5 4V6Z"/>',
+    bell:     '<path d="M6 14V10a6 6 0 1 1 12 0v4l1.5 3H4.5L6 14Z"/><path d="M10 20a2 2 0 0 0 4 0"/>',
+    phone:    '<rect x="7" y="3" width="10" height="18" rx="2"/><path d="M11 18h2"/>',
+
+    // Tech
+    laptop:   '<rect x="4" y="5" width="16" height="10" rx="1"/><path d="M2 18h20l-1 2H3l-1-2Z"/>',
+    desktop:  '<rect x="3" y="4" width="18" height="12" rx="1"/><path d="M9 20h6M12 16v4"/>',
+    cloud:    '<path d="M7 17a4 4 0 1 1 .5-7.9 5 5 0 0 1 9.5 2 3.5 3.5 0 0 1-1 6.9H7Z"/>',
+    server:   '<rect x="3" y="4" width="18" height="7" rx="1"/><rect x="3" y="13" width="18" height="7" rx="1"/><circle cx="7" cy="7.5" r=".7" fill="currentColor" stroke="none"/><circle cx="7" cy="16.5" r=".7" fill="currentColor" stroke="none"/>',
+    database: '<ellipse cx="12" cy="5" rx="8" ry="2.5"/><path d="M4 5v14c0 1.4 3.6 2.5 8 2.5s8-1.1 8-2.5V5M4 12c0 1.4 3.6 2.5 8 2.5s8-1.1 8-2.5"/>',
+    wifi:     '<path d="M2 9a14 14 0 0 1 20 0M5 13a9 9 0 0 1 14 0M8.5 16.5a4.5 4.5 0 0 1 7 0"/><circle cx="12" cy="20" r="1" fill="currentColor" stroke="none"/>',
+    link:     '<path d="M10 14a4 4 0 0 1 0-5.7l3-3a4 4 0 0 1 5.7 5.7l-1.5 1.5M14 10a4 4 0 0 1 0 5.7l-3 3a4 4 0 0 1-5.7-5.7l1.5-1.5"/>',
+
+    // Buildings
     house:    '<path d="M4 10.5L12 4l8 6.5V20a1 1 0 0 1-1 1h-4.5v-6h-5v6H5a1 1 0 0 1-1-1v-9.5Z"/>',
-    cart:     '<path d="M3 4h2.5l2.2 11.1A1.6 1.6 0 0 0 9.3 16.4h8.2a1.6 1.6 0 0 0 1.5-1.1L21 8H6"/><circle cx="9.5" cy="20" r="1.2" fill="currentColor" stroke="none"/><circle cx="17.5" cy="20" r="1.2" fill="currentColor" stroke="none"/>',
+    building: '<rect x="5" y="3" width="14" height="18"/><path d="M5 8h14M5 13h14M5 18h14M9 8v10M15 8v10"/>',
+    factory:  '<path d="M3 21V11l6 4V11l6 4V7l6 4v10H3Z"/><path d="M7 17h2M12 17h2M17 17h2"/>',
+    warehouse:'<path d="M3 10l9-5 9 5v11H3V10Z"/><rect x="8" y="13" width="8" height="8"/><path d="M8 17h8"/>',
+    store:    '<path d="M3 9l1.5-4h15L21 9M5 9v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9M3 9h18M10 20v-6h4v6"/>',
+    hospital: '<rect x="4" y="5" width="16" height="16"/><path d="M11 9h2v3h3v2h-3v3h-2v-3H8v-2h3V9Z"/>',
+    school:   '<path d="M12 4 3 9l9 5 9-5-9-5Z"/><path d="M7 11.5V16c0 1.5 2 3 5 3s5-1.5 5-3v-4.5M21 9v6"/>',
+    hotel:    '<rect x="3" y="5" width="18" height="16"/><path d="M3 12h18M7 8h1M11 8h1M15 8h1M7 15h10M7 18h10"/>',
+
+    // Transport
     car:      '<path d="M5 14l1.3-4.2A2.5 2.5 0 0 1 8.7 8h6.6a2.5 2.5 0 0 1 2.4 1.8L19 14M5 14h14M5 14v3.5h2.5v-1.5h9v1.5H19V14"/><circle cx="8" cy="16" r="1" fill="currentColor" stroke="none"/><circle cx="16" cy="16" r="1" fill="currentColor" stroke="none"/>',
+    truck:    '<path d="M3 16V6h11v10M14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="1.7"/><circle cx="17" cy="18" r="1.7"/>',
+    plane:    '<path d="M20 13l-8-2.5V5a1.2 1.2 0 0 0-2.4 0v5.5L2 13v2l7.6-1.5v3.5l-2 1.3v1.6l3.2-1 3.2 1v-1.6l-2-1.3V13.5L19.4 15v-2Z"/>',
+    ship:     '<path d="M12 3v5M8 8h8v3l4 1-1 6H5l-1-6 4-1V8ZM4 18c1 1 2 1 3 0s2 1 3 0 2 1 3 0 2 1 3 0 2 1 3 0"/>',
+    train:    '<rect x="5" y="3" width="14" height="14" rx="3"/><path d="M5 10h14M9 7h6M8 20l-2 2M16 20l2 2"/><circle cx="9" cy="14" r="1" fill="currentColor" stroke="none"/><circle cx="15" cy="14" r="1" fill="currentColor" stroke="none"/>',
+    bike:     '<circle cx="6" cy="17" r="3.5"/><circle cx="18" cy="17" r="3.5"/><path d="M6 17l4-8h5l3 8M10 9L8.5 5H6.5"/>',
+
+    // Time & Planning
+    calendar: '<rect x="3" y="5" width="18" height="16" rx="1"/><path d="M3 10h18M8 3v4M16 3v4"/>',
+    clock:    '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+    stopwatch:'<circle cx="12" cy="13" r="8"/><path d="M12 13V9M9 2h6M18 5l2 2M12 5v3"/>',
+    hourglass:'<path d="M6 3h12M6 21h12M7 3v3c0 2 2 4 5 6-3 2-5 4-5 6v3M17 3v3c0 2-2 4-5 6 3 2 5 4 5 6v3"/>',
+    flag:     '<path d="M5 3v18M5 4h11l-2 4 2 4H5"/>',
+    target:   '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/>',
+
+    // Tools & Security
+    tools:    '<path d="M14 6a4 4 0 0 1 5.5 5.5l-8.5 8.5a2.5 2.5 0 0 1-3.5-3.5l8.5-8.5Z"/><path d="M14 7l3 3"/>',
+    hammer:   '<path d="M14 4l6 6-3 3-6-6 3-3Z"/><path d="M11 7l-8 8 3 3 8-8"/>',
+    wrench:   '<path d="M20 4a5 5 0 0 1-6 7l-8 8a2.5 2.5 0 0 1-3.5-3.5l8-8a5 5 0 0 1 7-6l-3 3v3h3l2.5-3.5Z"/>',
+    gear:     '<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/>',
+    key:      '<circle cx="7" cy="14" r="4"/><path d="M10 11l10-10M17 4l3 3M14 7l3 3"/>',
+    lock:     '<rect x="5" y="11" width="14" height="10" rx="1.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>',
+    shield:   '<path d="M12 3l8 3v7c0 4-4 7-8 8-4-1-8-4-8-8V6l8-3Z"/>',
+
+    // Products & Commerce
+    cart:     '<path d="M3 4h2.5l2.2 11.1A1.6 1.6 0 0 0 9.3 16.4h8.2a1.6 1.6 0 0 0 1.5-1.1L21 8H6"/><circle cx="9.5" cy="20" r="1.2" fill="currentColor" stroke="none"/><circle cx="17.5" cy="20" r="1.2" fill="currentColor" stroke="none"/>',
+    box:      '<path d="M3 8l9-4 9 4v9l-9 4-9-4V8Z"/><path d="M3 8l9 4 9-4M12 12v9"/>',
+    tag:      '<path d="M3 4h6l12 12-6 6L3 10V4Z"/><circle cx="7" cy="8" r="1.3" fill="currentColor" stroke="none"/>',
+    barcode:  '<path d="M3 5v14M6 5v14M9 5v14M12 5v14M15 5v14M18 5v14M21 5v14"/>',
+    gift:     '<rect x="3" y="9" width="18" height="12" rx="1"/><path d="M3 13h18M12 9v12M12 9c-1.8 0-3-1-3-2.5S10.5 4.5 12 7s3-2 3-.5S13.8 9 12 9Z"/>',
+    scale:    '<path d="M12 3v18M3 21h18M7 3h10M7 9l-3 5h6l-3-5M17 9l-3 5h6l-3-5"/>',
+
+    // Energy & Sustainability
+    bulb:     '<path d="M10 17h4M10 20h4M8 14a5 5 0 1 1 8 0c-.7 1-1 2-1 3H9c0-1-.3-2-1-3Z"/>',
+    battery:  '<rect x="3" y="8" width="16" height="9" rx="1.5"/><path d="M19 11v3h2v-3h-2ZM5 11h6v3H5z" fill="currentColor" stroke="none"/>',
+    solar:    '<path d="M4 20h16M6 18l2-10h8l2 10M8 12h8M10 8v10M14 8v10M12 3v2M5 6l1 1M19 6l-1 1M3 11h2M19 11h2"/>',
+    wind:     '<circle cx="12" cy="12" r="1.5"/><path d="M12 10.5V3M12 13.5a4 4 0 0 0 7-2M12 13.5a4 4 0 0 1-7-2"/>',
+    waterdrop:'<path d="M12 3c-3 4-7 8-7 12a7 7 0 0 0 14 0c0-4-4-8-7-12Z"/>',
+    flame:    '<path d="M12 3c2 3 5 5.5 5 9a5 5 0 0 1-10 0c0-2 .8-3 1.8-4 .5 1 1.2 2 1.7 2 .5-3 .5-5 1.5-7Z"/>',
+    leaf:     '<path d="M5 19c0-7 6-13 14-13 0 7-6 13-14 13Z"/><path d="M5 19l6-6"/>',
+    thermometer:'<path d="M12 3a2.5 2.5 0 0 1 2.5 2.5v8.5a4.5 4.5 0 1 1-5 0V5.5A2.5 2.5 0 0 1 12 3Z"/><circle cx="12" cy="17" r="1.5" fill="currentColor" stroke="none"/>',
+    lightning:'<path d="M13 3L4 14h7l-2 7 9-11h-7l2-7Z"/>',
+
+    // Industry & Services
     fork:     '<path d="M7 3v7.5a2.5 2.5 0 0 1-5 0V3M4.5 10.5V21M17 3c-2 0-3.5 2-3.5 5s1.5 3 3.5 3M17 11v10"/>',
     cup:      '<path d="M5 7h12v7a5 5 0 0 1-5 5h-2a5 5 0 0 1-5-5V7Zm12 2h2a2 2 0 0 1 0 4h-2"/>',
-    plane:    '<path d="M20 13l-8-2.5V5a1.2 1.2 0 0 0-2.4 0v5.5L2 13v2l7.6-1.5v3.5l-2 1.3v1.6l3.2-1 3.2 1v-1.6l-2-1.3V13.5L19.4 15v-2Z"/>',
     film:     '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 4v16M17 4v16M3 9h4M3 14h4m10-5h4m-4 5h4"/>',
     music:    '<path d="M9 17V6l11-2v10"/><circle cx="6" cy="17" r="2.5"/><circle cx="17" cy="14" r="2.5"/>',
-    book:     '<path d="M3 5a2 2 0 0 1 2-2h4a3 3 0 0 1 3 3v14a3 3 0 0 0-3-3H3V5Zm18 0a2 2 0 0 0-2-2h-4a3 3 0 0 0-3 3v14a3 3 0 0 1 3-3h6V5Z"/>',
-    bulb:     '<path d="M10 17h4M10 20h4M8 14a5 5 0 1 1 8 0c-.7 1-1 2-1 3H9c0-1-.3-2-1-3Z"/>',
-    phone:    '<rect x="7" y="3" width="10" height="18" rx="2"/><path d="M11 18h2"/>',
-    card:     '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18M7 15h4"/>',
     shirt:    '<path d="M9 4l3 2 3-2 4.5 2.2-2 3.3L15 8.5v11.5H9V8.5l-2.5 1-2-3.3L9 4Z"/>',
     pills:    '<rect x="3" y="9" width="10" height="6" rx="3"/><path d="M8 9v6"/><circle cx="17" cy="14" r="4"/><path d="M14.5 11.5l5 5"/>',
     heart:    '<path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.5-7 10-7 10Z"/>',
     scissors: '<circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M8.5 8l11 11M8.5 16l11-11"/>',
     dumbbell: '<path d="M4 9v6M6.5 7.5v9M9 10.5v3h6v-3M17.5 7.5v9M20 9v6"/>',
     dog:      '<path d="M5 10l-.8-4 3.3 2h9l3.3-2L19 10v8.5a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V10Z"/><circle cx="9.5" cy="13" r=".9" fill="currentColor" stroke="none"/><circle cx="14.5" cy="13" r=".9" fill="currentColor" stroke="none"/><path d="M10.5 17c.5.5 1 1 1.5 1s1-.5 1.5-1"/>',
-    gift:     '<rect x="3" y="9" width="18" height="12" rx="1"/><path d="M3 13h18M12 9v12M12 9c-1.8 0-3-1-3-2.5S10.5 4.5 12 7s3-2 3-.5S13.8 9 12 9Z"/>',
-    star:     '<path d="M12 3.5l2.7 5.7 6.3.9-4.5 4.4 1 6.3L12 17.5l-5.5 3.3 1-6.3L3 10.1l6.3-.9L12 3.5Z"/>',
-    wallet:   '<path d="M4 7a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v2H5a1 1 0 0 1-1-1V7Zm0 2h15a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9Z"/><circle cx="17" cy="14" r="1" fill="currentColor" stroke="none"/>',
-    dollar:   '<path d="M12 3v18M16 7c-1-1.3-2.5-2-4-2-2.5 0-4 1.3-4 3s1 2.5 4 3 4 1.3 4 3-1.5 3-4 3c-1.5 0-3-.7-4-2"/>',
-    chart:    '<path d="M12 3v9h9a9 9 0 1 1-9-9Z"/><path d="M14.5 3a7.5 7.5 0 0 1 6.5 6.5h-6.5V3Z"/>',
-    receipt:  '<path d="M5 3v18l2-1 2 1 2-1 2 1 2-1 2 1 2-1V3l-2 1-2-1-2 1-2-1-2 1-2-1-2 1-2-1Z"/><path d="M8 8h8M8 12h8M8 16h5"/>',
-    briefcase:'<rect x="3" y="7" width="18" height="13" rx="1.5"/><path d="M9 7V5.5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2V7M3 12h18"/>',
     grad:     '<path d="M12 4 2 9l10 5 10-5-10-5Z"/><path d="M6 11v4.5c0 1 3 2.5 6 2.5s6-1.5 6-2.5V11M21 9v6"/>',
-    tools:    '<path d="M14 6a4 4 0 0 1 5.5 5.5l-8.5 8.5a2.5 2.5 0 0 1-3.5-3.5l8.5-8.5Z"/><path d="M14 7l3 3"/>',
-    leaf:     '<path d="M5 19c0-7 6-13 14-13 0 7-6 13-14 13Z"/><path d="M5 19l6-6"/>',
-    target:   '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/>',
-    flame:    '<path d="M12 3c2 3 5 5.5 5 9a5 5 0 0 1-10 0c0-2 .8-3 1.8-4 .5 1 1.2 2 1.7 2 .5-3 .5-5 1.5-7Z"/>',
-    tag:      '<path d="M3 4h6l12 12-6 6L3 10V4Z"/><circle cx="7" cy="8" r="1.3" fill="currentColor" stroke="none"/>',
+
+    // Misc
+    star:     '<path d="M12 3.5l2.7 5.7 6.3.9-4.5 4.4 1 6.3L12 17.5l-5.5 3.3 1-6.3L3 10.1l6.3-.9L12 3.5Z"/>',
     globe:    '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.8 3 2.8 15 0 18M12 3c-2.8 3-2.8 15 0 18"/>',
+    rocket:   '<path d="M12 3c4 0 7 3 7 7l-3 8h-8l-3-8c0-4 3-7 7-7Z"/><circle cx="12" cy="10" r="2"/><path d="M9 18l-3 3 3-1M15 18l3 3-3-1"/>',
+    magnifier:'<circle cx="11" cy="11" r="7"/><path d="M16 16l5 5"/>',
+    camera:   '<rect x="3" y="7" width="18" height="13" rx="2"/><circle cx="12" cy="13" r="4"/><path d="M9 7l1-3h4l1 3"/>',
+    pen:      '<path d="M3 21l4-1 12-12-3-3L4 17l-1 4Z"/><path d="M13 6l3 3"/>',
   };
   const ICON_KEYS = Object.keys(ICONS);
-  const svgIcon = (name) => `<svg viewBox="0 0 24 24" aria-hidden="true">${ICONS[name] || ICONS.wallet}</svg>`;
-
+  const svgIcon = name => `<svg viewBox="0 0 24 24" aria-hidden="true">${ICONS[name] || ICONS.wallet}</svg>`;
   const ACTION_SVG = {
     guide: '<svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h12v18H6a2 2 0 0 1-2-2V5Z"/><path d="M8 7h8M8 11h8M8 15h5"/></svg>',
     down:  '<svg viewBox="0 0 24 24"><path d="M12 4v14m0 0l5-5m-5 5l-5-5M5 20h14"/></svg>',
     up:    '<svg viewBox="0 0 24 24"><path d="M12 20V6m0 0L7 11m5-5l5 5M5 4h14"/></svg>',
     globe: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.8 3 2.8 15 0 18M12 3c-2.8 3-2.8 15 0 18"/></svg>',
+    coin:  '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 7v10"/></svg>',
   };
 
   const EMOJI_MAP = {
     '🏠':['house','blue'], '🏡':['house','blue'],
     '🛒':['cart','green'], '🛍️':['cart','green'],
-    '🚗':['car','gray'], '⛽':['car','orange'], '🚇':['car','blue'],
+    '🚗':['car','gray'], '⛽':['car','orange'], '🚇':['train','blue'],
     '🍽️':['fork','orange'], '🍴':['fork','orange'],
-    '☕':['cup','brown'], '🍺':['cup','yellow'], '🍷':['cup','red'], '🧋':['cup','brown'],
+    '☕':['cup','brown'], '🍺':['cup','yellow'], '🍷':['cup','red'],
     '✈️':['plane','teal'], '🏖️':['plane','teal'],
     '🎬':['film','pink'], '📺':['film','pink'],
-    '🎮':['star','purple'],
     '🎵':['music','pink'], '🎶':['music','pink'],
     '📚':['book','brown'], '📖':['book','brown'],
     '💡':['bulb','yellow'],
     '📱':['phone','blue'], '☎️':['phone','blue'],
     '💳':['card','blue'],
-    '👕':['shirt','indigo'], '👟':['shirt','indigo'], '👔':['shirt','indigo'],
-    '💊':['pills','red'], '🏥':['heart','red'],
+    '👕':['shirt','indigo'], '👟':['shirt','indigo'],
+    '💊':['pills','red'], '🏥':['hospital','red'],
     '💇':['scissors','pink'],
     '🧘':['heart','pink'], '❤️':['heart','red'],
     '🏋️':['dumbbell','red'], '💪':['dumbbell','red'],
     '🐶':['dog','brown'], '🐕':['dog','brown'],
-    '👶':['gift','pink'], '🎁':['gift','red'], '🎂':['gift','pink'],
-    '🧾':['receipt','gray'], '💼':['briefcase','gray'],
+    '👶':['gift','pink'],
+    '🎁':['gift','red'], '🎂':['gift','pink'],
+    '🧾':['receipt','gray'],
+    '💼':['briefcase','gray'],
     '🎓':['grad','indigo'], '🔧':['tools','gray'], '🛠️':['tools','gray'],
     '🌱':['leaf','green'], '🌿':['leaf','green'],
     '🎯':['target','red'],
-    '💸':['dollar','green'], '🪙':['dollar','yellow'], '💵':['dollar','green'],
+    '💸':['dollar','green'], '🪙':['coin','yellow'], '💵':['cash','green'],
     '💰':['wallet','green'],
     '⭐':['star','yellow'], '🌟':['star','yellow'],
     '🔥':['flame','orange'],
-    '🌍':['globe','blue'], '🌎':['globe','blue'], '🌐':['globe','blue'],
-    '📊':['chart','blue'], '📈':['chart','green'],
+    '🌍':['globe','blue'], '🌐':['globe','blue'],
+    '📊':['chartPie','blue'], '📈':['trendUp','green'], '📉':['trendDown','red'],
   };
   const emojiToIcon = e => EMOJI_MAP[e] || ['wallet', 'blue'];
 
-  // ============ Default state ============
-  function defaultState() {
-    const lang = detectLang();
-    const tr = T[lang];
-    return {
-      v: 5, lang,
-      currentId: 'p_default',
-      profiles: {
-        p_default: {
-          name: tr.defaultProfileName, currency: '€', amount: 2500,
-          keys: [
-            { id: uid(), icon: 'house',  color: 'blue',   name: tr.defaultKeys.housing,   type: 'amount',  value: 900 },
-            { id: uid(), icon: 'cart',   color: 'green',  name: tr.defaultKeys.groceries, type: 'amount',  value: 500 },
-            { id: uid(), icon: 'car',    color: 'gray',   name: tr.defaultKeys.transport, type: 'amount',  value: 200 },
-            { id: uid(), icon: 'fork',   color: 'orange', name: tr.defaultKeys.dining,    type: 'amount',  value: 150 },
-            { id: uid(), icon: 'wallet', color: 'green',  name: tr.defaultKeys.savings,   type: 'percent-total', value: 20 },
-            { id: uid(), icon: 'film',   color: 'pink',   name: tr.defaultKeys.leisure,   type: 'amount',  value: 100 },
-          ],
-        },
-      },
-    };
-  }
+  // ============ State & Migration ============
+  const LS_KEY = 'repartition.v6';
+  const LS_OLD = ['repartition.v5', 'repartition.v4', 'repartition.v3', 'envelopes.v2', 'repartition.v1'];
+  const $ = (s, r=document) => r.querySelector(s);
+  const $$ = (s, r=document) => [...r.querySelectorAll(s)];
+  const uid = () => 'k_' + Math.random().toString(36).slice(2, 10);
+  const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
   function normalizeType(t) {
     if (t === 'percent-rest' || t === 'percent-total' || t === 'amount') return t;
@@ -1012,12 +755,33 @@
     return 'amount';
   }
 
+  function defaultState() {
+    const lang = detectLang();
+    const tr = T[lang];
+    return {
+      v: 6, lang,
+      currentId: 'p_default',
+      profiles: {
+        p_default: {
+          name: tr.defaultProfileName, currency: 'EUR', amount: 5000,
+          keys: [
+            { id: uid(), icon: 'house',     color: 'blue',   name: tr.defaultKeys.housing,   type: 'amount',        value: 1800 },
+            { id: uid(), icon: 'people',    color: 'indigo', name: tr.defaultKeys.savings + ' / ' + tr.defaultKeys.groceries, type: 'percent-total', value: 40 },
+            { id: uid(), icon: 'briefcase', color: 'gray',   name: tr.defaultKeys.transport, type: 'amount',        value: 300 },
+            { id: uid(), icon: 'megaphone', color: 'pink',   name: tr.defaultKeys.leisure,   type: 'amount',        value: 200 },
+            { id: uid(), icon: 'piggy',     color: 'green',  name: tr.defaultKeys.savings,   type: 'percent-rest',  value: 30 },
+          ],
+        },
+      },
+    };
+  }
+
   function migrate(raw) {
     if (!raw) return null;
     let s;
     try { s = typeof raw === 'string' ? JSON.parse(raw) : raw; } catch { return null; }
     if (!s || !s.profiles) return null;
-    if (s.v === 5) return s;
+    if (s.v === 6) return s;
 
     Object.values(s.profiles).forEach(p => {
       let source = p.keys;
@@ -1034,13 +798,14 @@
         source = source.map(k => ({ ...k, type: t, value: +k.value || 0 }));
       }
       delete p.mode; delete p.envelopes;
-      p.currency = p.currency || '€';
+      p.currency = normalizeCurrency(p.currency);
       p.keys = (source || []).map(k => {
         let icon = k.icon, color = k.color;
         if (!icon || !color) {
           const [ic, co] = emojiToIcon(k.emoji || '💰');
           icon = icon || ic; color = color || co;
         }
+        if (!ICONS[icon]) icon = 'wallet';
         return {
           id: k.id || uid(),
           icon, color,
@@ -1052,7 +817,7 @@
     });
     if (!s.profiles[s.currentId]) s.currentId = Object.keys(s.profiles)[0] || 'p_default';
     if (!s.lang || !T[s.lang]) s.lang = detectLang();
-    s.v = 5;
+    s.v = 6;
     return s;
   }
 
@@ -1065,20 +830,20 @@
     state = migrate(raw) || defaultState();
   } catch { state = defaultState(); }
 
-  const save = () => { state.v = 5; try { localStorage.setItem(LS_KEY, JSON.stringify(state)); } catch {} };
+  const save = () => { state.v = 6; try { localStorage.setItem(LS_KEY, JSON.stringify(state)); } catch {} };
   const current = () => {
     if (!state.profiles[state.currentId]) state.currentId = Object.keys(state.profiles)[0];
     return state.profiles[state.currentId];
   };
 
   // ============ i18n helpers ============
-  const tr = () => T[state.lang] || T.en;
+  const tr = () => T[state.lang] || T.fr;
   function t(key, vars) {
     const parts = key.split('.');
     let v = tr();
     for (const p of parts) v = v && v[p];
     if (v == null) {
-      let fb = T.en;
+      let fb = T.fr;
       for (const p of parts) fb = fb && fb[p];
       v = fb ?? key;
     }
@@ -1091,16 +856,47 @@
     const v = Math.round((+n || 0) * 100) / 100;
     return v.toLocaleString(tr().appLocale, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   };
-  const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const fmtInt = n => Math.round(+n || 0).toLocaleString(tr().appLocale);
 
-  // ============ Sheets ============
+  // ============ Compute ============
+  function compute(p) {
+    const total = +p.amount || 0;
+    let pool = total;
+    const results = p.keys.map(k => {
+      let requested;
+      if (k.type === 'percent-total')      requested = total * (+k.value || 0) / 100;
+      else if (k.type === 'percent-rest')  requested = pool * (+k.value || 0) / 100;
+      else                                 requested = (+k.value || 0);
+      const actual = Math.max(0, Math.min(requested, pool));
+      pool -= actual;
+      return { key: k, requested, actual, short: requested - actual };
+    });
+    const allocated = total - pool;
+    const totalRequested = results.reduce((s, r) => s + r.requested, 0);
+    const totalShort = Math.max(0, totalRequested - total);
+    return { total, allocated, pool, results, totalShort };
+  }
+  function poolAtPosition(p, pos) {
+    const total = +p.amount || 0;
+    let pool = total;
+    for (let i = 0; i < Math.min(pos, p.keys.length); i++) {
+      const k = p.keys[i];
+      let r;
+      if (k.type === 'percent-total')      r = total * (+k.value || 0) / 100;
+      else if (k.type === 'percent-rest')  r = pool * (+k.value || 0) / 100;
+      else                                 r = (+k.value || 0);
+      pool -= Math.max(0, Math.min(r, pool));
+    }
+    return Math.max(0, pool);
+  }
+
+  // ============ Sheets & Dialog ============
   const openSheet  = id => $('#' + id).classList.add('open');
   const closeSheet = id => $('#' + id).classList.remove('open');
   $$('.sheet-backdrop').forEach(s => s.addEventListener('click', e => {
     if (e.target === s) s.classList.remove('open');
   }));
 
-  // ============ Dialog (replaces prompt/confirm/alert) ============
   function dialog({ title, message, input, placeholder, defaultValue, okText, cancelText, okStyle = 'primary', showCancel = true }) {
     return new Promise(resolve => {
       $('#dialogTitle').textContent = title || '';
@@ -1129,40 +925,6 @@
     });
   }
 
-  // ============ Compute ============
-  function compute(p) {
-    const total = +p.amount || 0;
-    let pool = total;
-    const results = p.keys.map(k => {
-      let requested;
-      if (k.type === 'percent-total')      requested = total * (+k.value || 0) / 100;
-      else if (k.type === 'percent-rest')  requested = pool * (+k.value || 0) / 100;
-      else                                 requested = (+k.value || 0);
-      const actual = Math.max(0, Math.min(requested, pool));
-      pool -= actual;
-      return { key: k, requested, actual, short: requested - actual };
-    });
-    const allocated = total - pool;
-    const totalRequested = results.reduce((s, r) => s + r.requested, 0);
-    const totalShort = Math.max(0, totalRequested - total);
-    return { total, allocated, pool, results, totalShort };
-  }
-
-  // Compute pool state at a given key position (before that key runs)
-  function poolAtPosition(p, pos) {
-    const total = +p.amount || 0;
-    let pool = total;
-    for (let i = 0; i < Math.min(pos, p.keys.length); i++) {
-      const k = p.keys[i];
-      let r;
-      if (k.type === 'percent-total')      r = total * (+k.value || 0) / 100;
-      else if (k.type === 'percent-rest')  r = pool * (+k.value || 0) / 100;
-      else                                 r = (+k.value || 0);
-      pool -= Math.max(0, Math.min(r, pool));
-    }
-    return Math.max(0, pool);
-  }
-
   // ============ Static text binding ============
   function applyStaticTexts() {
     document.documentElement.lang = tr().htmlLang;
@@ -1180,13 +942,14 @@
     $('#exportRowSub').textContent = t('exportSub');
     $('#importRowTitle').textContent = t('importTitle');
     $('#importRowSub').textContent = t('importSub');
+    $('#currencyRowTitle').textContent = t('currencyRowTitle');
     $('#langRowTitle').textContent = t('langRowTitle');
     $('#langRowSub').textContent = LANG_NAMES[state.lang];
+    const c = current();
+    $('#currencyRowSub').textContent = `${c.currency} · ${curSymOf(c.currency)} · ${currencyName(c.currency, tr().appLocale)}`;
     $('#footerText').textContent = t('footer');
-
     $('#profileSheetTitle').textContent = t('profilesTitle');
     $('#newProfileBtn').textContent = t('newProfile');
-
     $('#keyName').placeholder = t('keyNamePH');
     $('#typeValueLabel').textContent = t('typeValue');
     $('#pctTotal').textContent = t('pctTotalBtn');
@@ -1197,19 +960,18 @@
     $('#moveDown').textContent = t('moveDown');
     $('#keyDelete').textContent = t('delete');
     $('#keySave').textContent = t('save');
-
     $('#guideSheetTitle').textContent = t('guideTitle');
     $('#guideContent').innerHTML = t('guideHtml');
     $('#guideClose').textContent = t('guideGot');
-
     $('#langSheetTitle').textContent = t('langRowTitle');
+    $('#currencySheetTitle').textContent = t('currencyRowTitle');
   }
 
   // ============ Render ============
   function renderHero() {
     const p = current();
     const c = compute(p);
-    $('#curSym').textContent = p.currency;
+    $('#curSym').textContent = curSymOf(p.currency);
     if (document.activeElement !== $('#budget')) $('#budget').value = p.amount || '';
     $('#allocatedVal').textContent = fmt(c.allocated);
     $('#remainingVal').textContent = fmt(c.pool);
@@ -1224,17 +986,20 @@
       ? 'var(--warning)'
       : (c.total > 0 && c.pool < 0.01 ? 'var(--success)' : 'var(--accent)');
     $('#profileName').textContent = p.name;
+    $('#currencyRowSub').textContent = `${p.currency} · ${curSymOf(p.currency)} · ${currencyName(p.currency, tr().appLocale)}`;
   }
 
   function settingText(k, p) {
+    const sym = curSymOf(p.currency);
     if (k.type === 'percent-total') return `${fmt(k.value)} % · ${t('pctOfTotal')}`;
     if (k.type === 'percent-rest')  return `${fmt(k.value)} % · ${t('pctOfRest')}`;
-    return `${fmt(k.value)} ${p.currency} · ${t('fixed')}`;
+    return `${fmt(k.value)} ${sym} · ${t('fixed')}`;
   }
 
   function renderKeys() {
     const p = current();
     const c = compute(p);
+    const sym = curSymOf(p.currency);
     const list = $('#keysList');
     list.innerHTML = '';
     if (!p.keys.length) {
@@ -1255,7 +1020,7 @@
           <div class="row-sub">${settingText(k, p)}</div>
         </div>
         <div class="row-right">
-          <div class="row-amount ${isShort ? 'short' : (isZero ? 'zero' : '')}">${fmt(r.actual)} ${esc(p.currency)}</div>
+          <div class="row-amount ${isShort ? 'short' : (isZero ? 'zero' : '')}">${fmt(r.actual)} ${esc(sym)}</div>
           ${isShort ? `<div class="row-meta short">${t('requested')} ${fmt(r.requested)}</div>` : ''}
         </div>
         <span class="chevron">›</span>`;
@@ -1266,10 +1031,11 @@
 
   const renderAll = () => { renderHero(); renderKeys(); };
 
-  // Icons for Data rows (once)
+  // Data row icons (once)
   $('#guideRow').prepend(Object.assign(document.createElement('div'), { className: 'row-action-icon', innerHTML: ACTION_SVG.guide }));
   $('#exportRow').prepend(Object.assign(document.createElement('div'), { className: 'row-action-icon', innerHTML: ACTION_SVG.down }));
   $('#importRow').prepend(Object.assign(document.createElement('div'), { className: 'row-action-icon', innerHTML: ACTION_SVG.up }));
+  $('#currencyRow').prepend(Object.assign(document.createElement('div'), { className: 'row-action-icon', innerHTML: ACTION_SVG.coin }));
   $('#langRow').prepend(Object.assign(document.createElement('div'), { className: 'row-action-icon', innerHTML: ACTION_SVG.globe }));
 
   // ============ Key sheet ============
@@ -1282,6 +1048,7 @@
     const b = document.createElement('button');
     b.type = 'button';
     b.dataset.icon = name;
+    b.title = name;
     b.innerHTML = svgIcon(name);
     b.addEventListener('click', () => { draftIcon = name; updateIconBtn(); updateIconGridActive(); });
     iconGrid.appendChild(b);
@@ -1318,25 +1085,26 @@
     $('#pctRest').classList.toggle('active', type === 'percent-rest');
     updateValueHint();
   }
-  function getType() {
+  const getType = () => {
     if ($('#typeAbs').classList.contains('active')) return 'amount';
     return $('#pctRest').classList.contains('active') ? 'percent-rest' : 'percent-total';
-  }
+  };
 
   function updateValueHint() {
     const p = current();
+    const sym = curSymOf(p.currency);
     const type = getType();
     const v = +$('#keyValue').value || 0;
     const hint = $('#valueHint');
     if (type === 'percent-total') {
       hint.textContent = p.amount > 0
-        ? t('hintPctTotal', { amount: fmt(p.amount * v / 100), currency: p.currency, total: fmt(p.amount) })
+        ? t('hintPctTotal', { amount: fmt(p.amount * v / 100), currency: sym, total: fmt(p.amount) })
         : t('hintSetAmount');
     } else if (type === 'percent-rest') {
       const pos = editingId ? p.keys.findIndex(x => x.id === editingId) : p.keys.length;
       const basePool = poolAtPosition(p, pos < 0 ? p.keys.length : pos);
       hint.textContent = p.amount > 0
-        ? t('hintPctRest', { amount: fmt(basePool * v / 100), currency: p.currency })
+        ? t('hintPctRest', { amount: fmt(basePool * v / 100), currency: sym })
         : t('hintSetAmount');
     } else {
       hint.textContent = p.amount > 0 ? t('hintAmt', { pct: fmt(v / p.amount * 100) }) : '';
@@ -1357,14 +1125,13 @@
     if (isNew) k = { icon: 'wallet', color: 'blue', name: '', type: 'amount', value: 0 };
 
     $('#keySheetTitle').textContent = isNew ? t('newKey') : t('editKey');
-    draftIcon = k.icon;
-    draftColor = k.color;
+    draftIcon = ICONS[k.icon] ? k.icon : 'wallet';
+    draftColor = COLOR_MAP[k.color] ? k.color : 'blue';
     updateIconBtn(); updateColorActive(); updateIconGridActive();
     iconGrid.classList.add('hide');
-
     $('#keyName').value = k.name;
     $('#keyValue').value = k.value || '';
-    $('#typeAbs').textContent = p.currency;
+    $('#typeAbs').textContent = curSymOf(p.currency);
     setType(k.type);
     $('#keyDelete').classList.toggle('hide', isNew);
     $('#reorderSection').classList.toggle('hide', isNew);
@@ -1378,8 +1145,7 @@
     const p = current();
     const draft = {
       id: editingId || uid(),
-      icon: draftIcon,
-      color: draftColor,
+      icon: draftIcon, color: draftColor,
       name: ($('#keyName').value || '').trim() || t('key'),
       type: getType(),
       value: +$('#keyValue').value || 0,
@@ -1396,8 +1162,7 @@
   $('#keyDelete').addEventListener('click', async () => {
     if (!editingId) return;
     const ok = await dialog({
-      title: t('dlgDeleteKey'),
-      message: t('dlgDeleteKeyMsg'),
+      title: t('dlgDeleteKey'), message: t('dlgDeleteKeyMsg'),
       okText: t('dlgDelete'), okStyle: 'danger primary',
     });
     if (!ok) return;
@@ -1418,16 +1183,10 @@
   $('#moveUp').addEventListener('click', () => moveKey(-1));
   $('#moveDown').addEventListener('click', () => moveKey(1));
 
+  // ============ Budget input (step 50) ============
   $('#budget').addEventListener('input', e => {
     current().amount = +e.target.value || 0;
     save(); renderHero(); renderKeys();
-  });
-
-  $('#curSym').addEventListener('click', () => {
-    const p = current();
-    const i = CURRENCIES.indexOf(p.currency);
-    p.currency = CURRENCIES[(i + 1) % CURRENCIES.length];
-    save(); renderAll();
   });
 
   // ============ Profile sheet ============
@@ -1442,14 +1201,14 @@
       row.innerHTML = `
         <div class="row-main">
           <div class="row-title">${esc(p.name)}</div>
-          <div class="row-sub">${p.keys.length} · ${fmt(p.amount || 0)} ${esc(p.currency || '€')}</div>
+          <div class="row-sub">${p.keys.length} · ${fmt(p.amount || 0)} ${esc(curSymOf(p.currency))}</div>
         </div>
         ${isActive ? '<span class="check">✓</span>' : ''}
         <button class="btn ghost" type="button" data-rename="${id}" style="padding:6px 10px;font-size:14px">${t('rename')}</button>
         ${canDelete ? `<button class="btn ghost danger" type="button" data-delete="${id}" style="padding:6px 10px;font-size:14px">${t('del')}</button>` : ''}`;
       row.addEventListener('click', e => {
         if (e.target.closest('[data-rename], [data-delete]')) return;
-        state.currentId = id; save(); renderAll(); closeSheet('profileSheet');
+        state.currentId = id; save(); renderAll(); applyStaticTexts(); closeSheet('profileSheet');
       });
       list.appendChild(row);
     });
@@ -1474,7 +1233,7 @@
       if (!ok) return;
       delete state.profiles[id];
       if (state.currentId === id) state.currentId = Object.keys(state.profiles)[0];
-      save(); renderProfileList(); renderAll();
+      save(); renderProfileList(); renderAll(); applyStaticTexts();
     }));
   }
 
@@ -1488,10 +1247,54 @@
     });
     if (!name) return;
     const id = 'p_' + uid();
-    state.profiles[id] = { name, currency: current().currency || '€', amount: 0, keys: [] };
+    state.profiles[id] = { name, currency: current().currency || 'EUR', amount: 0, keys: [] };
     state.currentId = id;
-    save(); closeSheet('profileSheet'); renderAll();
+    save(); closeSheet('profileSheet'); renderAll(); applyStaticTexts();
   });
+
+  // ============ Currency picker ============
+  function renderCurrencyList() {
+    const p = current();
+    const list = $('#currencyList');
+    const locale = tr().appLocale;
+    list.innerHTML = '';
+    CURRENCY_ORDER.forEach(code => {
+      const row = document.createElement('div');
+      row.className = 'row';
+      row.innerHTML = `
+        <div class="row-main">
+          <div class="row-title">${esc(currencyName(code, locale))}</div>
+          <div class="row-sub">${esc(code)} · ${esc(curSymOf(code))}</div>
+        </div>
+        ${code === p.currency ? '<span class="check">✓</span>' : ''}`;
+      row.addEventListener('click', () => {
+        p.currency = code; save(); renderAll(); applyStaticTexts(); closeSheet('currencySheet');
+      });
+      list.appendChild(row);
+    });
+  }
+  $('#currencyRow').addEventListener('click', () => { renderCurrencyList(); openSheet('currencySheet'); });
+  $('#curSym').addEventListener('click', () => { renderCurrencyList(); openSheet('currencySheet'); });
+
+  // ============ Language sheet ============
+  function renderLangList() {
+    const list = $('#langList');
+    list.innerHTML = '';
+    LANGS.forEach(lg => {
+      const row = document.createElement('div');
+      row.className = 'row';
+      row.innerHTML = `
+        <div class="row-main"><div class="row-title">${LANG_NAMES[lg]}</div></div>
+        ${lg === state.lang ? '<span class="check">✓</span>' : ''}`;
+      row.addEventListener('click', () => {
+        state.lang = lg; save();
+        applyStaticTexts(); renderAll();
+        renderLangList(); closeSheet('langSheet');
+      });
+      list.appendChild(row);
+    });
+  }
+  $('#langRow').addEventListener('click', () => { renderLangList(); openSheet('langSheet'); });
 
   // ============ Data actions ============
   $('#exportRow').addEventListener('click', () => {
@@ -1529,27 +1332,6 @@
 
   $('#guideRow').addEventListener('click', () => openSheet('guideSheet'));
   $('#guideClose').addEventListener('click', () => closeSheet('guideSheet'));
-
-  // ============ Language sheet ============
-  function renderLangList() {
-    const list = $('#langList');
-    list.innerHTML = '';
-    LANGS.forEach(lg => {
-      const row = document.createElement('div');
-      row.className = 'row';
-      row.innerHTML = `
-        <div class="row-main"><div class="row-title">${LANG_NAMES[lg]}</div></div>
-        ${lg === state.lang ? '<span class="check">✓</span>' : ''}`;
-      row.addEventListener('click', () => {
-        state.lang = lg; save();
-        applyStaticTexts(); renderAll();
-        renderLangList();
-        closeSheet('langSheet');
-      });
-      list.appendChild(row);
-    });
-  }
-  $('#langRow').addEventListener('click', () => { renderLangList(); openSheet('langSheet'); });
 
   // ============ Boot ============
   applyStaticTexts();

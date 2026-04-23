@@ -9,7 +9,10 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Breakdown">
 <title>Répartition</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%23007aff'/><g fill='white' transform='translate(32 32)'><path d='M0 -18 A18 18 0 0 1 17.1 -5.6 L0 0 Z'/><path d='M17.1 -5.6 A18 18 0 0 1 -10.6 14.6 L0 0 Z' opacity='0.72'/><path d='M-10.6 14.6 A18 18 0 0 1 0 -18 L0 0 Z' opacity='0.88'/></g></svg>">
+<link rel="icon" type="image/png" sizes="32x32" href="icon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="icon-180.png">
+<link rel="manifest" href="manifest.json">
 <style>
   :root {
     color-scheme: light dark;
@@ -38,6 +41,8 @@
     padding: env(safe-area-inset-top) 0 env(safe-area-inset-bottom);
     min-height: 100vh; overscroll-behavior-y: contain;
   }
+  body.sheet-open { overflow: hidden; position: fixed; width: 100%; }
+  .sheet { touch-action: pan-y; }
   .wrap { max-width: 560px; margin: 0 auto; padding: 8px 16px 48px; }
 
   .nav { display: flex; justify-content: space-between; align-items: center; padding: 12px 4px 16px; }
@@ -924,11 +929,65 @@
   }
 
   // ============ Sheets & Dialog ============
-  const openSheet  = id => $('#' + id).classList.add('open');
-  const closeSheet = id => $('#' + id).classList.remove('open');
-  $$('.sheet-backdrop').forEach(s => s.addEventListener('click', e => {
-    if (e.target === s) s.classList.remove('open');
-  }));
+  let savedScrollY = 0;
+  function lockBody() {
+    if (document.body.classList.contains('sheet-open')) return;
+    savedScrollY = window.scrollY;
+    document.body.style.top = `-${savedScrollY}px`;
+    document.body.classList.add('sheet-open');
+  }
+  function unlockBody() {
+    if (document.querySelector('.sheet-backdrop.open')) return;
+    document.body.classList.remove('sheet-open');
+    document.body.style.top = '';
+    window.scrollTo(0, savedScrollY);
+  }
+  const openSheet = id => {
+    lockBody();
+    $('#' + id).classList.add('open');
+  };
+  const closeSheet = id => {
+    $('#' + id).classList.remove('open');
+    setTimeout(unlockBody, 50);
+  };
+  $$('.sheet-backdrop').forEach(backdrop => {
+    backdrop.addEventListener('click', e => {
+      if (e.target === backdrop) closeSheet(backdrop.id);
+    });
+    // Pull-down-to-dismiss on the sheet itself
+    const sheet = backdrop.querySelector('.sheet');
+    if (!sheet) return;
+    let startY = 0, lastY = 0, dragging = false, startScrollTop = 0;
+    sheet.addEventListener('touchstart', e => {
+      if (e.touches.length !== 1) return;
+      startY = lastY = e.touches[0].clientY;
+      startScrollTop = sheet.scrollTop;
+      dragging = startScrollTop <= 0;
+      sheet.style.transition = 'none';
+    }, { passive: true });
+    sheet.addEventListener('touchmove', e => {
+      if (!dragging) return;
+      lastY = e.touches[0].clientY;
+      const delta = lastY - startY;
+      if (delta > 0) {
+        sheet.style.transform = `translateY(${delta}px)`;
+        e.preventDefault();
+      } else {
+        dragging = false;
+        sheet.style.transform = '';
+      }
+    }, { passive: false });
+    const endDrag = () => {
+      if (!dragging) return;
+      dragging = false;
+      sheet.style.transition = '';
+      const delta = lastY - startY;
+      sheet.style.transform = '';
+      if (delta > 120) closeSheet(backdrop.id);
+    };
+    sheet.addEventListener('touchend', endDrag);
+    sheet.addEventListener('touchcancel', endDrag);
+  });
 
   function dialog({ title, message, input, placeholder, defaultValue, okText, cancelText, okStyle = 'primary', showCancel = true }) {
     return new Promise(resolve => {

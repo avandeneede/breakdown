@@ -1,15 +1,17 @@
 # repartition
 
-Petite app HTML pour décomposer un montant selon une **clé de répartition**. Chaque ligne peut être un montant fixe (€) ou un pourcentage (%) du total, et les clés sont traitées selon un **ordre de priorité**.
+Petite app HTML pour décomposer un montant selon une **clé de répartition**. Chaque ligne peut être un montant fixe (€), un pourcentage du total, ou un pourcentage de ce qui reste après les clés de priorité supérieure. Les clés sont traitées selon un **ordre de priorité**.
 
 **Live :** https://avandeneede.github.io/repartition/
 
 ## Fonctionnalités
 
 - Décomposition d'un montant par clé de répartition
-- Valeurs absolues (€) ou relatives (%) mélangées librement
+- Trois types de clés : montant fixe (€), % du total, ou % du reste
 - Ordre de priorité — les clés du haut sont servies en premier si le montant ne suffit pas
 - Plusieurs profils (un par cas d'usage)
+- Icônes SVG minimalistes + 12 couleurs système
+- Multilingue : EN / FR / NL (détection auto de la langue du système)
 - Thème clair / sombre automatique (suit le système)
 - 100 % local — données dans `localStorage`, aucun serveur
 - Mobile-first — s'ajoute à l'écran d'accueil iOS/Android
@@ -25,8 +27,11 @@ Tapez le montant à répartir en haut de l'écran. Tapez sur le symbole de devis
 ### 2. Ajouter des clés
 
 1. Touchez `+` dans la section « Clés de répartition »
-2. Choisissez un emoji et un nom (ex. « Loyer »)
-3. Entrez la valeur puis choisissez `€` (montant fixe) ou `%` (pourcentage du total)
+2. Choisissez une icône et une couleur, donnez un nom (ex. « Loyer »)
+3. Entrez la valeur puis choisissez `€` (montant fixe) ou `%`, et pour le pourcentage : **Du total** ou **Du reste**
+
+**Du total** : 20 % de 2 000 € = 400 €, indépendamment de ce qui a déjà été alloué.
+**Du reste** : 20 % de ce qu'il reste une fois les clés précédentes servies. Utile pour « épargner le reste après charges ».
 
 ### 3. Ordre de priorité
 
@@ -44,6 +49,10 @@ Pour réorganiser, ouvrez une clé et utilisez `↑ Monter` / `↓ Descendre`.
 ### 4. Plusieurs profils
 
 En haut à droite, tapez sur le nom du profil. Créez un profil par cas d'usage (paie personnelle, charges à répartir entre projets, etc.). Chaque profil a ses propres clés.
+
+### 5. Langue
+
+La langue par défaut suit celle de l'appareil (EN / FR / NL). Pour changer : section **Données** → **Langue** → choisissez.
 
 ---
 

@@ -1067,9 +1067,10 @@
     if (document.activeElement !== $('#budget')) {
       $('#budget').value = p.amount > 0 ? fmtAmount(p.amount) : '';
     }
-    $('#allocatedVal').textContent = fmt(c.allocated);
-    $('#remainingVal').textContent = fmt(c.pool);
-    $('#shortVal').textContent = fmt(c.totalShort);
+    const sym = curSymOf(p.currency);
+    $('#allocatedVal').textContent = `${fmt(c.allocated)} ${sym}`;
+    $('#remainingVal').textContent = `${fmt(c.pool)} ${sym}`;
+    $('#shortVal').textContent = `${fmt(c.totalShort)} ${sym}`;
     $('#remainingStat').classList.toggle('success', c.total > 0 && c.pool < 0.005 && c.totalShort < 0.005);
     $('#shortStat').classList.toggle('hide', c.totalShort < 0.005);
     $('#shortStat').classList.toggle('danger', c.totalShort >= 0.005);

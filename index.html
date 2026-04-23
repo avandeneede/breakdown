@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0f172a">
+<title>Clé de répartition</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22><rect width=%2264%22 height=%2264%22 rx=%2212%22 fill=%22%230f172a%22/><text x=%2250%25%22 y=%2256%25%22 font-size=%2238%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22sans-serif%22>%E2%80%B0</text></svg>">
+<style>
+  :root{
+    --bg:#0f172a; --panel:#1e293b; --panel2:#334155; --text:#f1f5f9;
+    --muted:#94a3b8; --accent:#38bdf8; --good:#22c55e; --bad:#ef4444;
+    --border:#334155;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+  body{min-height:100vh;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)}
+  .wrap{max-width:640px;margin:0 auto;padding:16px}
+  h1{font-size:20px;margin:0 0 4px;display:flex;align-items:center;gap:8px}
+  h1 .dot{width:10px;height:10px;border-radius:50%;background:var(--accent)}
+  .sub{color:var(--muted);font-size:13px;margin-bottom:16px}
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:14px;margin-bottom:14px}
+  label{display:block;font-size:12px;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:.05em}
+  .row{display:flex;gap:8px;align-items:center}
+  input,select,button{font:inherit;color:inherit}
+  input[type=text],input[type=number],select{
+    width:100%;background:var(--panel2);border:1px solid var(--border);
+    border-radius:10px;padding:12px 12px;color:var(--text);outline:none;
+    font-size:16px; /* prevents iOS zoom */
+  }
+  input:focus,select:focus{border-color:var(--accent)}
+  button{
+    background:var(--panel2);border:1px solid var(--border);color:var(--text);
+    border-radius:10px;padding:10px 14px;cursor:pointer;font-size:14px;
+    transition:background .15s;
+  }
+  button:hover{background:#475569}
+  button.primary{background:var(--accent);color:#0b1220;border-color:var(--accent);font-weight:600}
+  button.primary:hover{filter:brightness(1.1)}
+  button.ghost{background:transparent}
+  button.danger{color:var(--bad);border-color:#7f1d1d;background:transparent}
+  button.danger:hover{background:#3f1d1d}
+  .pill{display:inline-block;padding:3px 8px;border-radius:999px;background:var(--panel2);font-size:11px;color:var(--muted)}
+  .keys{display:flex;flex-direction:column;gap:8px}
+  .key{display:grid;grid-template-columns:1fr 110px 110px 36px;gap:6px;align-items:center}
+  .key .share{text-align:right}
+  .result{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px dashed var(--border)}
+  .result:last-child{border-bottom:none}
+  .result .name{font-weight:500}
+  .result .amt{font-variant-numeric:tabular-nums;font-weight:600}
+  .total{display:flex;justify-content:space-between;padding-top:10px;margin-top:4px;border-top:1px solid var(--border);font-size:13px;color:var(--muted)}
+  .total.warn{color:var(--bad)}
+  .btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+  .actions{display:flex;gap:6px;justify-content:flex-end;margin-top:8px}
+  .mode{display:flex;background:var(--panel2);border-radius:10px;padding:3px;gap:2px}
+  .mode button{flex:1;background:transparent;border:none;padding:8px;font-size:13px;border-radius:8px}
+  .mode button.active{background:var(--accent);color:#0b1220;font-weight:600}
+  .small{font-size:12px;color:var(--muted)}
+  .hide{display:none}
+  ::placeholder{color:#64748b}
+  @media (max-width:420px){
+    .key{grid-template-columns:1fr 90px 36px}
+    .key .pct{display:none}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1><span class="dot"></span>Clé de répartition</h1>
+  <div class="sub">Divisez un montant selon des parts configurables. Données stockées localement sur cet appareil.</div>
+
+  <div class="card">
+    <label>Profil</label>
+    <div class="row">
+      <select id="profileSelect"></select>
+      <button id="newProfile" title="Nouveau profil">+</button>
+      <button id="renameProfile" title="Renommer">✎</button>
+      <button id="deleteProfile" class="danger" title="Supprimer">✕</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <label>Montant à répartir</label>
+    <div class="row">
+      <input id="amount" type="number" inputmode="decimal" step="0.01" placeholder="0,00" />
+      <select id="currency" style="width:90px">
+        <option>€</option><option>$</option><option>£</option><option>CHF</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="row" style="justify-content:space-between;margin-bottom:10px">
+      <label style="margin:0">Clés de répartition</label>
+      <div class="mode">
+        <button id="modePct" class="active">%</button>
+        <button id="modeParts">Parts</button>
+      </div>
+    </div>
+
+    <div id="keys" class="keys"></div>
+
+    <div class="btns">
+      <button id="addKey">+ Ajouter</button>
+      <button id="equalize" class="ghost">Égaliser</button>
+      <button id="normalize" class="ghost">Normaliser 100%</button>
+    </div>
+    <div class="total" id="totalLine"></div>
+  </div>
+
+  <div class="card">
+    <label>Résultat</label>
+    <div id="results"></div>
+  </div>
+
+  <div class="card">
+    <label>Données</label>
+    <div class="btns">
+      <button id="export">Exporter</button>
+      <button id="import">Importer</button>
+      <input id="importFile" type="file" accept="application/json" class="hide">
+    </div>
+    <div class="small" style="margin-top:8px">Astuce iPhone: Safari → Partager → « Sur l'écran d'accueil » pour l'utiliser comme une app.</div>
+  </div>
+</div>
+
+<script>
+(() => {
+  const LS_KEY = 'repartition.v1';
+  const $ = s => document.querySelector(s);
+  const fmt = n => (Math.round(n*100)/100).toLocaleString('fr-BE',{minimumFractionDigits:2,maximumFractionDigits:2});
+
+  const defaultState = () => ({
+    currentId: 'default',
+    profiles: {
+      default: {
+        name: 'Défaut',
+        mode: 'pct',
+        currency: '€',
+        amount: 100,
+        keys: [
+          {name:'Personne A', value:50},
+          {name:'Personne B', value:50},
+        ],
+      }
+    }
+  });
+
+  let state = load();
+
+  function load(){
+    try{
+      const raw = localStorage.getItem(LS_KEY);
+      if(!raw) return defaultState();
+      const s = JSON.parse(raw);
+      if(!s.profiles || !s.currentId) return defaultState();
+      return s;
+    }catch(e){ return defaultState(); }
+  }
+  function save(){ localStorage.setItem(LS_KEY, JSON.stringify(state)); }
+  function current(){ return state.profiles[state.currentId]; }
+  function uid(){ return 'p_' + Math.random().toString(36).slice(2,9); }
+
+  function renderProfiles(){
+    const sel = $('#profileSelect');
+    sel.innerHTML = '';
+    Object.entries(state.profiles).forEach(([id,p])=>{
+      const o = document.createElement('option');
+      o.value = id; o.textContent = p.name;
+      if(id === state.currentId) o.selected = true;
+      sel.appendChild(o);
+    });
+  }
+
+  function renderKeys(){
+    const p = current();
+    const box = $('#keys');
+    box.innerHTML = '';
+    const total = p.keys.reduce((s,k)=>s+(+k.value||0),0);
+    p.keys.forEach((k,i)=>{
+      const row = document.createElement('div');
+      row.className = 'key';
+      const pct = total>0 ? (k.value/total*100) : 0;
+      row.innerHTML = `
+        <input type="text" value="${escapeHtml(k.name)}" placeholder="Nom" data-i="${i}" data-f="name">
+        <input type="number" inputmode="decimal" step="any" value="${k.value ?? ''}" placeholder="${p.mode==='pct'?'%':'parts'}" data-i="${i}" data-f="value" class="share">
+        <div class="pill pct" style="text-align:right">${fmt(pct)}%</div>
+        <button class="danger" data-i="${i}" data-f="del" title="Supprimer">✕</button>`;
+      box.appendChild(row);
+    });
+    // total line
+    const tl = $('#totalLine');
+    if(p.mode==='pct'){
+      const diff = Math.abs(total-100);
+      tl.textContent = `Somme: ${fmt(total)}%` + (diff>0.01?` — doit faire 100%`:'');
+      tl.classList.toggle('warn', diff>0.01);
+    } else {
+      tl.textContent = `Total parts: ${fmt(total)}`;
+      tl.classList.remove('warn');
+    }
+    // mode buttons
+    $('#modePct').classList.toggle('active', p.mode==='pct');
+    $('#modeParts').classList.toggle('active', p.mode==='parts');
+    $('#amount').value = p.amount ?? '';
+    $('#currency').value = p.currency || '€';
+  }
+
+  function renderResults(){
+    const p = current();
+    const out = $('#results');
+    out.innerHTML = '';
+    const amount = +p.amount || 0;
+    const total = p.keys.reduce((s,k)=>s+(+k.value||0),0);
+    if(total<=0 || p.keys.length===0){
+      out.innerHTML = '<div class="small">Ajoutez des parts pour voir la répartition.</div>';
+      return;
+    }
+    let sum = 0;
+    p.keys.forEach((k,i)=>{
+      const share = (+k.value||0)/total;
+      const amt = amount * share;
+      sum += amt;
+      const row = document.createElement('div');
+      row.className = 'result';
+      row.innerHTML = `<div><div class="name">${escapeHtml(k.name||'—')}</div>
+        <div class="small">${fmt(share*100)}%</div></div>
+        <div class="amt">${fmt(amt)} ${escapeHtml(p.currency||'')}</div>`;
+      out.appendChild(row);
+    });
+    const t = document.createElement('div');
+    t.className = 'total';
+    t.innerHTML = `<span>Total</span><span>${fmt(sum)} ${escapeHtml(p.currency||'')}</span>`;
+    out.appendChild(t);
+  }
+
+  function renderAll(){ renderProfiles(); renderKeys(); renderResults(); }
+
+  function escapeHtml(s){ return String(s??'').replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+  // Events
+  $('#profileSelect').addEventListener('change', e => {
+    state.currentId = e.target.value; save(); renderAll();
+  });
+  $('#newProfile').addEventListener('click', () => {
+    const name = prompt('Nom du profil ?', 'Nouveau profil');
+    if(!name) return;
+    const id = uid();
+    state.profiles[id] = {name, mode:'pct', currency:'€', amount:0, keys:[{name:'A',value:50},{name:'B',value:50}]};
+    state.currentId = id; save(); renderAll();
+  });
+  $('#renameProfile').addEventListener('click', () => {
+    const p = current();
+    const name = prompt('Renommer le profil', p.name);
+    if(!name) return;
+    p.name = name; save(); renderAll();
+  });
+  $('#deleteProfile').addEventListener('click', () => {
+    if(Object.keys(state.profiles).length<=1){ alert('Vous devez garder au moins un profil.'); return; }
+    if(!confirm('Supprimer ce profil ?')) return;
+    delete state.profiles[state.currentId];
+    state.currentId = Object.keys(state.profiles)[0];
+    save(); renderAll();
+  });
+
+  $('#amount').addEventListener('input', e => {
+    current().amount = +e.target.value || 0; save(); renderResults();
+  });
+  $('#currency').addEventListener('change', e => {
+    current().currency = e.target.value; save(); renderResults();
+  });
+
+  $('#keys').addEventListener('input', e => {
+    const i = +e.target.dataset.i, f = e.target.dataset.f;
+    if(isNaN(i) || !f) return;
+    const p = current();
+    if(f==='name') p.keys[i].name = e.target.value;
+    else if(f==='value') p.keys[i].value = +e.target.value || 0;
+    save(); renderKeys(); renderResults();
+  });
+  $('#keys').addEventListener('click', e => {
+    if(e.target.dataset.f === 'del'){
+      const i = +e.target.dataset.i;
+      current().keys.splice(i,1); save(); renderKeys(); renderResults();
+    }
+  });
+
+  $('#addKey').addEventListener('click', () => {
+    current().keys.push({name:'', value:0}); save(); renderKeys(); renderResults();
+  });
+  $('#equalize').addEventListener('click', () => {
+    const p = current();
+    if(!p.keys.length) return;
+    const v = p.mode==='pct' ? 100/p.keys.length : 1;
+    p.keys.forEach(k=>k.value = Math.round(v*100)/100);
+    save(); renderKeys(); renderResults();
+  });
+  $('#normalize').addEventListener('click', () => {
+    const p = current();
+    const total = p.keys.reduce((s,k)=>s+(+k.value||0),0);
+    if(total<=0) return;
+    p.keys.forEach(k=>k.value = Math.round((k.value/total*100)*100)/100);
+    p.mode = 'pct';
+    save(); renderKeys(); renderResults();
+  });
+
+  $('#modePct').addEventListener('click', () => { current().mode='pct'; save(); renderKeys(); renderResults(); });
+  $('#modeParts').addEventListener('click', () => { current().mode='parts'; save(); renderKeys(); renderResults(); });
+
+  $('#export').addEventListener('click', () => {
+    const blob = new Blob([JSON.stringify(state,null,2)],{type:'application/json'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'repartition.json'; a.click();
+    setTimeout(()=>URL.revokeObjectURL(url), 1000);
+  });
+  $('#import').addEventListener('click', () => $('#importFile').click());
+  $('#importFile').addEventListener('change', e => {
+    const f = e.target.files[0]; if(!f) return;
+    const r = new FileReader();
+    r.onload = () => {
+      try{
+        const s = JSON.parse(r.result);
+        if(!s.profiles || !s.currentId) throw new Error('Fichier invalide');
+        state = s; save(); renderAll();
+      }catch(err){ alert('Import échoué: ' + err.message); }
+    };
+    r.readAsText(f);
+    e.target.value = '';
+  });
+
+  renderAll();
+})();
+</script>
+</body>
+</html>
